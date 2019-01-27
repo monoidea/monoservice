@@ -6439,16 +6439,16 @@ m4trace:configure.ac:48: -1- PKG_CHECK_EXISTS([libqrencode >= 4.0.0], [pkg_cv_[]
 m4trace:configure.ac:48: -1- _PKG_SHORT_ERRORS_SUPPORTED
 m4trace:configure.ac:49: -1- m4_pattern_allow([^LIBQRENCODE_CFLAGS$])
 m4trace:configure.ac:50: -1- m4_pattern_allow([^LIBQRENCODE_LIBS$])
-m4trace:configure.ac:52: -1- PKG_CHECK_MODULES([LIBPNG], [libpng >= 1.6.0])
-m4trace:configure.ac:52: -1- m4_pattern_allow([^LIBPNG_CFLAGS$])
-m4trace:configure.ac:52: -1- m4_pattern_allow([^LIBPNG_LIBS$])
-m4trace:configure.ac:52: -1- PKG_CHECK_EXISTS([libpng >= 1.6.0], [pkg_cv_[]LIBPNG_CFLAGS=`$PKG_CONFIG --[]cflags "libpng >= 1.6.0" 2>/dev/null`
+m4trace:configure.ac:52: -1- PKG_CHECK_MODULES([CAIRO], [cairo >= 1.16.0])
+m4trace:configure.ac:52: -1- m4_pattern_allow([^CAIRO_CFLAGS$])
+m4trace:configure.ac:52: -1- m4_pattern_allow([^CAIRO_LIBS$])
+m4trace:configure.ac:52: -1- PKG_CHECK_EXISTS([cairo >= 1.16.0], [pkg_cv_[]CAIRO_CFLAGS=`$PKG_CONFIG --[]cflags "cairo >= 1.16.0" 2>/dev/null`
 		      test "x$?" != "x0" && pkg_failed=yes ], [pkg_failed=yes])
-m4trace:configure.ac:52: -1- PKG_CHECK_EXISTS([libpng >= 1.6.0], [pkg_cv_[]LIBPNG_LIBS=`$PKG_CONFIG --[]libs "libpng >= 1.6.0" 2>/dev/null`
+m4trace:configure.ac:52: -1- PKG_CHECK_EXISTS([cairo >= 1.16.0], [pkg_cv_[]CAIRO_LIBS=`$PKG_CONFIG --[]libs "cairo >= 1.16.0" 2>/dev/null`
 		      test "x$?" != "x0" && pkg_failed=yes ], [pkg_failed=yes])
 m4trace:configure.ac:52: -1- _PKG_SHORT_ERRORS_SUPPORTED
-m4trace:configure.ac:53: -1- m4_pattern_allow([^LIBPNG_CFLAGS$])
-m4trace:configure.ac:54: -1- m4_pattern_allow([^LIBPNG_LIBS$])
+m4trace:configure.ac:53: -1- m4_pattern_allow([^CAIRO_CFLAGS$])
+m4trace:configure.ac:54: -1- m4_pattern_allow([^CAIRO_LIBS$])
 m4trace:configure.ac:57: -1- m4_pattern_allow([^HAVE_STDLIB_H$])
 m4trace:configure.ac:57: -1- m4_pattern_allow([^HAVE_MALLOC$])
 m4trace:configure.ac:57: -1- m4_pattern_allow([^HAVE_MALLOC$])

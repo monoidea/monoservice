@@ -23,7 +23,7 @@
 #include <glib.h>
 #include <glib-object.h>
 
-#include <qrcode.h>
+#include <qrencode.h>
 
 #define MONOSERVICE_TYPE_QRCODE                (monoservice_qrcode_get_type())
 #define MONOSERVICE_QRCODE(obj)                (G_TYPE_CHECK_INSTANCE_CAST((obj), MONOSERVICE_TYPE_QRCODE, MonoserviceQrcode))
@@ -34,6 +34,12 @@
 
 #define MONOSERVICE_QRCODE_DEFAULT_URL "http://monothek.ch"
 #define MONOSERVICE_QRCODE_DEFAULT_FILENAME SRCDIR "/monoservice.share/monoservice/qrcode/qrcode.xpm"
+
+#define MONOSERVICE_QRCODE_DEFAULT_SVG_WIDTH (480)
+#define MONOSERVICE_QRCODE_DEFAULT_SVG_HEIGHT (480)
+
+#define MONOSERVICE_QRCODE_DEFAULT_PNG_WIDTH (480)
+#define MONOSERVICE_QRCODE_DEFAULT_PNG_HEIGHT (480)
 
 typedef struct _MonoserviceQrcode MonoserviceQrcode;
 typedef struct _MonoserviceQrcodeClass MonoserviceQrcodeClass;
@@ -47,7 +53,7 @@ struct _MonoserviceQrcode
   gchar *url;
   gchar *filename;
   
-  QRcode *qrcode
+  QRcode *qrcode;
 };
 
 struct _MonoserviceQrcodeClass

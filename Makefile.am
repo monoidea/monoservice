@@ -42,31 +42,33 @@ EXTRA_DIST = config.rpath m4/ChangeLog  config.rpath \
 CLEANFILES = \
 	m4/Makefile
 
-libmonoservice_la_HEADERS_0 = $(libmonoservice_h_sources)
-libmonoservice_la_SOURCES = $(libmonoservice_la_HEADERS_0) $(libmonoservice_c_sources)
+libmonoservice_la_HEADERS_0 = $(libmonoservice_lib_h_sources)
+libmonoservice_la_SOURCES = $(libmonoservice_la_HEADERS_0) $(libmonoservice_lib_c_sources)
 
 # library libmonoservice
-libmonoservice_la_CFLAGS = $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(LIBPNG_CFLAGS)
+libmonoservice_la_CFLAGS = $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
 libmonoservice_la_LDFLAGS = $(LDFLAGS) -version-info 1:0:0 -shared -fPIC -Wl,-soname,libmonoservice.so -pthread
-libmonoservice_la_LIBADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(LIBPNG_LIBS)
+libmonoservice_la_LIBADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
 # monoservice
 monoservice_www_SOURCES = $(monoservice_www_c_sources) $(monoservice_wwwheaders)
 
-monoservice_www_CFLAGS += $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(LIBPNG_CFLAGS)
+monoservice_www_CFLAGS += $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
 monoservice_www_LDFLAGS += -pthread
-monoservice_www_LDADD = libmonoservice.la -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(LIBPNG_LIBS)
+monoservice_www_LDADD = libmonoservice.la -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
 # libmonoservice all files
-deprecated_libmonoservice_h_sources =
+deprecated_libmonoservice_lib_h_sources =
 
-libmonoservice_h_sources = \
-	$(deprecated_libmonoservice_h_sources)
+libmonoservice_lib_h_sources = \
+	$(deprecated_libmonoservice_lib_h_sources) \
+	monoservice/lib/monoservice_qrcode.h
 
-deprecated_libmonoservice_c_sources =
+deprecated_libmonoservice_lib_c_sources =
 
-libmonoservice_c_sources = \
-	$(deprecated_libmonoservice_c_sources)
+libmonoservice_lib_c_sources = \
+	$(deprecated_libmonoservice_lib_c_sources) \
+	monoservice/lib/monoservice_qrcode.c
 
 # monoservice_www all files
 monoservice_wwwheaders = \

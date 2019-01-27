@@ -19,7 +19,12 @@
 
 #include <monoservice/lib/monoservice_qrcode.h>
 
+#include <cairo.h>
+#include <cairo-svg.h>
+
 #include <stdio.h>
+
+#include <i18n.h>
 
 void monoservice_qrcode_class_init(MonoserviceQrcodeClass *qrcode);
 void monoservice_qrcode_init(MonoserviceQrcode *qrcode);
@@ -97,7 +102,6 @@ void
 monoservice_qrcode_class_init(MonoserviceQrcodeClass *qrcode)
 {
   GObjectClass *gobject;
-  GtkWidgetClass *widget;
 
   GParamSpec *param_spec;
 
@@ -322,7 +326,7 @@ monoservice_qrcode_real_encode(MonoserviceQrcode *qrcode)
 void
 monoservice_qrcode_encode(MonoserviceQrcode *qrcode)
 {
-  g_return_if_fail(MONOTHEK_IS_QRCODE(qrcode));
+  g_return_if_fail(MONOSERVICE_IS_QRCODE(qrcode));
   
   g_object_ref((GObject *) qrcode);
   g_signal_emit(G_OBJECT(qrcode),
@@ -343,7 +347,7 @@ monoservice_qrcode_real_write(MonoserviceQrcode *qrcode)
   static const guint border_width = 1;
 
   width = qrcode->qrcode->width;
-  height = qrcode->qrcode->height;
+  height = qrcode->qrcode->width;
   
   f = fopen(qrcode->filename,
 	    "w");
@@ -417,7 +421,7 @@ monoservice_qrcode_real_write(MonoserviceQrcode *qrcode)
 void
 monoservice_qrcode_write(MonoserviceQrcode *qrcode)
 {
-  g_return_if_fail(MONOTHEK_IS_QRCODE(qrcode));
+  g_return_if_fail(MONOSERVICE_IS_QRCODE(qrcode));
   
   g_object_ref((GObject *) qrcode);
   g_signal_emit(G_OBJECT(qrcode),
@@ -429,14 +433,138 @@ void
 monoservice_qrcode_export_svg(MonoserviceQrcode *qrcode,
 			      gchar *svg_filename)
 {
-  //TODO:JK: implement me
+  cairo_surface_t *svg_surface;
+  cairo_t *cr;
+  
+  guint svg_width, svg_height;
+  gdouble svg_square_size;
+  guint width, height;
+  guint i, j;
+  
+  svg_width = MONOSERVICE_QRCODE_DEFAULT_SVG_WIDTH;
+  svg_height = MONOSERVICE_QRCODE_DEFAULT_SVG_HEIGHT;
+  
+  svg_surface = cairo_svg_surface_create(svg_filename,
+					 svg_width,
+					 svg_height);
+  cairo_svg_surface_restrict_to_version(svg_surface,
+					CAIRO_SVG_VERSION_1_2);
+  
+  cr = cairo_create(svg_surface);
+
+  /* background */
+  cairo_set_source_rgba(cr,
+			1.0,
+			1.0,
+			1.0,
+			1.0);
+  
+  cairo_rectangle(cr,
+		  0.0,
+		  0.0,
+		  svg_width,
+		  svg_height);
+  cairo_fill(cr);
+
+  /* qrcode */
+  width = qrcode->qrcode->width;
+  height = qrcode->qrcode->width;
+
+  svg_square_size = (gdouble) svg_width / (gdouble) width;
+  
+  cairo_set_source_rgb(cr,
+		       0.0,
+		       0.0,
+		       0.0);
+
+  for(i = 0; i < height; i++){
+    for(j = 0; j < width; j++){
+      if(qrcode->qrcode->data[i * qrcode->qrcode->width + j] % 2 == 1){
+	cairo_rectangle(cr,
+			j * svg_square_size,
+			i * svg_square_size,
+			svg_square_size,
+			svg_square_size);
+	cairo_fill(cr);
+      }
+    }
+  }
+
+  cairo_surface_flush(svg_surface);
+  cairo_surface_finish(svg_surface);
+
+  cairo_surface_destroy(svg_surface);
+  
+  cairo_destroy(cr);
 }
 
 void
 monoservice_qrcode_export_png(MonoserviceQrcode *qrcode,
 			      gchar *png_filename)
 {
-  //TODO:JK: implement me
+  cairo_surface_t *png_surface;
+  cairo_t *cr;
+  
+  guint png_width, png_height;
+  gdouble png_square_size;
+  guint width, height;
+  guint i, j;
+  
+  png_width = MONOSERVICE_QRCODE_DEFAULT_PNG_WIDTH;
+  png_height = MONOSERVICE_QRCODE_DEFAULT_PNG_HEIGHT;
+  
+  png_surface = cairo_image_surface_create(CAIRO_FORMAT_ARGB32,
+					   png_width,
+					   png_height);
+  
+  cr = cairo_create(png_surface);
+
+  /* background */
+  cairo_set_source_rgba(cr,
+			1.0,
+			1.0,
+			1.0,
+			1.0);
+  
+  cairo_rectangle(cr,
+		  0.0,
+		  0.0,
+		  png_width,
+		  png_height);
+  cairo_fill(cr);
+
+  /* qrcode */
+  width = qrcode->qrcode->width;
+  height = qrcode->qrcode->width;
+
+  png_square_size = (gdouble) png_width / (gdouble) width;
+  
+  cairo_set_source_rgb(cr,
+		       0.0,
+		       0.0,
+		       0.0);
+
+  for(i = 0; i < height; i++){
+    for(j = 0; j < width; j++){
+      if(qrcode->qrcode->data[i * qrcode->qrcode->width + j] % 2 == 1){
+	cairo_rectangle(cr,
+			j * png_square_size,
+			i * png_square_size,
+			png_square_size,
+			png_square_size);
+	cairo_fill(cr);
+      }
+    }
+  }
+
+  cairo_surface_flush(png_surface);
+  cairo_surface_write_to_png(png_surface,
+			     png_filename);
+
+  cairo_surface_finish(png_surface);
+  cairo_surface_destroy(png_surface);
+  
+  cairo_destroy(cr);
 }
 
 /**

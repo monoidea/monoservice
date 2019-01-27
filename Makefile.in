@@ -155,7 +155,10 @@ libmonoservice_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 am__objects_1 =
 am__objects_2 = $(am__objects_1)
 am__objects_3 = $(am__objects_2)
-am_libmonoservice_la_OBJECTS = $(am__objects_3) $(am__objects_2)
+am__dirstamp = $(am__leading_dot)dirstamp
+am__objects_4 = $(am__objects_1) \
+	monoservice/lib/libmonoservice_la-monoservice_qrcode.lo
+am_libmonoservice_la_OBJECTS = $(am__objects_3) $(am__objects_4)
 libmonoservice_la_OBJECTS = $(am_libmonoservice_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -165,9 +168,8 @@ libmonoservice_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(libmonoservice_la_CFLAGS) $(CFLAGS) \
 	$(libmonoservice_la_LDFLAGS) $(LDFLAGS) -o $@
-am__dirstamp = $(am__leading_dot)dirstamp
-am__objects_4 = monoservice/www-monoservice_main.$(OBJEXT)
-am_monoservice_www_OBJECTS = $(am__objects_4) $(am__objects_1)
+am__objects_5 = monoservice/www-monoservice_main.$(OBJEXT)
+am_monoservice_www_OBJECTS = $(am__objects_5) $(am__objects_1)
 monoservice_www_OBJECTS = $(am_monoservice_www_OBJECTS)
 monoservice_www_DEPENDENCIES = libmonoservice.la $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -191,7 +193,8 @@ am__v_at_1 =
 DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/monoservice
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
-am__depfiles_remade = monoservice/$(DEPDIR)/www-monoservice_main.Po
+am__depfiles_remade = monoservice/$(DEPDIR)/www-monoservice_main.Po \
+	monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Plo
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
 	$(CPPFLAGS) $(AM_CFLAGS) $(CFLAGS)
@@ -310,6 +313,8 @@ AUTOCONF = @AUTOCONF@
 AUTOHEADER = @AUTOHEADER@
 AUTOMAKE = @AUTOMAKE@
 AWK = @AWK@
+CAIRO_CFLAGS = @CAIRO_CFLAGS@
+CAIRO_LIBS = @CAIRO_LIBS@
 CC = @CC@
 CCDEPMODE = @CCDEPMODE@
 
@@ -354,8 +359,6 @@ LDFLAGS = @LDFLAGS@ $(LTLIBINTL)
 LIBICONV = @LIBICONV@
 LIBINTL = @LIBINTL@
 LIBOBJS = @LIBOBJS@
-LIBPNG_CFLAGS = @LIBPNG_CFLAGS@
-LIBPNG_LIBS = @LIBPNG_LIBS@
 LIBQRENCODE_CFLAGS = @LIBQRENCODE_CFLAGS@
 LIBQRENCODE_LIBS = @LIBQRENCODE_LIBS@
 LIBS = @LIBS@
@@ -463,7 +466,7 @@ SUBDIRS = po
 ACLOCAL_AMFLAGS = -I m4
 AM_CPPFLAGS = -std=gnu99 -include errno.h -I$(top_srcdir) -DMONOSERVICE_DEVEL_MODE=1 -DSRCDIR=\"$(srcdir)\" -DDESTDIR=\"$(DESTDIR)$(datadir)\" -DPACKAGE_VERSION=\"$(PACKAGE_VERSION)\" -D_FORTIFY_SOURCE=2 -Wformat -Werror=format-security
 monoservice_www_CFLAGS = @MONOSERVICE_CFLAGS@ $(LIBXML2_CFLAGS) \
-	$(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(LIBPNG_CFLAGS)
+	$(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
 monoservice_www_LDFLAGS = @MONOSERVICE_LDFLAGS@ -pthread
 libmonoservicedir = $(libdir)/monoservice
 libmonoservice_LTLIBRARIES = libmonoservice.la
@@ -482,26 +485,28 @@ EXTRA_DIST = config.rpath m4/ChangeLog  config.rpath \
 CLEANFILES = \
 	m4/Makefile
 
-libmonoservice_la_HEADERS_0 = $(libmonoservice_h_sources)
-libmonoservice_la_SOURCES = $(libmonoservice_la_HEADERS_0) $(libmonoservice_c_sources)
+libmonoservice_la_HEADERS_0 = $(libmonoservice_lib_h_sources)
+libmonoservice_la_SOURCES = $(libmonoservice_la_HEADERS_0) $(libmonoservice_lib_c_sources)
 
 # library libmonoservice
-libmonoservice_la_CFLAGS = $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(LIBPNG_CFLAGS)
+libmonoservice_la_CFLAGS = $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
 libmonoservice_la_LDFLAGS = $(LDFLAGS) -version-info 1:0:0 -shared -fPIC -Wl,-soname,libmonoservice.so -pthread
-libmonoservice_la_LIBADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(LIBPNG_LIBS)
+libmonoservice_la_LIBADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
 # monoservice
 monoservice_www_SOURCES = $(monoservice_www_c_sources) $(monoservice_wwwheaders)
-monoservice_www_LDADD = libmonoservice.la -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(LIBPNG_LIBS)
+monoservice_www_LDADD = libmonoservice.la -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
 # libmonoservice all files
-deprecated_libmonoservice_h_sources = 
-libmonoservice_h_sources = \
-	$(deprecated_libmonoservice_h_sources)
+deprecated_libmonoservice_lib_h_sources = 
+libmonoservice_lib_h_sources = \
+	$(deprecated_libmonoservice_lib_h_sources) \
+	monoservice/lib/monoservice_qrcode.h
 
-deprecated_libmonoservice_c_sources = 
-libmonoservice_c_sources = \
-	$(deprecated_libmonoservice_c_sources)
+deprecated_libmonoservice_lib_c_sources = 
+libmonoservice_lib_c_sources = \
+	$(deprecated_libmonoservice_lib_c_sources) \
+	monoservice/lib/monoservice_qrcode.c
 
 
 # monoservice_www all files
@@ -647,6 +652,15 @@ clean-libmonoserviceLTLIBRARIES:
 	  echo rm -f $${locs}; \
 	  rm -f $${locs}; \
 	}
+monoservice/lib/$(am__dirstamp):
+	@$(MKDIR_P) monoservice/lib
+	@: > monoservice/lib/$(am__dirstamp)
+monoservice/lib/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) monoservice/lib/$(DEPDIR)
+	@: > monoservice/lib/$(DEPDIR)/$(am__dirstamp)
+monoservice/lib/libmonoservice_la-monoservice_qrcode.lo:  \
+	monoservice/lib/$(am__dirstamp) \
+	monoservice/lib/$(DEPDIR)/$(am__dirstamp)
 
 libmonoservice.la: $(libmonoservice_la_OBJECTS) $(libmonoservice_la_DEPENDENCIES) $(EXTRA_libmonoservice_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(libmonoservice_la_LINK) -rpath $(libmonoservicedir) $(libmonoservice_la_OBJECTS) $(libmonoservice_la_LIBADD) $(LIBS)
@@ -667,11 +681,14 @@ monoservice-www$(EXEEXT): $(monoservice_www_OBJECTS) $(monoservice_www_DEPENDENC
 mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 	-rm -f monoservice/*.$(OBJEXT)
+	-rm -f monoservice/lib/*.$(OBJEXT)
+	-rm -f monoservice/lib/*.lo
 
 distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/$(DEPDIR)/www-monoservice_main.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Plo@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
 	@$(MKDIR_P) $(@D)
@@ -703,6 +720,13 @@ am--depfiles: $(am__depfiles_remade)
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
 
+monoservice/lib/libmonoservice_la-monoservice_qrcode.lo: monoservice/lib/monoservice_qrcode.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -MT monoservice/lib/libmonoservice_la-monoservice_qrcode.lo -MD -MP -MF monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Tpo -c -o monoservice/lib/libmonoservice_la-monoservice_qrcode.lo `test -f 'monoservice/lib/monoservice_qrcode.c' || echo '$(srcdir)/'`monoservice/lib/monoservice_qrcode.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Tpo monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/lib/monoservice_qrcode.c' object='monoservice/lib/libmonoservice_la-monoservice_qrcode.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -c -o monoservice/lib/libmonoservice_la-monoservice_qrcode.lo `test -f 'monoservice/lib/monoservice_qrcode.c' || echo '$(srcdir)/'`monoservice/lib/monoservice_qrcode.c
+
 monoservice/www-monoservice_main.o: monoservice/monoservice_main.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_www_CFLAGS) $(CFLAGS) -MT monoservice/www-monoservice_main.o -MD -MP -MF monoservice/$(DEPDIR)/www-monoservice_main.Tpo -c -o monoservice/www-monoservice_main.o `test -f 'monoservice/monoservice_main.c' || echo '$(srcdir)/'`monoservice/monoservice_main.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/$(DEPDIR)/www-monoservice_main.Tpo monoservice/$(DEPDIR)/www-monoservice_main.Po
@@ -722,6 +746,7 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+	-rm -rf monoservice/lib/.libs monoservice/lib/_libs
 
 distclean-libtool:
 	-rm -f libtool config.lt
@@ -1061,6 +1086,8 @@ distclean-generic:
 	-test . = "$(srcdir)" || test -z "$(CONFIG_CLEAN_VPATH_FILES)" || rm -f $(CONFIG_CLEAN_VPATH_FILES)
 	-rm -f monoservice/$(DEPDIR)/$(am__dirstamp)
 	-rm -f monoservice/$(am__dirstamp)
+	-rm -f monoservice/lib/$(DEPDIR)/$(am__dirstamp)
+	-rm -f monoservice/lib/$(am__dirstamp)
 
 maintainer-clean-generic:
 	@echo "This command is intended for maintainers to use"
@@ -1073,6 +1100,7 @@ clean-am: clean-binPROGRAMS clean-generic \
 distclean: distclean-recursive
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 		-rm -f monoservice/$(DEPDIR)/www-monoservice_main.Po
+	-rm -f monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Plo
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
 	distclean-hdr distclean-libtool distclean-tags
@@ -1121,6 +1149,7 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
 		-rm -f monoservice/$(DEPDIR)/www-monoservice_main.Po
+	-rm -f monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Plo
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic
 
