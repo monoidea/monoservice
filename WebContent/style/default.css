@@ -1,0 +1,35 @@
+@CHARSET "UTF-8";
+
+body {
+    color: #00ffff;
+    font: 14px sans;
+    background-color: #000000;
+}
+
+h1 {
+    color: #00ffff;
+}
+
+p {
+    color: #00ffff;
+}
+
+a:link {
+    color: #ff00ff;
+    text-decoration: underline;
+}
+
+a:active {
+    color: #ff00ff;
+    text-decoration: underline;
+}
+
+a:visited {
+    color: #ff00ff;
+    text-decoration: underline;
+}
+
+a:hover {
+    color: #ff00ff;
+    text-decoration: none;
+}
