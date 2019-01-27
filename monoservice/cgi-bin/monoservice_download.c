@@ -102,7 +102,7 @@ monoservice_download_parse_query_string(gchar **session_id, gchar **token)
 
   static gboolean regex_compiled = FALSE;
 
-  static const gchar *parameter_pattern = "^\\?session-id=([a-z0-9\\-]+),token=([a-z0-9\\-]+)";
+  static const gchar *parameter_pattern = "^\\?session-id=([a-z0-9\\-]+)&token=([a-z0-9\\-]+)";
 
   static const size_t max_matches = 3;
 
