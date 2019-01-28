@@ -45,6 +45,11 @@ void monoservice_mysql_connector_finalize(GObject *gobject);
 
 enum{
   PROP_0,
+  PROP_HOSTNAME,
+  PROP_USER,
+  PROP_PASSWORD,
+  PROP_DB_NAME,
+  PROP_PORT,
 };
 
 static gpointer monoservice_mysql_connector_parent_class = NULL;
@@ -99,6 +104,87 @@ monoservice_mysql_connector_class_init(MonoserviceMysqlConnectorClass *mysql_con
   gobject->finalize = monoservice_mysql_connector_finalize;
 
   /* properties */
+  /**
+   * MonoserviceMysqlConnector:hostname:
+   *
+   * The hostname to connect to.
+   * 
+   * Since: 1.0.0
+   */
+  param_spec = g_param_spec_string("hostname",
+				   i18n_pspec("hostname"),
+				   i18n_pspec("The hostname to connect"),
+				   MONOSERVICE_MYSQL_CONNECTOR_DEFAULT_HOSTNAME,
+				   G_PARAM_READABLE | G_PARAM_WRITABLE);
+  g_object_class_install_property(gobject,
+				  PROP_HOSTNAME,
+				  param_spec);
+
+  /**
+   * MonoserviceMysqlConnector:user:
+   *
+   * The user to login.
+   * 
+   * Since: 1.0.0
+   */
+  param_spec = g_param_spec_string("user",
+				   i18n_pspec("user"),
+				   i18n_pspec("The user to login"),
+				   MONOSERVICE_MYSQL_CONNECTOR_DEFAULT_USER,
+				   G_PARAM_READABLE | G_PARAM_WRITABLE);
+  g_object_class_install_property(gobject,
+				  PROP_USER,
+				  param_spec);
+
+  /**
+   * MonoserviceMysqlConnector:password:
+   *
+   * The password to use for login.
+   * 
+   * Since: 1.0.0
+   */
+  param_spec = g_param_spec_string("password",
+				   i18n_pspec("password"),
+				   i18n_pspec("The password to login"),
+				   MONOSERVICE_MYSQL_CONNECTOR_DEFAULT_PASSWORD,
+				   G_PARAM_READABLE | G_PARAM_WRITABLE);
+  g_object_class_install_property(gobject,
+				  PROP_PASSWORD,
+				  param_spec);
+
+  /**
+   * MonoserviceMysqlConnector:db-name:
+   *
+   * The database name.
+   * 
+   * Since: 1.0.0
+   */
+  param_spec = g_param_spec_string("db-name",
+				   i18n_pspec("database name"),
+				   i18n_pspec("The database name"),
+				   MONOSERVICE_MYSQL_CONNECTOR_DEFAULT_DB_NAME,
+				   G_PARAM_READABLE | G_PARAM_WRITABLE);
+  g_object_class_install_property(gobject,
+				  PROP_DB_NAME,
+				  param_spec);
+
+  /**
+   * MonoserviceMysqlConnector:port:
+   *
+   * The port to connect.
+   * 
+   * Since: 1.0.0
+   */
+  param_spec = g_param_spec_uint("port",
+				 i18n_pspec("port"),
+				 i18n_pspec("The port to connect"),
+				 0,
+				 G_MAXUINT,
+				 MONOSERVICE_MYSQL_CONNECTOR_DEFAULT_PORT,
+				 G_PARAM_READABLE | G_PARAM_WRITABLE);
+  g_object_class_install_property(gobject,
+				  PROP_PORT,
+				  param_spec);
 }
 
 void
@@ -141,9 +227,101 @@ monoservice_mysql_connector_set_property(GObject *gobject,
 {
   MonoserviceMysqlConnector *mysql_connector;
 
+  pthread_mutex_t *obj_mutex;
+
   mysql_connector = MONOSERVICE_MYSQL_CONNECTOR(gobject);
 
+  /* get object mutex */
+  pthread_mutex_lock(monoservice_mysql_connector_get_class_mutex());
+  
+  obj_mutex = mysql_connector->obj_mutex;
+
+  pthread_mutex_unlock(monoservice_mysql_connector_get_class_mutex());
+
   switch(prop_id){
+  case PROP_HOSTNAME:
+  {
+    gchar *hostname;
+
+    hostname = g_value_get_string(value);
+    
+    pthread_mutex_lock(obj_mutex);
+
+    if(hostname == mysql_connector->hostname){
+      pthread_mutex_unlock(obj_mutex);
+
+      return;
+    }
+
+    g_free(mysql_connector->hostname);
+
+    mysql_connector->hostname = g_strdup(hostname);
+    
+    pthread_mutex_unlock(obj_mutex);
+  }
+  break;
+  case PROP_USER:
+  {
+    gchar *user;
+
+    user = g_value_get_string(value);
+    
+    pthread_mutex_lock(obj_mutex);
+
+    if(user == mysql_connector->user){
+      pthread_mutex_unlock(obj_mutex);
+
+      return;
+    }
+
+    g_free(mysql_connector->user);
+
+    mysql_connector->user = g_strdup(user);
+    
+    pthread_mutex_unlock(obj_mutex);
+  }
+  break;
+  case PROP_PASSWORD:
+  {
+    gchar *password;
+
+    password = g_value_get_string(value);
+    
+    pthread_mutex_lock(obj_mutex);
+
+    if(password == mysql_connector->password){
+      pthread_mutex_unlock(obj_mutex);
+
+      return;
+    }
+
+    g_free(mysql_connector->password);
+
+    mysql_connector->password = g_strdup(password);
+    
+    pthread_mutex_unlock(obj_mutex);
+  }
+  break;
+  case PROP_DB_NAME:
+  {
+    gchar *db_name;
+
+    db_name = g_value_get_string(value);
+
+    monoservice_mysql_connector_select_db(mysql_connector,
+					  db_name,
+					  NULL);
+  }
+  break;
+  case PROP_PORT:
+  {
+    pthread_mutex_lock(obj_mutex);
+
+    mysql_connector->port = g_value_get_uint(value);
+    
+    pthread_mutex_unlock(obj_mutex);
+  }
+  break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID(gobject, prop_id, param_spec);
     break;
@@ -158,9 +336,68 @@ monoservice_mysql_connector_get_property(GObject *gobject,
 {
   MonoserviceMysqlConnector *mysql_connector;
 
+  pthread_mutex_t *obj_mutex;
+
   mysql_connector = MONOSERVICE_MYSQL_CONNECTOR(gobject);
 
+  /* get object mutex */
+  pthread_mutex_lock(monoservice_mysql_connector_get_class_mutex());
+  
+  obj_mutex = mysql_connector->obj_mutex;
+
+  pthread_mutex_unlock(monoservice_mysql_connector_get_class_mutex());
+
   switch(prop_id){
+  case PROP_HOSTNAME:
+  {
+    pthread_mutex_lock(obj_mutex);
+
+    g_value_set_string(value,
+		       mysql_connector->hostname);
+    
+    pthread_mutex_unlock(obj_mutex);
+  }
+  break;
+  case PROP_USER:
+  {
+    pthread_mutex_lock(obj_mutex);
+
+    g_value_set_string(value,
+		       mysql_connector->user);
+    
+    pthread_mutex_unlock(obj_mutex);
+  }
+  break;
+  case PROP_PASSWORD:
+  {
+    pthread_mutex_lock(obj_mutex);
+
+    g_value_set_string(value,
+		       mysql_connector->password);
+    
+    pthread_mutex_unlock(obj_mutex);
+  }
+  break;
+  case PROP_DB_NAME:
+  {
+    pthread_mutex_lock(obj_mutex);
+
+    g_value_set_string(value,
+		       mysql_connector->db_name);
+    
+    pthread_mutex_unlock(obj_mutex);
+  }
+  break;
+  case PROP_PORT:
+  {
+    pthread_mutex_lock(obj_mutex);
+
+    g_value_set_uint(value,
+		     mysql_connector->port);
+    
+    pthread_mutex_unlock(obj_mutex);
+  }
+  break;
   default:
     G_OBJECT_WARN_INVALID_PROPERTY_ID(gobject, prop_id, param_spec);
     break;
@@ -173,7 +410,20 @@ monoservice_mysql_connector_finalize(GObject *gobject)
   MonoserviceMysqlConnector *mysql_connector;
 
   mysql_connector = (MonoserviceMysqlConnector *) gobject;
+
+  pthread_mutex_destroy(mysql_connector->obj_mutex);
+  pthread_mutexattr_destroy(mysql_connector->obj_mutexattr);
   
+  free(mysql_connector->obj_mutex);
+  free(mysql_connector->obj_mutexattr);
+
+  g_free(mysql_connector->hostname);
+
+  g_free(mysql_connector->user);
+  g_free(mysql_connector->password);
+
+  g_free(mysql_connector->db_name);
+
   /* call parent */
   G_OBJECT_CLASS(monoservice_mysql_connector_parent_class)->finalize(gobject);
 }
@@ -430,7 +680,13 @@ monoservice_mysql_connector_query_extended(MonoserviceMysqlConnector *mysql_conn
   guint i, j;
   
   if(!MONOSERVICE_IS_MYSQL_CONNECTOR(mysql_connector)){
-    return(NULL);
+    return;
+  }
+
+  if(!monoservice_mysql_connector_test_flags(mysql_connector, MONOSERVICE_MYSQL_CONNECTOR_CONNECTED)){
+    g_warning("not connected");
+    
+    return;
   }
 
   /* query */

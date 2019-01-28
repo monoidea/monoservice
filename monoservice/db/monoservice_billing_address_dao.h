@@ -23,35 +23,60 @@
 #include <glib.h>
 #include <glib-object.h>
 
-#include <mysql.h>
+#include <monoservice/db/monoservice_mysql_connector.h>
 
-int monoservice_billing_address_dao_create();
-void monoservice_billing_address_dao_delete(int billing_address_id);
+guint64 monoservice_billing_address_dao_create(MonoserviceMysqlConnector *mysql_connector,
+					       gchar *firstname,
+					       gchar *surname,
+					       gchar *phone,
+					       gchar *email,
+					       gchar *street,
+					       gchar *zip,
+					       gchar *city,
+					       gchar *country);
+void monoservice_billing_address_dao_delete(MonoserviceMysqlConnector *mysql_connector,
+					    guint64 billing_address_id);
 
-void monoservice_billing_address_dao_set_payment_transaction(int billing_address_id,
-							     int payment_transaction);
+gchar** monoservice_billing_address_dao_select(MonoserviceMysqlConnector *mysql_connector,
+					       guint64 billing_address_id);
 
-void monoservice_billing_address_dao_set_firstname(int billing_address_id,
-						   char *firstname);
-void monoservice_billing_address_dao_set_surname(int billing_address_id,
-						 char *surname);
+void monoservice_billing_address_dao_set_payment_transaction(MonoserviceMysqlConnector *mysql_connector,
+							     guint64 billing_address_id,
+							     guint64 payment_transaction);
 
-void monoservice_billing_address_dao_set_email(int billing_address_id,
-					       char *email);
+void monoservice_billing_address_dao_set_firstname(MonoserviceMysqlConnector *mysql_connector,
+						   guint64 billing_address_id,
+						   gchar *firstname);
+void monoservice_billing_address_dao_set_surname(MonoserviceMysqlConnector *mysql_connector,
+						 guint64 billing_address_id,
+						 gchar *surname);
 
-void monoservice_billing_address_dao_set_street(int billing_address_id,
-						char *street);
+void monoservice_billing_address_dao_set_phone(MonoserviceMysqlConnector *mysql_connector,
+					       guint64 billing_address_id,
+					       gchar *phone);
 
-void monoservice_billing_address_dao_set_zip(int billing_address_id,
-					     char *zip);
+void monoservice_billing_address_dao_set_email(MonoserviceMysqlConnector *mysql_connector,
+					       guint64 billing_address_id,
+					       gchar *email);
 
-void monoservice_billing_address_dao_set_city(int billing_address_id,
-					      char *city);
+void monoservice_billing_address_dao_set_street(MonoserviceMysqlConnector *mysql_connector,
+						guint64 billing_address_id,
+						gchar *street);
 
-void monoservice_billing_address_dao_set_country(int billing_address_id,
-						 char *country);
+void monoservice_billing_address_dao_set_zip(MonoserviceMysqlConnector *mysql_connector,
+					     guint64 billing_address_id,
+					     gchar *zip);
 
-int* monoservice_billing_address_dao_get_by_media_account(int media_account_id,
-							  guint *billing_address_count);
+void monoservice_billing_address_dao_set_city(MonoserviceMysqlConnector *mysql_connector,
+					      guint64 billing_address_id,
+					      gchar *city);
+
+void monoservice_billing_address_dao_set_country(MonoserviceMysqlConnector *mysql_connector,
+						 guint64 billing_address_id,
+						 gchar *country);
+
+guint64* monoservice_billing_address_dao_find_by_media_account(MonoserviceMysqlConnector *mysql_connector,
+							       guint64 media_account_id,
+							       guint64 *billing_address_count);
 
 #endif /*__MONOSERVICE_BILLING_ADDRESS_DAO_H__*/

@@ -19,41 +19,136 @@
 
 #include <monoservice/db/monoservice_media_account_dao.h>
 
-int
-monoservice_media_account_dao_create()
+guint64
+monoservice_media_account_dao_create(MonoserviceMysqlConnector *mysql_connector)
 {
-  int media_account_id;
+  gchar *query;
+  guint64 media_account_id;
 
-  media_account_id = -1;
+  GError *error;
+
+  query = g_strdup("INSERT INTO MEDIA_ACCOUNT DEFAULT VALUES");
+  media_account_id = 0;
+
+  error = NULL;
+  monoservice_mysql_connector_query_extended(mysql_connector,
+					     query,
+					     &media_account_id,
+					     NULL,
+					     NULL,
+					     NULL, NULL,
+					     &error);
+
+  g_free(query);
   
-  //TODO:JK: implement me
-
   return(media_account_id);
 }
 
 void
-monoservice_media_account_dao_delete(int media_account_id)
+monoservice_media_account_dao_delete(MonoserviceMysqlConnector *mysql_connector,
+				     guint64 media_account_id)
 {
-  //TODO:JK: implement me
+  gchar *query;
+
+  GError *error;
+
+  query = g_strdup_printf("DELETE FROM MEDIA_ACCOUNT WHERE MEDIA_ACCOUNT_ID = '%lu'", media_account_id);
+
+  error = NULL;
+  monoservice_mysql_connector_query(mysql_connector,
+				    query,
+				    &error);
+
+  g_free(query);
+}
+
+gchar**
+monoservice_media_account_dao_select(MonoserviceMysqlConnector *mysql_connector,
+				     guint64 media_account_id)
+
+{
+  gchar ***table;
+  gchar **strv;
+  gchar *query;
+
+  GError *error;
+
+  query = g_strdup_printf("SELECT * FROM MEDIA_ACCOUNT WHERE MEDIA_ACCOUNT_ID = '%lu'", media_account_id);
+
+  table = NULL;
+  error = NULL;
+  monoservice_mysql_connector_query_extended(mysql_connector,
+					     query,
+					     NULL,
+					     NULL,
+					     &table,
+					     NULL, NULL,
+					     &error);
+
+  g_free(query);
+
+  if(table != NULL){
+    strv = table[0];
+
+    g_free(table);
+  }
+
+  return(strv);
 }
 
 void
-monoservice_media_account_dao_set_billing_address(int media_account_id,
-						  int billing_address)
+monoservice_media_account_dao_set_billing_address(MonoserviceMysqlConnector *mysql_connector,
+						  guint64 media_account_id,
+						  guint64 billing_address)
 {
-  //TODO:JK: implement me
+  gchar *query;
+
+  GError *error;
+
+  query = g_strdup_printf("UPDATE MEDIA_ACCOUNT SET BILLING_ADDRESS = '%lu' WHERE MEDIA_ACCOUNT_ID = '%lu'", billing_address, media_account_id);
+
+  error = NULL;
+  monoservice_mysql_connector_query(mysql_connector,
+				    query,
+				    &error);
+
+  g_free(query);
 }
 
 void
-monoservice_media_account_dao_set_video_file(int media_account_id,
-					     int video_file)
+monoservice_media_account_dao_set_video_file(MonoserviceMysqlConnector *mysql_connector,
+					     guint64 media_account_id,
+					     guint64 video_file)
 {
-  //TODO:JK: implement me
+  gchar *query;
+
+  GError *error;
+
+  query = g_strdup_printf("UPDATE MEDIA_ACCOUNT SET VIDEO_FILE = '%lu' WHERE MEDIA_ACCOUNT_ID = '%lu'", video_file, media_account_id);
+
+  error = NULL;
+  monoservice_mysql_connector_query(mysql_connector,
+				    query,
+				    &error);
+
+  g_free(query);
 }
 
 void
-monoservice_media_account_dao_set_session_store(int media_account_id,
-						int session_store)
+monoservice_media_account_dao_set_session_store(MonoserviceMysqlConnector *mysql_connector,
+						guint64 media_account_id,
+						guint64 session_store)
 {
-  //TODO:JK: implement me
+  gchar *query;
+
+  GError *error;
+
+  query = g_strdup_printf("UPDATE MEDIA_ACCOUNT SET SESSION_STORE = '%lu' WHERE MEDIA_ACCOUNT_ID = '%lu'", session_store, media_account_id);
+
+  error = NULL;
+  monoservice_mysql_connector_query(mysql_connector,
+				    query,
+				    &error);
+
+  g_free(query);
 }

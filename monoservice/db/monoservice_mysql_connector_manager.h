@@ -52,6 +52,13 @@ struct _MonoserviceMysqlConnectorManagerClass
 
 GType monoservice_mysql_connector_manager_get_type();
 
+pthread_mutex_t* monoservice_mysql_connector_manager_get_class_mutex();
+
+void monoservice_mysql_connector_manager_add_connector(MonoserviceMysqlConnectorManager *mysql_connector_manager,
+						       GObject *connector);
+void monoservice_mysql_connector_manager_remove_connector(MonoserviceMysqlConnectorManager *mysql_connector_manager,
+							  GObject *connector);
+
 GList* monoservice_mysql_connector_manager_get_connector_by_hostname(MonoserviceMysqlConnectorManager *mysql_connector_manager,
 								     gchar *hostname);
 

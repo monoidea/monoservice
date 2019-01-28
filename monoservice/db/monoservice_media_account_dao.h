@@ -23,18 +23,25 @@
 #include <glib.h>
 #include <glib-object.h>
 
-#include <mysql.h>
+#include <monoservice/db/monoservice_mysql_connector.h>
 
-int monoservice_media_account_dao_create();
-void monoservice_media_account_dao_delete(int media_account_id);
+guint64 monoservice_media_account_dao_create(MonoserviceMysqlConnector *mysql_connector);
+void monoservice_media_account_dao_delete(MonoserviceMysqlConnector *mysql_connector,
+					  guint64 media_account_id);
 
-void monoservice_media_account_dao_set_billing_address(int media_account_id,
-						       int billing_address);
+gchar** monoservice_media_account_dao_select(MonoserviceMysqlConnector *mysql_connector,
+					     guint64 media_account_id);
 
-void monoservice_media_account_dao_set_video_file(int media_account_id,
-						  int video_file);
+void monoservice_media_account_dao_set_billing_address(MonoserviceMysqlConnector *mysql_connector,
+						       guint64 media_account_id,
+						       guint64 billing_address);
 
-void monoservice_media_account_dao_set_session_store(int media_account_id,
-						     int session_store);
-						      
+void monoservice_media_account_dao_set_video_file(MonoserviceMysqlConnector *mysql_connector,
+						  guint64 media_account_id,
+						  guint64 video_file);
+
+void monoservice_media_account_dao_set_session_store(MonoserviceMysqlConnector *mysql_connector,
+						     guint64 media_account_id,
+						     guint64 session_store);
+ 
 #endif /*__MONOSERVICE_MEDIA_ACCOUNT_DAO_H__*/
