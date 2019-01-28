@@ -44,6 +44,10 @@
 typedef struct _MonoserviceMysqlConnector MonoserviceMysqlConnector;
 typedef struct _MonoserviceMysqlConnectorClass MonoserviceMysqlConnectorClass;
 
+typedef enum{
+  MONOSERVICE_MYSQL_CONNECTOR_CONNECTED    = 1,
+}MonoserviceMysqlConnectorFlags;
+
 struct _MonoserviceMysqlConnector
 {
   GObject gobject;
@@ -76,12 +80,30 @@ GType monoservice_mysql_connector_get_type();
 
 pthread_mutex_t* monoservice_mysql_connector_get_class_mutex();
 
-void monoservice_mysql_connector_connect(MonoserviceMysqlConnector *mysql_connector);
+void monoservice_mysql_connector_set_flags(MonoserviceMysqlConnector *mysql_connector,
+					   guint flags);
+void monoservice_mysql_connector_unset_flags(MonoserviceMysqlConnector *mysql_connector,
+					     guint flags);
+gboolean monoservice_mysql_connector_test_flags(MonoserviceMysqlConnector *mysql_connector,
+						guint flags);
+
+void monoservice_mysql_connector_connect(MonoserviceMysqlConnector *mysql_connector,
+					 GError **error);
+
 void monoservice_mysql_connector_select_db(MonoserviceMysqlConnector *mysql_connector,
-					   gchar *db_name);
+					   gchar *db_name,
+					   GError **error);
 
 void monoservice_mysql_connector_query(MonoserviceMysqlConnector *mysql_connector,
-				       gchar *query);
+				       gchar *query,
+				       GError **error);
+void monoservice_mysql_connector_query_extended(MonoserviceMysqlConnector *mysql_connector,
+						gchar *query,
+						guint64 *insert_id,
+						gchar ***field_strv,
+						gchar ****value_strv_arr,
+						guint64 *row_count, guint64 *col_count,
+						GError **error);
 
 void monoservice_mysql_connector_close(MonoserviceMysqlConnector *mysql_connector);
 
