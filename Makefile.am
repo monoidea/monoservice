@@ -19,6 +19,9 @@ LIBTOOL_DEPS = @LIBTOOL_DEPS@
 monoservice_www_CFLAGS = @MONOSERVICE_CFLAGS@
 monoservice_www_LDFLAGS = @MONOSERVICE_LDFLAGS@
 
+monoservice_status_cgi_CFLAGS = @MONOSERVICE_CFLAGS@
+monoservice_status_cgi_LDFLAGS = @MONOSERVICE_LDFLAGS@
+
 monoservice_config_cgi_CFLAGS = @MONOSERVICE_CFLAGS@
 monoservice_config_cgi_LDFLAGS = @MONOSERVICE_LDFLAGS@
 
@@ -63,13 +66,13 @@ EXTRA_DIST = config.rpath m4/ChangeLog  config.rpath \
 CLEANFILES = \
 	m4/Makefile
 
-libmonoservice_la_HEADERS_0 = $(libmonoservice_lib_h_sources)
-libmonoservice_la_SOURCES = $(libmonoservice_la_HEADERS_0) $(libmonoservice_lib_c_sources)
+libmonoservice_la_HEADERS_0 = $(libmonoservice_lib_h_sources) $(libmonoservice_db_h_sources)
+libmonoservice_la_SOURCES = $(libmonoservice_la_HEADERS_0) $(libmonoservice_lib_c_sources) $(libmonoservice_db_c_sources)
 
 # library libmonoservice
-libmonoservice_la_CFLAGS = $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
+libmonoservice_la_CFLAGS = $(MYSQLCLIENT_CFLAGS) $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
 libmonoservice_la_LDFLAGS = $(LDFLAGS) -version-info 1:0:0 -shared -fPIC -Wl,-soname,libmonoservice.so -pthread
-libmonoservice_la_LIBADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+libmonoservice_la_LIBADD = -ldl -lm $(MYSQLCLIENT_LIBS) $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
 # monoservice WWW
 monoservice_www_SOURCES = $(monoservice_www_c_sources) $(monoservice_wwwheaders)
@@ -120,7 +123,7 @@ monoservice_video_cgi_CFLAGS += $(LIBXSLT_CFLAGS) $(LIBXML2_CFLAGS) $(GOBJECT_CF
 monoservice_video_cgi_LDFLAGS += -pthread
 monoservice_video_cgi_LDADD = -ldl -lm $(LIBXSLT_LIBS) $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
-# libmonoservice all files
+# libmonoservice lib files
 deprecated_libmonoservice_lib_h_sources =
 
 libmonoservice_lib_h_sources = \
@@ -134,6 +137,21 @@ libmonoservice_lib_c_sources = \
 	$(deprecated_libmonoservice_lib_c_sources) \
 	monoservice/lib/monoservice_media_queue.c \
 	monoservice/lib/monoservice_qrcode.c
+
+# libmonoservice db files
+deprecated_libmonoservice_db_h_sources =
+
+libmonoservice_db_h_sources = \
+	$(deprecated_libmonoservice_db_h_sources) \
+	monoservice/db/monoservice_mysql_connector.h \
+	monoservice/db/monoservice_media_account_dao.h
+
+deprecated_libmonoservice_db_c_sources =
+
+libmonoservice_db_c_sources = \
+	$(deprecated_libmonoservice_db_c_sources) \
+	monoservice/db/monoservice_mysql_connector.c \
+	monoservice/db/monoservice_media_account_dao.c
 
 # monoservice_www all files
 monoservice_wwwheaders = \
@@ -203,3 +221,5 @@ force-update-gmo-%: check-gettext
 	if test ! -f po/$$language.po ; then echo "file po/$$language.po does not exist" ; exit 1 ; fi ; \
 	touch po/$$language.po ; \
 	cd po && $(MAKE) $(AM_MAKEFLAGS) update-gmo
+
+.PHONY: check-gettext update-po update-gmo force-update-gmo

@@ -166,12 +166,13 @@ main(int argc, char **argv)
   
   xmlChar *template_filename;
   xmlChar *xsl_filename;
+  xmlChar *data;
   gchar *session_id, *token;
   gchar *resource_id;
 
   guint param_count;
+  int data_length;
   gboolean success;
-
   
   c_locale = newlocale(LC_ALL_MASK, "C", (locale_t) 0);
   uselocale(c_locale);
@@ -201,10 +202,6 @@ main(int argc, char **argv)
 
     goto download_FORBIDDEN;
   }
-
-  monoservice_download_write_status(HTTP_STATUS_MESSAGE_OK,
-				    HTTP_STATUS_CODE_OK);
-  monoservice_download_write_content_header(0);
   
   /* XSL params */
   param_count = 1;
@@ -229,8 +226,27 @@ main(int argc, char **argv)
   template = xmlParseFile(template_filename);
   
   html_output = xsltApplyStylesheet(stylesheet, template, param_strv);
-  xsltSaveResultToFile(stdout, html_output, stylesheet);
 
+  data = NULL;
+  data_length = -1;
+  xsltSaveResultToString(&data, &data_length, html_output, stylesheet);
+
+  /* response */
+  if(data != NULL){
+    monoservice_download_write_status(HTTP_STATUS_MESSAGE_OK,
+				      HTTP_STATUS_CODE_OK);
+    monoservice_download_write_content_header(data_length);
+
+    fwrite(data, data_length, sizeof(xmlChar), stdout);
+
+    free(data);
+  }else{
+    monoservice_download_write_status(HTTP_STATUS_MESSAGE_OK,
+				      HTTP_STATUS_CODE_OK);
+    monoservice_download_write_content_header(0);
+  }
+  
+  /*  */
   xsltFreeStylesheet(stylesheet);
   xmlFreeDoc(html_output);
   xmlFreeDoc(template);

@@ -97,6 +97,10 @@ POST_UNINSTALL = :
 build_triplet = @build@
 host_triplet = @host@
 bin_PROGRAMS = monoservice-www$(EXEEXT) \
+	monoservice-status.cgi$(EXEEXT) \
+	monoservice-config.cgi$(EXEEXT) \
+	monoservice-control.cgi$(EXEEXT) \
+	monoservice-upload.cgi$(EXEEXT) \
 	monoservice-download.cgi$(EXEEXT) \
 	monoservice-video.cgi$(EXEEXT)
 subdir = .
@@ -153,14 +157,19 @@ LTLIBRARIES = $(libmonoservice_LTLIBRARIES)
 am__DEPENDENCIES_1 =
 libmonoservice_la_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1)
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 am__objects_1 =
 am__objects_2 = $(am__objects_1)
-am__objects_3 = $(am__objects_2)
+am__objects_3 = $(am__objects_2) $(am__objects_2)
 am__dirstamp = $(am__leading_dot)dirstamp
 am__objects_4 = $(am__objects_1) \
+	monoservice/lib/libmonoservice_la-monoservice_media_queue.lo \
 	monoservice/lib/libmonoservice_la-monoservice_qrcode.lo
-am_libmonoservice_la_OBJECTS = $(am__objects_3) $(am__objects_4)
+am__objects_5 = $(am__objects_1) \
+	monoservice/db/libmonoservice_la-monoservice_mysql_connector.lo \
+	monoservice/db/libmonoservice_la-monoservice_media_account_dao.lo
+am_libmonoservice_la_OBJECTS = $(am__objects_3) $(am__objects_4) \
+	$(am__objects_5)
 libmonoservice_la_OBJECTS = $(am_libmonoservice_la_OBJECTS)
 AM_V_lt = $(am__v_lt_@AM_V@)
 am__v_lt_ = $(am__v_lt_@AM_DEFAULT_V@)
@@ -170,8 +179,31 @@ libmonoservice_la_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(libmonoservice_la_CFLAGS) $(CFLAGS) \
 	$(libmonoservice_la_LDFLAGS) $(LDFLAGS) -o $@
-am__objects_5 = monoservice/cgi-bin/download_cgi-monoservice_download.$(OBJEXT)
-am_monoservice_download_cgi_OBJECTS = $(am__objects_5) \
+am__objects_6 =  \
+	monoservice/cgi-bin/config_cgi-monoservice_config.$(OBJEXT)
+am_monoservice_config_cgi_OBJECTS = $(am__objects_6) $(am__objects_1)
+monoservice_config_cgi_OBJECTS = $(am_monoservice_config_cgi_OBJECTS)
+monoservice_config_cgi_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
+monoservice_config_cgi_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(monoservice_config_cgi_CFLAGS) $(CFLAGS) \
+	$(monoservice_config_cgi_LDFLAGS) $(LDFLAGS) -o $@
+am__objects_7 =  \
+	monoservice/cgi-bin/control_cgi-monoservice_control.$(OBJEXT)
+am_monoservice_control_cgi_OBJECTS = $(am__objects_7) $(am__objects_1)
+monoservice_control_cgi_OBJECTS =  \
+	$(am_monoservice_control_cgi_OBJECTS)
+monoservice_control_cgi_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
+monoservice_control_cgi_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(monoservice_control_cgi_CFLAGS) $(CFLAGS) \
+	$(monoservice_control_cgi_LDFLAGS) $(LDFLAGS) -o $@
+am__objects_8 = monoservice/cgi-bin/download_cgi-monoservice_download.$(OBJEXT)
+am_monoservice_download_cgi_OBJECTS = $(am__objects_8) \
 	$(am__objects_1)
 monoservice_download_cgi_OBJECTS =  \
 	$(am_monoservice_download_cgi_OBJECTS)
@@ -182,9 +214,31 @@ monoservice_download_cgi_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(monoservice_download_cgi_CFLAGS) $(CFLAGS) \
 	$(monoservice_download_cgi_LDFLAGS) $(LDFLAGS) -o $@
-am__objects_6 =  \
+am__objects_9 =  \
+	monoservice/cgi-bin/status_cgi-monoservice_status.$(OBJEXT)
+am_monoservice_status_cgi_OBJECTS = $(am__objects_9) $(am__objects_1)
+monoservice_status_cgi_OBJECTS = $(am_monoservice_status_cgi_OBJECTS)
+monoservice_status_cgi_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
+monoservice_status_cgi_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(monoservice_status_cgi_CFLAGS) $(CFLAGS) \
+	$(monoservice_status_cgi_LDFLAGS) $(LDFLAGS) -o $@
+am__objects_10 =  \
+	monoservice/cgi-bin/upload_cgi-monoservice_upload.$(OBJEXT)
+am_monoservice_upload_cgi_OBJECTS = $(am__objects_10) $(am__objects_1)
+monoservice_upload_cgi_OBJECTS = $(am_monoservice_upload_cgi_OBJECTS)
+monoservice_upload_cgi_DEPENDENCIES = $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
+	$(am__DEPENDENCIES_1)
+monoservice_upload_cgi_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
+	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
+	$(monoservice_upload_cgi_CFLAGS) $(CFLAGS) \
+	$(monoservice_upload_cgi_LDFLAGS) $(LDFLAGS) -o $@
+am__objects_11 =  \
 	monoservice/cgi-bin/video_cgi-monoservice_video.$(OBJEXT)
-am_monoservice_video_cgi_OBJECTS = $(am__objects_6) $(am__objects_1)
+am_monoservice_video_cgi_OBJECTS = $(am__objects_11) $(am__objects_1)
 monoservice_video_cgi_OBJECTS = $(am_monoservice_video_cgi_OBJECTS)
 monoservice_video_cgi_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -193,8 +247,8 @@ monoservice_video_cgi_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(monoservice_video_cgi_CFLAGS) $(CFLAGS) \
 	$(monoservice_video_cgi_LDFLAGS) $(LDFLAGS) -o $@
-am__objects_7 = monoservice/www-monoservice_main.$(OBJEXT)
-am_monoservice_www_OBJECTS = $(am__objects_7) $(am__objects_1)
+am__objects_12 = monoservice/www-monoservice_main.$(OBJEXT)
+am_monoservice_www_OBJECTS = $(am__objects_12) $(am__objects_1)
 monoservice_www_OBJECTS = $(am_monoservice_www_OBJECTS)
 monoservice_www_DEPENDENCIES = libmonoservice.la $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
@@ -219,8 +273,15 @@ DEFAULT_INCLUDES = -I.@am__isrc@ -I$(top_builddir)/monoservice
 depcomp = $(SHELL) $(top_srcdir)/depcomp
 am__maybe_remake_depfiles = depfiles
 am__depfiles_remade = monoservice/$(DEPDIR)/www-monoservice_main.Po \
+	monoservice/cgi-bin/$(DEPDIR)/config_cgi-monoservice_config.Po \
+	monoservice/cgi-bin/$(DEPDIR)/control_cgi-monoservice_control.Po \
 	monoservice/cgi-bin/$(DEPDIR)/download_cgi-monoservice_download.Po \
+	monoservice/cgi-bin/$(DEPDIR)/status_cgi-monoservice_status.Po \
+	monoservice/cgi-bin/$(DEPDIR)/upload_cgi-monoservice_upload.Po \
 	monoservice/cgi-bin/$(DEPDIR)/video_cgi-monoservice_video.Po \
+	monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_media_account_dao.Plo \
+	monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_mysql_connector.Plo \
+	monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_media_queue.Plo \
 	monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Plo
 am__mv = mv -f
 COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) \
@@ -242,10 +303,18 @@ am__v_CCLD_ = $(am__v_CCLD_@AM_DEFAULT_V@)
 am__v_CCLD_0 = @echo "  CCLD    " $@;
 am__v_CCLD_1 = 
 SOURCES = $(libmonoservice_la_SOURCES) \
+	$(monoservice_config_cgi_SOURCES) \
+	$(monoservice_control_cgi_SOURCES) \
 	$(monoservice_download_cgi_SOURCES) \
+	$(monoservice_status_cgi_SOURCES) \
+	$(monoservice_upload_cgi_SOURCES) \
 	$(monoservice_video_cgi_SOURCES) $(monoservice_www_SOURCES)
 DIST_SOURCES = $(libmonoservice_la_SOURCES) \
+	$(monoservice_config_cgi_SOURCES) \
+	$(monoservice_control_cgi_SOURCES) \
 	$(monoservice_download_cgi_SOURCES) \
+	$(monoservice_status_cgi_SOURCES) \
+	$(monoservice_upload_cgi_SOURCES) \
 	$(monoservice_video_cgi_SOURCES) $(monoservice_www_SOURCES)
 RECURSIVE_TARGETS = all-recursive check-recursive cscopelist-recursive \
 	ctags-recursive dvi-recursive html-recursive info-recursive \
@@ -413,6 +482,8 @@ MONOSERVICE_LDFLAGS = @MONOSERVICE_LDFLAGS@
 MSGFMT = @MSGFMT@
 MSGFMT_015 = @MSGFMT_015@
 MSGMERGE = @MSGMERGE@
+MYSQLCLIENT_CFLAGS = @MYSQLCLIENT_CFLAGS@
+MYSQLCLIENT_LIBS = @MYSQLCLIENT_LIBS@
 NM = @NM@
 NMEDIT = @NMEDIT@
 OBJDUMP = @OBJDUMP@
@@ -501,6 +572,19 @@ AM_CPPFLAGS = -std=gnu99 -include errno.h -I$(top_srcdir) -DMONOSERVICE_DEVEL_MO
 monoservice_www_CFLAGS = @MONOSERVICE_CFLAGS@ $(LIBXML2_CFLAGS) \
 	$(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
 monoservice_www_LDFLAGS = @MONOSERVICE_LDFLAGS@ -pthread
+monoservice_status_cgi_CFLAGS = @MONOSERVICE_CFLAGS@ $(LIBXML2_CFLAGS) \
+	$(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
+monoservice_status_cgi_LDFLAGS = @MONOSERVICE_LDFLAGS@ -pthread
+monoservice_config_cgi_CFLAGS = @MONOSERVICE_CFLAGS@ $(LIBXML2_CFLAGS) \
+	$(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
+monoservice_config_cgi_LDFLAGS = @MONOSERVICE_LDFLAGS@ -pthread
+monoservice_control_cgi_CFLAGS = @MONOSERVICE_CFLAGS@ \
+	$(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) \
+	$(CAIRO_CFLAGS)
+monoservice_control_cgi_LDFLAGS = @MONOSERVICE_LDFLAGS@ -pthread
+monoservice_upload_cgi_CFLAGS = @MONOSERVICE_CFLAGS@ $(LIBXML2_CFLAGS) \
+	$(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
+monoservice_upload_cgi_LDFLAGS = @MONOSERVICE_LDFLAGS@ -pthread
 monoservice_download_cgi_CFLAGS = @MONOSERVICE_CFLAGS@ \
 	$(LIBXSLT_CFLAGS) $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) \
 	$(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
@@ -526,17 +610,33 @@ EXTRA_DIST = config.rpath m4/ChangeLog  config.rpath \
 CLEANFILES = \
 	m4/Makefile
 
-libmonoservice_la_HEADERS_0 = $(libmonoservice_lib_h_sources)
-libmonoservice_la_SOURCES = $(libmonoservice_la_HEADERS_0) $(libmonoservice_lib_c_sources)
+libmonoservice_la_HEADERS_0 = $(libmonoservice_lib_h_sources) $(libmonoservice_db_h_sources)
+libmonoservice_la_SOURCES = $(libmonoservice_la_HEADERS_0) $(libmonoservice_lib_c_sources) $(libmonoservice_db_c_sources)
 
 # library libmonoservice
-libmonoservice_la_CFLAGS = $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
+libmonoservice_la_CFLAGS = $(MYSQLCLIENT_CFLAGS) $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
 libmonoservice_la_LDFLAGS = $(LDFLAGS) -version-info 1:0:0 -shared -fPIC -Wl,-soname,libmonoservice.so -pthread
-libmonoservice_la_LIBADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+libmonoservice_la_LIBADD = -ldl -lm $(MYSQLCLIENT_LIBS) $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
 # monoservice WWW
 monoservice_www_SOURCES = $(monoservice_www_c_sources) $(monoservice_wwwheaders)
 monoservice_www_LDADD = libmonoservice.la -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+
+# monoservice-status.cgi
+monoservice_status_cgi_SOURCES = $(monoservice_status_cgi_c_sources) $(monoservice_status_cgiheaders)
+monoservice_status_cgi_LDADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+
+# monoservice-config.cgi
+monoservice_config_cgi_SOURCES = $(monoservice_config_cgi_c_sources) $(monoservice_config_cgiheaders)
+monoservice_config_cgi_LDADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+
+# monoservice-control.cgi
+monoservice_control_cgi_SOURCES = $(monoservice_control_cgi_c_sources) $(monoservice_control_cgiheaders)
+monoservice_control_cgi_LDADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+
+# monoservice-upload.cgi
+monoservice_upload_cgi_SOURCES = $(monoservice_upload_cgi_c_sources) $(monoservice_upload_cgiheaders)
+monoservice_upload_cgi_LDADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
 # monoservice-download.cgi
 monoservice_download_cgi_SOURCES = $(monoservice_download_cgi_c_sources) $(monoservice_download_cgiheaders)
@@ -546,16 +646,32 @@ monoservice_download_cgi_LDADD = -ldl -lm $(LIBXSLT_LIBS) $(LIBXML2_LIBS) $(GOBJ
 monoservice_video_cgi_SOURCES = $(monoservice_video_cgi_c_sources) $(monoservice_video_cgiheaders)
 monoservice_video_cgi_LDADD = -ldl -lm $(LIBXSLT_LIBS) $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
-# libmonoservice all files
+# libmonoservice lib files
 deprecated_libmonoservice_lib_h_sources = 
 libmonoservice_lib_h_sources = \
 	$(deprecated_libmonoservice_lib_h_sources) \
+	monoservice/lib/monoservice_media_queue.h \
 	monoservice/lib/monoservice_qrcode.h
 
 deprecated_libmonoservice_lib_c_sources = 
 libmonoservice_lib_c_sources = \
 	$(deprecated_libmonoservice_lib_c_sources) \
+	monoservice/lib/monoservice_media_queue.c \
 	monoservice/lib/monoservice_qrcode.c
+
+
+# libmonoservice db files
+deprecated_libmonoservice_db_h_sources = 
+libmonoservice_db_h_sources = \
+	$(deprecated_libmonoservice_db_h_sources) \
+	monoservice/db/monoservice_mysql_connector.h \
+	monoservice/db/monoservice_media_account_dao.h
+
+deprecated_libmonoservice_db_c_sources = 
+libmonoservice_db_c_sources = \
+	$(deprecated_libmonoservice_db_c_sources) \
+	monoservice/db/monoservice_mysql_connector.c \
+	monoservice/db/monoservice_media_account_dao.c
 
 
 # monoservice_www all files
@@ -564,6 +680,30 @@ monoservice_wwwheaders = \
 
 monoservice_www_c_sources = \
 	monoservice/monoservice_main.c
+
+
+# monoservice_status_cgi all files
+monoservice_status_cgiheaders = 
+monoservice_status_cgi_c_sources = \
+	monoservice/cgi-bin/monoservice_status.c
+
+
+# monoservice_config_cgi all files
+monoservice_config_cgiheaders = 
+monoservice_config_cgi_c_sources = \
+	monoservice/cgi-bin/monoservice_config.c
+
+
+# monoservice_control_cgi all files
+monoservice_control_cgiheaders = 
+monoservice_control_cgi_c_sources = \
+	monoservice/cgi-bin/monoservice_control.c
+
+
+# monoservice_upload_cgi all files
+monoservice_upload_cgiheaders = 
+monoservice_upload_cgi_c_sources = \
+	monoservice/cgi-bin/monoservice_upload.c
 
 
 # monoservice_download_cgi all files
@@ -719,9 +859,24 @@ monoservice/lib/$(am__dirstamp):
 monoservice/lib/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) monoservice/lib/$(DEPDIR)
 	@: > monoservice/lib/$(DEPDIR)/$(am__dirstamp)
+monoservice/lib/libmonoservice_la-monoservice_media_queue.lo:  \
+	monoservice/lib/$(am__dirstamp) \
+	monoservice/lib/$(DEPDIR)/$(am__dirstamp)
 monoservice/lib/libmonoservice_la-monoservice_qrcode.lo:  \
 	monoservice/lib/$(am__dirstamp) \
 	monoservice/lib/$(DEPDIR)/$(am__dirstamp)
+monoservice/db/$(am__dirstamp):
+	@$(MKDIR_P) monoservice/db
+	@: > monoservice/db/$(am__dirstamp)
+monoservice/db/$(DEPDIR)/$(am__dirstamp):
+	@$(MKDIR_P) monoservice/db/$(DEPDIR)
+	@: > monoservice/db/$(DEPDIR)/$(am__dirstamp)
+monoservice/db/libmonoservice_la-monoservice_mysql_connector.lo:  \
+	monoservice/db/$(am__dirstamp) \
+	monoservice/db/$(DEPDIR)/$(am__dirstamp)
+monoservice/db/libmonoservice_la-monoservice_media_account_dao.lo:  \
+	monoservice/db/$(am__dirstamp) \
+	monoservice/db/$(DEPDIR)/$(am__dirstamp)
 
 libmonoservice.la: $(libmonoservice_la_OBJECTS) $(libmonoservice_la_DEPENDENCIES) $(EXTRA_libmonoservice_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(libmonoservice_la_LINK) -rpath $(libmonoservicedir) $(libmonoservice_la_OBJECTS) $(libmonoservice_la_LIBADD) $(LIBS)
@@ -731,6 +886,20 @@ monoservice/cgi-bin/$(am__dirstamp):
 monoservice/cgi-bin/$(DEPDIR)/$(am__dirstamp):
 	@$(MKDIR_P) monoservice/cgi-bin/$(DEPDIR)
 	@: > monoservice/cgi-bin/$(DEPDIR)/$(am__dirstamp)
+monoservice/cgi-bin/config_cgi-monoservice_config.$(OBJEXT):  \
+	monoservice/cgi-bin/$(am__dirstamp) \
+	monoservice/cgi-bin/$(DEPDIR)/$(am__dirstamp)
+
+monoservice-config.cgi$(EXEEXT): $(monoservice_config_cgi_OBJECTS) $(monoservice_config_cgi_DEPENDENCIES) $(EXTRA_monoservice_config_cgi_DEPENDENCIES) 
+	@rm -f monoservice-config.cgi$(EXEEXT)
+	$(AM_V_CCLD)$(monoservice_config_cgi_LINK) $(monoservice_config_cgi_OBJECTS) $(monoservice_config_cgi_LDADD) $(LIBS)
+monoservice/cgi-bin/control_cgi-monoservice_control.$(OBJEXT):  \
+	monoservice/cgi-bin/$(am__dirstamp) \
+	monoservice/cgi-bin/$(DEPDIR)/$(am__dirstamp)
+
+monoservice-control.cgi$(EXEEXT): $(monoservice_control_cgi_OBJECTS) $(monoservice_control_cgi_DEPENDENCIES) $(EXTRA_monoservice_control_cgi_DEPENDENCIES) 
+	@rm -f monoservice-control.cgi$(EXEEXT)
+	$(AM_V_CCLD)$(monoservice_control_cgi_LINK) $(monoservice_control_cgi_OBJECTS) $(monoservice_control_cgi_LDADD) $(LIBS)
 monoservice/cgi-bin/download_cgi-monoservice_download.$(OBJEXT):  \
 	monoservice/cgi-bin/$(am__dirstamp) \
 	monoservice/cgi-bin/$(DEPDIR)/$(am__dirstamp)
@@ -738,6 +907,20 @@ monoservice/cgi-bin/download_cgi-monoservice_download.$(OBJEXT):  \
 monoservice-download.cgi$(EXEEXT): $(monoservice_download_cgi_OBJECTS) $(monoservice_download_cgi_DEPENDENCIES) $(EXTRA_monoservice_download_cgi_DEPENDENCIES) 
 	@rm -f monoservice-download.cgi$(EXEEXT)
 	$(AM_V_CCLD)$(monoservice_download_cgi_LINK) $(monoservice_download_cgi_OBJECTS) $(monoservice_download_cgi_LDADD) $(LIBS)
+monoservice/cgi-bin/status_cgi-monoservice_status.$(OBJEXT):  \
+	monoservice/cgi-bin/$(am__dirstamp) \
+	monoservice/cgi-bin/$(DEPDIR)/$(am__dirstamp)
+
+monoservice-status.cgi$(EXEEXT): $(monoservice_status_cgi_OBJECTS) $(monoservice_status_cgi_DEPENDENCIES) $(EXTRA_monoservice_status_cgi_DEPENDENCIES) 
+	@rm -f monoservice-status.cgi$(EXEEXT)
+	$(AM_V_CCLD)$(monoservice_status_cgi_LINK) $(monoservice_status_cgi_OBJECTS) $(monoservice_status_cgi_LDADD) $(LIBS)
+monoservice/cgi-bin/upload_cgi-monoservice_upload.$(OBJEXT):  \
+	monoservice/cgi-bin/$(am__dirstamp) \
+	monoservice/cgi-bin/$(DEPDIR)/$(am__dirstamp)
+
+monoservice-upload.cgi$(EXEEXT): $(monoservice_upload_cgi_OBJECTS) $(monoservice_upload_cgi_DEPENDENCIES) $(EXTRA_monoservice_upload_cgi_DEPENDENCIES) 
+	@rm -f monoservice-upload.cgi$(EXEEXT)
+	$(AM_V_CCLD)$(monoservice_upload_cgi_LINK) $(monoservice_upload_cgi_OBJECTS) $(monoservice_upload_cgi_LDADD) $(LIBS)
 monoservice/cgi-bin/video_cgi-monoservice_video.$(OBJEXT):  \
 	monoservice/cgi-bin/$(am__dirstamp) \
 	monoservice/cgi-bin/$(DEPDIR)/$(am__dirstamp)
@@ -763,6 +946,8 @@ mostlyclean-compile:
 	-rm -f *.$(OBJEXT)
 	-rm -f monoservice/*.$(OBJEXT)
 	-rm -f monoservice/cgi-bin/*.$(OBJEXT)
+	-rm -f monoservice/db/*.$(OBJEXT)
+	-rm -f monoservice/db/*.lo
 	-rm -f monoservice/lib/*.$(OBJEXT)
 	-rm -f monoservice/lib/*.lo
 
@@ -770,8 +955,15 @@ distclean-compile:
 	-rm -f *.tab.c
 
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/$(DEPDIR)/www-monoservice_main.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@monoservice/cgi-bin/$(DEPDIR)/config_cgi-monoservice_config.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@monoservice/cgi-bin/$(DEPDIR)/control_cgi-monoservice_control.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/cgi-bin/$(DEPDIR)/download_cgi-monoservice_download.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@monoservice/cgi-bin/$(DEPDIR)/status_cgi-monoservice_status.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@monoservice/cgi-bin/$(DEPDIR)/upload_cgi-monoservice_upload.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/cgi-bin/$(DEPDIR)/video_cgi-monoservice_video.Po@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_media_account_dao.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_mysql_connector.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_media_queue.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Plo@am__quote@ # am--include-marker
 
 $(am__depfiles_remade):
@@ -804,12 +996,61 @@ am--depfiles: $(am__depfiles_remade)
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LTCOMPILE) -c -o $@ $<
 
+monoservice/lib/libmonoservice_la-monoservice_media_queue.lo: monoservice/lib/monoservice_media_queue.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -MT monoservice/lib/libmonoservice_la-monoservice_media_queue.lo -MD -MP -MF monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_media_queue.Tpo -c -o monoservice/lib/libmonoservice_la-monoservice_media_queue.lo `test -f 'monoservice/lib/monoservice_media_queue.c' || echo '$(srcdir)/'`monoservice/lib/monoservice_media_queue.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_media_queue.Tpo monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_media_queue.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/lib/monoservice_media_queue.c' object='monoservice/lib/libmonoservice_la-monoservice_media_queue.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -c -o monoservice/lib/libmonoservice_la-monoservice_media_queue.lo `test -f 'monoservice/lib/monoservice_media_queue.c' || echo '$(srcdir)/'`monoservice/lib/monoservice_media_queue.c
+
 monoservice/lib/libmonoservice_la-monoservice_qrcode.lo: monoservice/lib/monoservice_qrcode.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -MT monoservice/lib/libmonoservice_la-monoservice_qrcode.lo -MD -MP -MF monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Tpo -c -o monoservice/lib/libmonoservice_la-monoservice_qrcode.lo `test -f 'monoservice/lib/monoservice_qrcode.c' || echo '$(srcdir)/'`monoservice/lib/monoservice_qrcode.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Tpo monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Plo
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/lib/monoservice_qrcode.c' object='monoservice/lib/libmonoservice_la-monoservice_qrcode.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -c -o monoservice/lib/libmonoservice_la-monoservice_qrcode.lo `test -f 'monoservice/lib/monoservice_qrcode.c' || echo '$(srcdir)/'`monoservice/lib/monoservice_qrcode.c
+
+monoservice/db/libmonoservice_la-monoservice_mysql_connector.lo: monoservice/db/monoservice_mysql_connector.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -MT monoservice/db/libmonoservice_la-monoservice_mysql_connector.lo -MD -MP -MF monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_mysql_connector.Tpo -c -o monoservice/db/libmonoservice_la-monoservice_mysql_connector.lo `test -f 'monoservice/db/monoservice_mysql_connector.c' || echo '$(srcdir)/'`monoservice/db/monoservice_mysql_connector.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_mysql_connector.Tpo monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_mysql_connector.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/db/monoservice_mysql_connector.c' object='monoservice/db/libmonoservice_la-monoservice_mysql_connector.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -c -o monoservice/db/libmonoservice_la-monoservice_mysql_connector.lo `test -f 'monoservice/db/monoservice_mysql_connector.c' || echo '$(srcdir)/'`monoservice/db/monoservice_mysql_connector.c
+
+monoservice/db/libmonoservice_la-monoservice_media_account_dao.lo: monoservice/db/monoservice_media_account_dao.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -MT monoservice/db/libmonoservice_la-monoservice_media_account_dao.lo -MD -MP -MF monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_media_account_dao.Tpo -c -o monoservice/db/libmonoservice_la-monoservice_media_account_dao.lo `test -f 'monoservice/db/monoservice_media_account_dao.c' || echo '$(srcdir)/'`monoservice/db/monoservice_media_account_dao.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_media_account_dao.Tpo monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_media_account_dao.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/db/monoservice_media_account_dao.c' object='monoservice/db/libmonoservice_la-monoservice_media_account_dao.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -c -o monoservice/db/libmonoservice_la-monoservice_media_account_dao.lo `test -f 'monoservice/db/monoservice_media_account_dao.c' || echo '$(srcdir)/'`monoservice/db/monoservice_media_account_dao.c
+
+monoservice/cgi-bin/config_cgi-monoservice_config.o: monoservice/cgi-bin/monoservice_config.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_config_cgi_CFLAGS) $(CFLAGS) -MT monoservice/cgi-bin/config_cgi-monoservice_config.o -MD -MP -MF monoservice/cgi-bin/$(DEPDIR)/config_cgi-monoservice_config.Tpo -c -o monoservice/cgi-bin/config_cgi-monoservice_config.o `test -f 'monoservice/cgi-bin/monoservice_config.c' || echo '$(srcdir)/'`monoservice/cgi-bin/monoservice_config.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/cgi-bin/$(DEPDIR)/config_cgi-monoservice_config.Tpo monoservice/cgi-bin/$(DEPDIR)/config_cgi-monoservice_config.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/cgi-bin/monoservice_config.c' object='monoservice/cgi-bin/config_cgi-monoservice_config.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_config_cgi_CFLAGS) $(CFLAGS) -c -o monoservice/cgi-bin/config_cgi-monoservice_config.o `test -f 'monoservice/cgi-bin/monoservice_config.c' || echo '$(srcdir)/'`monoservice/cgi-bin/monoservice_config.c
+
+monoservice/cgi-bin/config_cgi-monoservice_config.obj: monoservice/cgi-bin/monoservice_config.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_config_cgi_CFLAGS) $(CFLAGS) -MT monoservice/cgi-bin/config_cgi-monoservice_config.obj -MD -MP -MF monoservice/cgi-bin/$(DEPDIR)/config_cgi-monoservice_config.Tpo -c -o monoservice/cgi-bin/config_cgi-monoservice_config.obj `if test -f 'monoservice/cgi-bin/monoservice_config.c'; then $(CYGPATH_W) 'monoservice/cgi-bin/monoservice_config.c'; else $(CYGPATH_W) '$(srcdir)/monoservice/cgi-bin/monoservice_config.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/cgi-bin/$(DEPDIR)/config_cgi-monoservice_config.Tpo monoservice/cgi-bin/$(DEPDIR)/config_cgi-monoservice_config.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/cgi-bin/monoservice_config.c' object='monoservice/cgi-bin/config_cgi-monoservice_config.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_config_cgi_CFLAGS) $(CFLAGS) -c -o monoservice/cgi-bin/config_cgi-monoservice_config.obj `if test -f 'monoservice/cgi-bin/monoservice_config.c'; then $(CYGPATH_W) 'monoservice/cgi-bin/monoservice_config.c'; else $(CYGPATH_W) '$(srcdir)/monoservice/cgi-bin/monoservice_config.c'; fi`
+
+monoservice/cgi-bin/control_cgi-monoservice_control.o: monoservice/cgi-bin/monoservice_control.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_control_cgi_CFLAGS) $(CFLAGS) -MT monoservice/cgi-bin/control_cgi-monoservice_control.o -MD -MP -MF monoservice/cgi-bin/$(DEPDIR)/control_cgi-monoservice_control.Tpo -c -o monoservice/cgi-bin/control_cgi-monoservice_control.o `test -f 'monoservice/cgi-bin/monoservice_control.c' || echo '$(srcdir)/'`monoservice/cgi-bin/monoservice_control.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/cgi-bin/$(DEPDIR)/control_cgi-monoservice_control.Tpo monoservice/cgi-bin/$(DEPDIR)/control_cgi-monoservice_control.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/cgi-bin/monoservice_control.c' object='monoservice/cgi-bin/control_cgi-monoservice_control.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_control_cgi_CFLAGS) $(CFLAGS) -c -o monoservice/cgi-bin/control_cgi-monoservice_control.o `test -f 'monoservice/cgi-bin/monoservice_control.c' || echo '$(srcdir)/'`monoservice/cgi-bin/monoservice_control.c
+
+monoservice/cgi-bin/control_cgi-monoservice_control.obj: monoservice/cgi-bin/monoservice_control.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_control_cgi_CFLAGS) $(CFLAGS) -MT monoservice/cgi-bin/control_cgi-monoservice_control.obj -MD -MP -MF monoservice/cgi-bin/$(DEPDIR)/control_cgi-monoservice_control.Tpo -c -o monoservice/cgi-bin/control_cgi-monoservice_control.obj `if test -f 'monoservice/cgi-bin/monoservice_control.c'; then $(CYGPATH_W) 'monoservice/cgi-bin/monoservice_control.c'; else $(CYGPATH_W) '$(srcdir)/monoservice/cgi-bin/monoservice_control.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/cgi-bin/$(DEPDIR)/control_cgi-monoservice_control.Tpo monoservice/cgi-bin/$(DEPDIR)/control_cgi-monoservice_control.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/cgi-bin/monoservice_control.c' object='monoservice/cgi-bin/control_cgi-monoservice_control.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_control_cgi_CFLAGS) $(CFLAGS) -c -o monoservice/cgi-bin/control_cgi-monoservice_control.obj `if test -f 'monoservice/cgi-bin/monoservice_control.c'; then $(CYGPATH_W) 'monoservice/cgi-bin/monoservice_control.c'; else $(CYGPATH_W) '$(srcdir)/monoservice/cgi-bin/monoservice_control.c'; fi`
 
 monoservice/cgi-bin/download_cgi-monoservice_download.o: monoservice/cgi-bin/monoservice_download.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_download_cgi_CFLAGS) $(CFLAGS) -MT monoservice/cgi-bin/download_cgi-monoservice_download.o -MD -MP -MF monoservice/cgi-bin/$(DEPDIR)/download_cgi-monoservice_download.Tpo -c -o monoservice/cgi-bin/download_cgi-monoservice_download.o `test -f 'monoservice/cgi-bin/monoservice_download.c' || echo '$(srcdir)/'`monoservice/cgi-bin/monoservice_download.c
@@ -824,6 +1065,34 @@ monoservice/cgi-bin/download_cgi-monoservice_download.obj: monoservice/cgi-bin/m
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/cgi-bin/monoservice_download.c' object='monoservice/cgi-bin/download_cgi-monoservice_download.obj' libtool=no @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_download_cgi_CFLAGS) $(CFLAGS) -c -o monoservice/cgi-bin/download_cgi-monoservice_download.obj `if test -f 'monoservice/cgi-bin/monoservice_download.c'; then $(CYGPATH_W) 'monoservice/cgi-bin/monoservice_download.c'; else $(CYGPATH_W) '$(srcdir)/monoservice/cgi-bin/monoservice_download.c'; fi`
+
+monoservice/cgi-bin/status_cgi-monoservice_status.o: monoservice/cgi-bin/monoservice_status.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_status_cgi_CFLAGS) $(CFLAGS) -MT monoservice/cgi-bin/status_cgi-monoservice_status.o -MD -MP -MF monoservice/cgi-bin/$(DEPDIR)/status_cgi-monoservice_status.Tpo -c -o monoservice/cgi-bin/status_cgi-monoservice_status.o `test -f 'monoservice/cgi-bin/monoservice_status.c' || echo '$(srcdir)/'`monoservice/cgi-bin/monoservice_status.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/cgi-bin/$(DEPDIR)/status_cgi-monoservice_status.Tpo monoservice/cgi-bin/$(DEPDIR)/status_cgi-monoservice_status.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/cgi-bin/monoservice_status.c' object='monoservice/cgi-bin/status_cgi-monoservice_status.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_status_cgi_CFLAGS) $(CFLAGS) -c -o monoservice/cgi-bin/status_cgi-monoservice_status.o `test -f 'monoservice/cgi-bin/monoservice_status.c' || echo '$(srcdir)/'`monoservice/cgi-bin/monoservice_status.c
+
+monoservice/cgi-bin/status_cgi-monoservice_status.obj: monoservice/cgi-bin/monoservice_status.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_status_cgi_CFLAGS) $(CFLAGS) -MT monoservice/cgi-bin/status_cgi-monoservice_status.obj -MD -MP -MF monoservice/cgi-bin/$(DEPDIR)/status_cgi-monoservice_status.Tpo -c -o monoservice/cgi-bin/status_cgi-monoservice_status.obj `if test -f 'monoservice/cgi-bin/monoservice_status.c'; then $(CYGPATH_W) 'monoservice/cgi-bin/monoservice_status.c'; else $(CYGPATH_W) '$(srcdir)/monoservice/cgi-bin/monoservice_status.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/cgi-bin/$(DEPDIR)/status_cgi-monoservice_status.Tpo monoservice/cgi-bin/$(DEPDIR)/status_cgi-monoservice_status.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/cgi-bin/monoservice_status.c' object='monoservice/cgi-bin/status_cgi-monoservice_status.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_status_cgi_CFLAGS) $(CFLAGS) -c -o monoservice/cgi-bin/status_cgi-monoservice_status.obj `if test -f 'monoservice/cgi-bin/monoservice_status.c'; then $(CYGPATH_W) 'monoservice/cgi-bin/monoservice_status.c'; else $(CYGPATH_W) '$(srcdir)/monoservice/cgi-bin/monoservice_status.c'; fi`
+
+monoservice/cgi-bin/upload_cgi-monoservice_upload.o: monoservice/cgi-bin/monoservice_upload.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_upload_cgi_CFLAGS) $(CFLAGS) -MT monoservice/cgi-bin/upload_cgi-monoservice_upload.o -MD -MP -MF monoservice/cgi-bin/$(DEPDIR)/upload_cgi-monoservice_upload.Tpo -c -o monoservice/cgi-bin/upload_cgi-monoservice_upload.o `test -f 'monoservice/cgi-bin/monoservice_upload.c' || echo '$(srcdir)/'`monoservice/cgi-bin/monoservice_upload.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/cgi-bin/$(DEPDIR)/upload_cgi-monoservice_upload.Tpo monoservice/cgi-bin/$(DEPDIR)/upload_cgi-monoservice_upload.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/cgi-bin/monoservice_upload.c' object='monoservice/cgi-bin/upload_cgi-monoservice_upload.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_upload_cgi_CFLAGS) $(CFLAGS) -c -o monoservice/cgi-bin/upload_cgi-monoservice_upload.o `test -f 'monoservice/cgi-bin/monoservice_upload.c' || echo '$(srcdir)/'`monoservice/cgi-bin/monoservice_upload.c
+
+monoservice/cgi-bin/upload_cgi-monoservice_upload.obj: monoservice/cgi-bin/monoservice_upload.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_upload_cgi_CFLAGS) $(CFLAGS) -MT monoservice/cgi-bin/upload_cgi-monoservice_upload.obj -MD -MP -MF monoservice/cgi-bin/$(DEPDIR)/upload_cgi-monoservice_upload.Tpo -c -o monoservice/cgi-bin/upload_cgi-monoservice_upload.obj `if test -f 'monoservice/cgi-bin/monoservice_upload.c'; then $(CYGPATH_W) 'monoservice/cgi-bin/monoservice_upload.c'; else $(CYGPATH_W) '$(srcdir)/monoservice/cgi-bin/monoservice_upload.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/cgi-bin/$(DEPDIR)/upload_cgi-monoservice_upload.Tpo monoservice/cgi-bin/$(DEPDIR)/upload_cgi-monoservice_upload.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/cgi-bin/monoservice_upload.c' object='monoservice/cgi-bin/upload_cgi-monoservice_upload.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_upload_cgi_CFLAGS) $(CFLAGS) -c -o monoservice/cgi-bin/upload_cgi-monoservice_upload.obj `if test -f 'monoservice/cgi-bin/monoservice_upload.c'; then $(CYGPATH_W) 'monoservice/cgi-bin/monoservice_upload.c'; else $(CYGPATH_W) '$(srcdir)/monoservice/cgi-bin/monoservice_upload.c'; fi`
 
 monoservice/cgi-bin/video_cgi-monoservice_video.o: monoservice/cgi-bin/monoservice_video.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_video_cgi_CFLAGS) $(CFLAGS) -MT monoservice/cgi-bin/video_cgi-monoservice_video.o -MD -MP -MF monoservice/cgi-bin/$(DEPDIR)/video_cgi-monoservice_video.Tpo -c -o monoservice/cgi-bin/video_cgi-monoservice_video.o `test -f 'monoservice/cgi-bin/monoservice_video.c' || echo '$(srcdir)/'`monoservice/cgi-bin/monoservice_video.c
@@ -858,6 +1127,7 @@ mostlyclean-libtool:
 
 clean-libtool:
 	-rm -rf .libs _libs
+	-rm -rf monoservice/db/.libs monoservice/db/_libs
 	-rm -rf monoservice/lib/.libs monoservice/lib/_libs
 
 distclean-libtool:
@@ -1200,6 +1470,8 @@ distclean-generic:
 	-rm -f monoservice/$(am__dirstamp)
 	-rm -f monoservice/cgi-bin/$(DEPDIR)/$(am__dirstamp)
 	-rm -f monoservice/cgi-bin/$(am__dirstamp)
+	-rm -f monoservice/db/$(DEPDIR)/$(am__dirstamp)
+	-rm -f monoservice/db/$(am__dirstamp)
 	-rm -f monoservice/lib/$(DEPDIR)/$(am__dirstamp)
 	-rm -f monoservice/lib/$(am__dirstamp)
 
@@ -1214,8 +1486,15 @@ clean-am: clean-binPROGRAMS clean-generic \
 distclean: distclean-recursive
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 		-rm -f monoservice/$(DEPDIR)/www-monoservice_main.Po
+	-rm -f monoservice/cgi-bin/$(DEPDIR)/config_cgi-monoservice_config.Po
+	-rm -f monoservice/cgi-bin/$(DEPDIR)/control_cgi-monoservice_control.Po
 	-rm -f monoservice/cgi-bin/$(DEPDIR)/download_cgi-monoservice_download.Po
+	-rm -f monoservice/cgi-bin/$(DEPDIR)/status_cgi-monoservice_status.Po
+	-rm -f monoservice/cgi-bin/$(DEPDIR)/upload_cgi-monoservice_upload.Po
 	-rm -f monoservice/cgi-bin/$(DEPDIR)/video_cgi-monoservice_video.Po
+	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_media_account_dao.Plo
+	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_mysql_connector.Plo
+	-rm -f monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_media_queue.Plo
 	-rm -f monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Plo
 	-rm -f Makefile
 distclean-am: clean-am distclean-compile distclean-generic \
@@ -1265,8 +1544,15 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f $(am__CONFIG_DISTCLEAN_FILES)
 	-rm -rf $(top_srcdir)/autom4te.cache
 		-rm -f monoservice/$(DEPDIR)/www-monoservice_main.Po
+	-rm -f monoservice/cgi-bin/$(DEPDIR)/config_cgi-monoservice_config.Po
+	-rm -f monoservice/cgi-bin/$(DEPDIR)/control_cgi-monoservice_control.Po
 	-rm -f monoservice/cgi-bin/$(DEPDIR)/download_cgi-monoservice_download.Po
+	-rm -f monoservice/cgi-bin/$(DEPDIR)/status_cgi-monoservice_status.Po
+	-rm -f monoservice/cgi-bin/$(DEPDIR)/upload_cgi-monoservice_upload.Po
 	-rm -f monoservice/cgi-bin/$(DEPDIR)/video_cgi-monoservice_video.Po
+	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_media_account_dao.Plo
+	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_mysql_connector.Plo
+	-rm -f monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_media_queue.Plo
 	-rm -f monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Plo
 	-rm -f Makefile
 maintainer-clean-am: distclean-am maintainer-clean-generic

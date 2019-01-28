@@ -30,6 +30,9 @@
 #include <pthread.h>
 
 #include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 #include <regex.h>
 
 void monoservice_video_write_status(gchar *status_message, guint status_code);
@@ -163,6 +166,8 @@ int
 main(int argc, char **argv)
 {
   FILE *f;
+
+  struct stat statbuf;    
   
   gchar *video_filename;
   gchar *session_id, *token;
@@ -205,9 +210,11 @@ main(int argc, char **argv)
   video_filename = monoservice_video_find_media(resource_id);
   
   if(video_filename != NULL){
+    stat(video_filename, &statbuf);
+    
     monoservice_video_write_status(HTTP_STATUS_MESSAGE_OK,
 				   HTTP_STATUS_CODE_OK);
-    monoservice_video_write_content_header(0);
+    monoservice_video_write_content_header(statbuf.st_size);
     
     f = fopen(video_filename, "r");
 
@@ -220,6 +227,10 @@ main(int argc, char **argv)
     }
 
     fclose(f);
+  }else{
+    monoservice_video_write_status(HTTP_STATUS_MESSAGE_OK,
+				   HTTP_STATUS_CODE_OK);
+    monoservice_video_write_content_header(0);
   }
   
 video_FORBIDDEN:
