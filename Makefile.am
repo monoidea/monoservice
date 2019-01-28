@@ -19,6 +19,9 @@ LIBTOOL_DEPS = @LIBTOOL_DEPS@
 monoservice_www_CFLAGS = @MONOSERVICE_CFLAGS@
 monoservice_www_LDFLAGS = @MONOSERVICE_LDFLAGS@
 
+monoservice_config_cgi_CFLAGS = @MONOSERVICE_CFLAGS@
+monoservice_config_cgi_LDFLAGS = @MONOSERVICE_LDFLAGS@
+
 monoservice_control_cgi_CFLAGS = @MONOSERVICE_CFLAGS@
 monoservice_control_cgi_LDFLAGS = @MONOSERVICE_LDFLAGS@
 
@@ -35,6 +38,8 @@ localedir = $(datadir)/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 bin_PROGRAMS = monoservice-www \
+	monoservice-status.cgi \
+	monoservice-config.cgi \
 	monoservice-control.cgi \
 	monoservice-upload.cgi \
 	monoservice-download.cgi \
@@ -73,6 +78,20 @@ monoservice_www_CFLAGS += $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLA
 monoservice_www_LDFLAGS += -pthread
 monoservice_www_LDADD = libmonoservice.la -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
+# monoservice-status.cgi
+monoservice_status_cgi_SOURCES = $(monoservice_status_cgi_c_sources) $(monoservice_status_cgiheaders)
+
+monoservice_status_cgi_CFLAGS += $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
+monoservice_status_cgi_LDFLAGS += -pthread
+monoservice_status_cgi_LDADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+
+# monoservice-config.cgi
+monoservice_config_cgi_SOURCES = $(monoservice_config_cgi_c_sources) $(monoservice_config_cgiheaders)
+
+monoservice_config_cgi_CFLAGS += $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
+monoservice_config_cgi_LDFLAGS += -pthread
+monoservice_config_cgi_LDADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+
 # monoservice-control.cgi
 monoservice_control_cgi_SOURCES = $(monoservice_control_cgi_c_sources) $(monoservice_control_cgiheaders)
 
@@ -106,12 +125,14 @@ deprecated_libmonoservice_lib_h_sources =
 
 libmonoservice_lib_h_sources = \
 	$(deprecated_libmonoservice_lib_h_sources) \
+	monoservice/lib/monoservice_media_queue.h \
 	monoservice/lib/monoservice_qrcode.h
 
 deprecated_libmonoservice_lib_c_sources =
 
 libmonoservice_lib_c_sources = \
 	$(deprecated_libmonoservice_lib_c_sources) \
+	monoservice/lib/monoservice_media_queue.c \
 	monoservice/lib/monoservice_qrcode.c
 
 # monoservice_www all files
@@ -120,6 +141,18 @@ monoservice_wwwheaders = \
 
 monoservice_www_c_sources = \
 	monoservice/monoservice_main.c
+
+# monoservice_status_cgi all files
+monoservice_status_cgiheaders =
+
+monoservice_status_cgi_c_sources = \
+	monoservice/cgi-bin/monoservice_status.c
+
+# monoservice_config_cgi all files
+monoservice_config_cgiheaders =
+
+monoservice_config_cgi_c_sources = \
+	monoservice/cgi-bin/monoservice_config.c
 
 # monoservice_control_cgi all files
 monoservice_control_cgiheaders =
