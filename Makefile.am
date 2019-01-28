@@ -19,6 +19,12 @@ LIBTOOL_DEPS = @LIBTOOL_DEPS@
 monoservice_www_CFLAGS = @MONOSERVICE_CFLAGS@
 monoservice_www_LDFLAGS = @MONOSERVICE_LDFLAGS@
 
+monoservice_control_cgi_CFLAGS = @MONOSERVICE_CFLAGS@
+monoservice_control_cgi_LDFLAGS = @MONOSERVICE_LDFLAGS@
+
+monoservice_upload_cgi_CFLAGS = @MONOSERVICE_CFLAGS@
+monoservice_upload_cgi_LDFLAGS = @MONOSERVICE_LDFLAGS@
+
 monoservice_download_cgi_CFLAGS = @MONOSERVICE_CFLAGS@
 monoservice_download_cgi_LDFLAGS = @MONOSERVICE_LDFLAGS@
 
@@ -29,6 +35,8 @@ localedir = $(datadir)/locale
 DEFS = -DLOCALEDIR=\"$(localedir)\" @DEFS@
 
 bin_PROGRAMS = monoservice-www \
+	monoservice-control.cgi \
+	monoservice-upload.cgi \
 	monoservice-download.cgi \
 	monoservice-video.cgi
 
@@ -65,6 +73,20 @@ monoservice_www_CFLAGS += $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLA
 monoservice_www_LDFLAGS += -pthread
 monoservice_www_LDADD = libmonoservice.la -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
+# monoservice-control.cgi
+monoservice_control_cgi_SOURCES = $(monoservice_control_cgi_c_sources) $(monoservice_control_cgiheaders)
+
+monoservice_control_cgi_CFLAGS += $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
+monoservice_control_cgi_LDFLAGS += -pthread
+monoservice_control_cgi_LDADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+
+# monoservice-upload.cgi
+monoservice_upload_cgi_SOURCES = $(monoservice_upload_cgi_c_sources) $(monoservice_upload_cgiheaders)
+
+monoservice_upload_cgi_CFLAGS += $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
+monoservice_upload_cgi_LDFLAGS += -pthread
+monoservice_upload_cgi_LDADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+
 # monoservice-download.cgi
 monoservice_download_cgi_SOURCES = $(monoservice_download_cgi_c_sources) $(monoservice_download_cgiheaders)
 
@@ -98,6 +120,18 @@ monoservice_wwwheaders = \
 
 monoservice_www_c_sources = \
 	monoservice/monoservice_main.c
+
+# monoservice_control_cgi all files
+monoservice_control_cgiheaders =
+
+monoservice_control_cgi_c_sources = \
+	monoservice/cgi-bin/monoservice_control.c
+
+# monoservice_upload_cgi all files
+monoservice_upload_cgiheaders =
+
+monoservice_upload_cgi_c_sources = \
+	monoservice/cgi-bin/monoservice_upload.c
 
 # monoservice_download_cgi all files
 monoservice_download_cgiheaders =
@@ -136,5 +170,3 @@ force-update-gmo-%: check-gettext
 	if test ! -f po/$$language.po ; then echo "file po/$$language.po does not exist" ; exit 1 ; fi ; \
 	touch po/$$language.po ; \
 	cd po && $(MAKE) $(AM_MAKEFLAGS) update-gmo
-
-.PHONY: check-gettext update-po update-gmo force-update-gmo
