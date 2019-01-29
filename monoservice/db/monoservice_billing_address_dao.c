@@ -35,7 +35,55 @@ monoservice_billing_address_dao_create(MonoserviceMysqlConnector *mysql_connecto
 
   GError *error;
 
-  query = g_strdup_printf("INSERT INTO BILLING_ADDRESS (FIRSTNAME,SURNAME,PHONE,EMAIL,STREET,ZIP,CITY,COUNTRY) VALUES ('%s','%s','%s','%s','%s','%s','%s','%s')",
+  if(firstname == NULL){
+    firstname = g_strdup("NULL");
+  }else{
+    firstname = g_strdup_printf("'%s'", firstname);
+  }
+
+  if(surname == NULL){
+    surname = g_strdup("NULL");
+  }else{
+    surname = g_strdup_printf("'%s'", surname);
+  }
+
+  if(phone == NULL){
+    phone = g_strdup("NULL");
+  }else{
+    phone = g_strdup_printf("'%s'", phone);
+  }
+
+  if(email == NULL){
+    email = g_strdup("NULL");
+  }else{
+    email = g_strdup_printf("'%s'", email);
+  }
+
+  if(street == NULL){
+    street = g_strdup("NULL");
+  }else{
+    street = g_strdup_printf("'%s'", street);
+  }
+
+  if(zip == NULL){
+    zip = g_strdup("NULL");
+  }else{
+    zip = g_strdup_printf("'%s'", zip);
+  }
+
+  if(city == NULL){
+    city = g_strdup("NULL");
+  }else{
+    city = g_strdup_printf("'%s'", city);
+  }
+
+  if(country == NULL){
+    country = g_strdup("NULL");
+  }else{
+    country = g_strdup_printf("'%s'", country);
+  }
+  
+  query = g_strdup_printf("INSERT INTO BILLING_ADDRESS (FIRSTNAME, SURNAME, PHONE, EMAIL, STREET, ZIP, CITY, COUNTRY) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
 			  firstname,
 			  surname,
 			  phone,
@@ -54,6 +102,15 @@ monoservice_billing_address_dao_create(MonoserviceMysqlConnector *mysql_connecto
 					     NULL,
 					     NULL, NULL,
 					     &error);
+
+  g_free(firstname);
+  g_free(surname);
+  g_free(phone);
+  g_free(email);
+  g_free(street);
+  g_free(zip);
+  g_free(city);
+  g_free(country);
 
   g_free(query);
   
@@ -139,13 +196,21 @@ monoservice_billing_address_dao_set_firstname(MonoserviceMysqlConnector *mysql_c
 
   GError *error;
 
-  query = g_strdup_printf("UPDATE BILLING_ADDRESS SET FIRSTNAME = '%s' WHERE BILLING_ADDRESS_ID = '%lu'", firstname, billing_address_id);
+  if(firstname == NULL){
+    firstname = g_strdup("NULL");
+  }else{
+    firstname = g_strdup_printf("'%s'", firstname);
+  }
+
+  query = g_strdup_printf("UPDATE BILLING_ADDRESS SET FIRSTNAME = %s WHERE BILLING_ADDRESS_ID = '%lu'", firstname, billing_address_id);
 
   error = NULL;
   monoservice_mysql_connector_query(mysql_connector,
 				    query,
 				    &error);
 
+  g_free(firstname);
+  
   g_free(query);
 }
 
@@ -158,13 +223,21 @@ monoservice_billing_address_dao_set_surname(MonoserviceMysqlConnector *mysql_con
 
   GError *error;
 
-  query = g_strdup_printf("UPDATE BILLING_ADDRESS SET SURNAME = '%s' WHERE BILLING_ADDRESS_ID = '%lu'", surname, billing_address_id);
+  if(surname == NULL){
+    surname = g_strdup("NULL");
+  }else{
+    surname = g_strdup_printf("'%s'", surname);
+  }
+
+  query = g_strdup_printf("UPDATE BILLING_ADDRESS SET SURNAME = %s WHERE BILLING_ADDRESS_ID = '%lu'", surname, billing_address_id);
 
   error = NULL;
   monoservice_mysql_connector_query(mysql_connector,
 				    query,
 				    &error);
 
+  g_free(surname);
+  
   g_free(query);
 }
 
@@ -177,13 +250,21 @@ monoservice_billing_address_dao_set_phone(MonoserviceMysqlConnector *mysql_conne
 
   GError *error;
 
-  query = g_strdup_printf("UPDATE BILLING_ADDRESS SET PHONE = '%s' WHERE BILLING_ADDRESS_ID = '%lu'", phone, billing_address_id);
+  if(phone == NULL){
+    phone = g_strdup("NULL");
+  }else{
+    phone = g_strdup_printf("'%s'", phone);
+  }
+
+  query = g_strdup_printf("UPDATE BILLING_ADDRESS SET PHONE = %s WHERE BILLING_ADDRESS_ID = '%lu'", phone, billing_address_id);
 
   error = NULL;
   monoservice_mysql_connector_query(mysql_connector,
 				    query,
 				    &error);
 
+  g_free(phone);
+  
   g_free(query);
 }
 
@@ -196,13 +277,21 @@ monoservice_billing_address_dao_set_email(MonoserviceMysqlConnector *mysql_conne
 
   GError *error;
 
-  query = g_strdup_printf("UPDATE BILLING_ADDRESS SET EMAIL = '%s' WHERE BILLING_ADDRESS_ID = '%lu'", email, billing_address_id);
+  if(email == NULL){
+    email = g_strdup("NULL");
+  }else{
+    email = g_strdup_printf("'%s'", email);
+  }
+
+  query = g_strdup_printf("UPDATE BILLING_ADDRESS SET EMAIL = %s WHERE BILLING_ADDRESS_ID = '%lu'", email, billing_address_id);
 
   error = NULL;
   monoservice_mysql_connector_query(mysql_connector,
 				    query,
 				    &error);
 
+  g_free(email);
+  
   g_free(query);
 }
 
@@ -215,13 +304,21 @@ monoservice_billing_address_dao_set_street(MonoserviceMysqlConnector *mysql_conn
 
   GError *error;
 
-  query = g_strdup_printf("UPDATE BILLING_ADDRESS SET STREET = '%s' WHERE BILLING_ADDRESS_ID = '%lu'", street, billing_address_id);
+  if(street == NULL){
+    street = g_strdup("NULL");
+  }else{
+    street = g_strdup_printf("'%s'", street);
+  }
+
+  query = g_strdup_printf("UPDATE BILLING_ADDRESS SET STREET = %s WHERE BILLING_ADDRESS_ID = '%lu'", street, billing_address_id);
 
   error = NULL;
   monoservice_mysql_connector_query(mysql_connector,
 				    query,
 				    &error);
 
+  g_free(street);
+  
   g_free(query);
 }
 
@@ -234,13 +331,21 @@ monoservice_billing_address_dao_set_zip(MonoserviceMysqlConnector *mysql_connect
 
   GError *error;
 
-  query = g_strdup_printf("UPDATE BILLING_ADDRESS SET ZIP = '%s' WHERE BILLING_ADDRESS_ID = '%lu'", zip, billing_address_id);
+  if(zip == NULL){
+    zip = g_strdup("NULL");
+  }else{
+    zip = g_strdup_printf("'%s'", zip);
+  }
+
+  query = g_strdup_printf("UPDATE BILLING_ADDRESS SET ZIP = %s WHERE BILLING_ADDRESS_ID = '%lu'", zip, billing_address_id);
 
   error = NULL;
   monoservice_mysql_connector_query(mysql_connector,
 				    query,
 				    &error);
 
+  g_free(zip);
+  
   g_free(query);
 }
 
@@ -253,13 +358,21 @@ monoservice_billing_address_dao_set_city(MonoserviceMysqlConnector *mysql_connec
 
   GError *error;
 
-  query = g_strdup_printf("UPDATE BILLING_ADDRESS SET CITY = '%s' WHERE BILLING_ADDRESS_ID = '%lu'", city, billing_address_id);
+  if(city == NULL){
+    city = g_strdup("NULL");
+  }else{
+    city = g_strdup_printf("'%s'", city);
+  }
+
+  query = g_strdup_printf("UPDATE BILLING_ADDRESS SET CITY = %s WHERE BILLING_ADDRESS_ID = '%lu'", city, billing_address_id);
 
   error = NULL;
   monoservice_mysql_connector_query(mysql_connector,
 				    query,
 				    &error);
 
+  g_free(city);
+  
   g_free(query);
 }
 
@@ -272,13 +385,21 @@ monoservice_billing_address_dao_set_country(MonoserviceMysqlConnector *mysql_con
 
   GError *error;
 
-  query = g_strdup_printf("UPDATE BILLING_ADDRESS SET COUNTRY = '%s' WHERE BILLING_ADDRESS_ID = '%lu'", country, billing_address_id);
+  if(country == NULL){
+    country = g_strdup("NULL");
+  }else{
+    country = g_strdup_printf("'%s'", country);
+  }
+
+  query = g_strdup_printf("UPDATE BILLING_ADDRESS SET COUNTRY = %s WHERE BILLING_ADDRESS_ID = '%lu'", country, billing_address_id);
 
   error = NULL;
   monoservice_mysql_connector_query(mysql_connector,
 				    query,
 				    &error);
 
+  g_free(country);
+  
   g_free(query);
 }
 
