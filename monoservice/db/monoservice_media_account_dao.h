@@ -35,13 +35,5 @@ gchar** monoservice_media_account_dao_select(MonoserviceMysqlConnector *mysql_co
 void monoservice_media_account_dao_set_billing_address(MonoserviceMysqlConnector *mysql_connector,
 						       guint64 media_account_id,
 						       guint64 billing_address);
-
-void monoservice_media_account_dao_set_video_file(MonoserviceMysqlConnector *mysql_connector,
-						  guint64 media_account_id,
-						  guint64 video_file);
-
-void monoservice_media_account_dao_set_session_store(MonoserviceMysqlConnector *mysql_connector,
-						     guint64 media_account_id,
-						     guint64 session_store);
  
 #endif /*__MONOSERVICE_MEDIA_ACCOUNT_DAO_H__*/
