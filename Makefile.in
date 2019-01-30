@@ -234,7 +234,7 @@ am_monoservice_upload_cgi_OBJECTS = $(am__objects_10) $(am__objects_1)
 monoservice_upload_cgi_OBJECTS = $(am_monoservice_upload_cgi_OBJECTS)
 monoservice_upload_cgi_DEPENDENCIES = $(am__DEPENDENCIES_1) \
 	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1) \
-	$(am__DEPENDENCIES_1)
+	$(am__DEPENDENCIES_1) $(am__DEPENDENCIES_1)
 monoservice_upload_cgi_LINK = $(LIBTOOL) $(AM_V_lt) --tag=CC \
 	$(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=link $(CCLD) \
 	$(monoservice_upload_cgi_CFLAGS) $(CFLAGS) \
@@ -468,6 +468,8 @@ LIBOBJS = @LIBOBJS@
 LIBQRENCODE_CFLAGS = @LIBQRENCODE_CFLAGS@
 LIBQRENCODE_LIBS = @LIBQRENCODE_LIBS@
 LIBS = @LIBS@
+LIBSOUP_CFLAGS = @LIBSOUP_CFLAGS@
+LIBSOUP_LIBS = @LIBSOUP_LIBS@
 LIBTOOL = @LIBTOOL@
 LIBTOOL_DEPS = @LIBTOOL_DEPS@
 LIBXML2_CFLAGS = @LIBXML2_CFLAGS@
@@ -588,8 +590,9 @@ monoservice_control_cgi_CFLAGS = @MONOSERVICE_CFLAGS@ \
 	$(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) \
 	$(CAIRO_CFLAGS)
 monoservice_control_cgi_LDFLAGS = @MONOSERVICE_LDFLAGS@ -pthread
-monoservice_upload_cgi_CFLAGS = @MONOSERVICE_CFLAGS@ $(LIBXML2_CFLAGS) \
-	$(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
+monoservice_upload_cgi_CFLAGS = @MONOSERVICE_CFLAGS@ $(LIBSOUP_CFLAGS) \
+	$(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) \
+	$(CAIRO_CFLAGS)
 monoservice_upload_cgi_LDFLAGS = @MONOSERVICE_LDFLAGS@ -pthread
 monoservice_download_cgi_CFLAGS = @MONOSERVICE_CFLAGS@ \
 	$(LIBXSLT_CFLAGS) $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) \
@@ -642,7 +645,7 @@ monoservice_control_cgi_LDADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQR
 
 # monoservice-upload.cgi
 monoservice_upload_cgi_SOURCES = $(monoservice_upload_cgi_c_sources) $(monoservice_upload_cgiheaders)
-monoservice_upload_cgi_LDADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+monoservice_upload_cgi_LDADD = -ldl -lm $(LIBSOUP_LIBS) $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
 # monoservice-download.cgi
 monoservice_download_cgi_SOURCES = $(monoservice_download_cgi_c_sources) $(monoservice_download_cgiheaders)

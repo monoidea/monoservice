@@ -105,9 +105,9 @@ monoservice_control_cgi_LDADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQR
 # monoservice-upload.cgi
 monoservice_upload_cgi_SOURCES = $(monoservice_upload_cgi_c_sources) $(monoservice_upload_cgiheaders)
 
-monoservice_upload_cgi_CFLAGS += $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
+monoservice_upload_cgi_CFLAGS += $(LIBSOUP_CFLAGS) $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
 monoservice_upload_cgi_LDFLAGS += -pthread
-monoservice_upload_cgi_LDADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+monoservice_upload_cgi_LDADD = -ldl -lm $(LIBSOUP_LIBS) $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
 # monoservice-download.cgi
 monoservice_download_cgi_SOURCES = $(monoservice_download_cgi_c_sources) $(monoservice_download_cgiheaders)
