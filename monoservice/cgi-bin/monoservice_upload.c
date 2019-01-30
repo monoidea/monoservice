@@ -24,6 +24,7 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#define _GNU_SOURCE
 #include <string.h>
 
 #define MONOSERVICE_UPLOAD_DEFAULT_BUFFER_SIZE (131072)
@@ -91,6 +92,8 @@ main(int argc, char **argv)
 {
   SoupMessage *media_message;
 
+  SoupBuffer *file;
+  
   char *str;
   char *buffer;
   char pre_buffer[MONOSERVICE_UPLOAD_DEFAULT_BUFFER_SIZE + 1];
@@ -98,7 +101,9 @@ main(int argc, char **argv)
   gchar *form_data;
   gchar *boundary;
   gchar *username, *token;
-
+  gchar *filename;
+  gchar *file_content_type;
+  
   gsize content_length;
   gsize num_read;
   gboolean success;
@@ -224,14 +229,56 @@ main(int argc, char **argv)
   
   media_message = soup_message_new(MONOSERVICE_UPLOAD_DEFAULT_METHOD,
 				   MONOSERVICE_UPLOAD_DEFAULT_URI);
-
+  g_object_ref(media_message);
+  
   soup_message_set_request(media_message,
 			   MONOSERVICE_UPLOAD_DEFAULT_CONTENT_TYPE,
 			   SOUP_MEMORY_STATIC,
 			   buffer,
 			   content_length);
 
+  filename = NULL;
+  file_content_type = NULL;
+  file = NULL;
+  soup_form_decode_multipart(media_message,
+			     NULL,
+			     &filename,
+			     &file_content_type,
+			     &file);
 
+  if(g_str_has_suffix(filename,
+		      ".wav")){
+    guint8 *data;
+    gsize length;
+
+    soup_buffer_get_data(file,
+			 &data,
+			 &length);
+    
+    /* audio file */
+    //TODO:JK: implement me
+  }else if(g_str_has_suffix(filename,
+			    ".mp4")){
+    guint8 *data;
+    gsize length;
+
+    soup_buffer_get_data(file,
+			 &data,
+			 &length);
+
+    /* video file */
+    //TODO:JK: implement me
+  }
+
+  g_object_run_dispose(media_message);
+  g_object_unref(media_message);
+
+  soup_buffer_free(file);
+  
+  g_free(filename);
+  g_free(file_content_type);
+  
+  free(buffer);
   
 upload_FORBIDDEN:
   g_free(username);
