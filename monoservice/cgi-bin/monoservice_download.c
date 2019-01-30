@@ -72,20 +72,20 @@ extern int xmlLoadExtDtdDefaultValue;
 void
 monoservice_download_write_status(gchar *status_message, guint status_code)
 {
-  printf("HTTP/1.1 %d %s\n", status_code, status_message);
+  printf("HTTP/1.1 %d %s\r\n", status_code, status_message);
 }
 
 void
 monoservice_download_write_content_header(gsize content_length)
 {
-  printf("Cache-Control: no-store, no-cache\n");
-  printf("Content-Type: text/html\n");
+  printf("Cache-Control: no-store, no-cache\r\n");
+  printf("Content-Type: text/html\r\n");
 
   if(content_length > 0){
-    printf("Content-length: %d\n", content_length);
+    printf("Content-length: %d\r\n", content_length);
   }
 
-  printf("\n");
+  printf("\r\n");
 }
 
 gboolean
