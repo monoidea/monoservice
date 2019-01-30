@@ -75,8 +75,4 @@ void monoservice_billing_address_dao_set_country(MonoserviceMysqlConnector *mysq
 						 guint64 billing_address_id,
 						 gchar *country);
 
-guint64* monoservice_billing_address_dao_find_by_media_account(MonoserviceMysqlConnector *mysql_connector,
-							       guint64 media_account_id,
-							       guint64 *billing_address_count);
-
 #endif /*__MONOSERVICE_BILLING_ADDRESS_DAO_H__*/
