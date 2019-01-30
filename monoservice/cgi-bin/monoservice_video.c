@@ -74,7 +74,7 @@ monoservice_video_write_content_header(gsize content_length)
   printf("Content-Type: video/mp4\r\n");
 
   if(content_length > 0){
-    printf("Content-length: %d\r\n", content_length);
+    printf("Content-length: %lu\r\n", content_length);
   }
   
   printf("Content-Disposition: attachment; filename=monothek-video.mp4\r\n");

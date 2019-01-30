@@ -146,7 +146,8 @@ libmonoservice_db_h_sources = \
 	monoservice/db/monoservice_mysql_connector.h \
 	monoservice/db/monoservice_mysql_connector_manager.h \
 	monoservice/db/monoservice_media_account_dao.h \
-	monoservice/db/monoservice_billing_address_dao.h
+	monoservice/db/monoservice_billing_address_dao.h \
+	monoservice/db/monoservice_payment_transaction_dao.h
 
 deprecated_libmonoservice_db_c_sources =
 
@@ -155,7 +156,8 @@ libmonoservice_db_c_sources = \
 	monoservice/db/monoservice_mysql_connector.c \
 	monoservice/db/monoservice_mysql_connector_manager.c \
 	monoservice/db/monoservice_media_account_dao.c \
-	monoservice/db/monoservice_billing_address_dao.c
+	monoservice/db/monoservice_billing_address_dao.c \
+	monoservice/db/monoservice_payment_transaction_dao.c
 
 # monoservice_www all files
 monoservice_wwwheaders = \

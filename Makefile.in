@@ -169,7 +169,8 @@ am__objects_5 = $(am__objects_1) \
 	monoservice/db/libmonoservice_la-monoservice_mysql_connector.lo \
 	monoservice/db/libmonoservice_la-monoservice_mysql_connector_manager.lo \
 	monoservice/db/libmonoservice_la-monoservice_media_account_dao.lo \
-	monoservice/db/libmonoservice_la-monoservice_billing_address_dao.lo
+	monoservice/db/libmonoservice_la-monoservice_billing_address_dao.lo \
+	monoservice/db/libmonoservice_la-monoservice_payment_transaction_dao.lo
 am_libmonoservice_la_OBJECTS = $(am__objects_3) $(am__objects_4) \
 	$(am__objects_5)
 libmonoservice_la_OBJECTS = $(am_libmonoservice_la_OBJECTS)
@@ -285,6 +286,7 @@ am__depfiles_remade = monoservice/$(DEPDIR)/www-monoservice_main.Po \
 	monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_media_account_dao.Plo \
 	monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_mysql_connector.Plo \
 	monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_mysql_connector_manager.Plo \
+	monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_payment_transaction_dao.Plo \
 	monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_media_queue.Plo \
 	monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Plo
 am__mv = mv -f
@@ -671,7 +673,8 @@ libmonoservice_db_h_sources = \
 	monoservice/db/monoservice_mysql_connector.h \
 	monoservice/db/monoservice_mysql_connector_manager.h \
 	monoservice/db/monoservice_media_account_dao.h \
-	monoservice/db/monoservice_billing_address_dao.h
+	monoservice/db/monoservice_billing_address_dao.h \
+	monoservice/db/monoservice_payment_transaction_dao.h
 
 deprecated_libmonoservice_db_c_sources = 
 libmonoservice_db_c_sources = \
@@ -679,7 +682,8 @@ libmonoservice_db_c_sources = \
 	monoservice/db/monoservice_mysql_connector.c \
 	monoservice/db/monoservice_mysql_connector_manager.c \
 	monoservice/db/monoservice_media_account_dao.c \
-	monoservice/db/monoservice_billing_address_dao.c
+	monoservice/db/monoservice_billing_address_dao.c \
+	monoservice/db/monoservice_payment_transaction_dao.c
 
 
 # monoservice_www all files
@@ -891,6 +895,9 @@ monoservice/db/libmonoservice_la-monoservice_media_account_dao.lo:  \
 monoservice/db/libmonoservice_la-monoservice_billing_address_dao.lo:  \
 	monoservice/db/$(am__dirstamp) \
 	monoservice/db/$(DEPDIR)/$(am__dirstamp)
+monoservice/db/libmonoservice_la-monoservice_payment_transaction_dao.lo:  \
+	monoservice/db/$(am__dirstamp) \
+	monoservice/db/$(DEPDIR)/$(am__dirstamp)
 
 libmonoservice.la: $(libmonoservice_la_OBJECTS) $(libmonoservice_la_DEPENDENCIES) $(EXTRA_libmonoservice_la_DEPENDENCIES) 
 	$(AM_V_CCLD)$(libmonoservice_la_LINK) -rpath $(libmonoservicedir) $(libmonoservice_la_OBJECTS) $(libmonoservice_la_LIBADD) $(LIBS)
@@ -979,6 +986,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_media_account_dao.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_mysql_connector.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_mysql_connector_manager.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_payment_transaction_dao.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_media_queue.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Plo@am__quote@ # am--include-marker
 
@@ -1053,6 +1061,13 @@ monoservice/db/libmonoservice_la-monoservice_billing_address_dao.lo: monoservice
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/db/monoservice_billing_address_dao.c' object='monoservice/db/libmonoservice_la-monoservice_billing_address_dao.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -c -o monoservice/db/libmonoservice_la-monoservice_billing_address_dao.lo `test -f 'monoservice/db/monoservice_billing_address_dao.c' || echo '$(srcdir)/'`monoservice/db/monoservice_billing_address_dao.c
+
+monoservice/db/libmonoservice_la-monoservice_payment_transaction_dao.lo: monoservice/db/monoservice_payment_transaction_dao.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -MT monoservice/db/libmonoservice_la-monoservice_payment_transaction_dao.lo -MD -MP -MF monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_payment_transaction_dao.Tpo -c -o monoservice/db/libmonoservice_la-monoservice_payment_transaction_dao.lo `test -f 'monoservice/db/monoservice_payment_transaction_dao.c' || echo '$(srcdir)/'`monoservice/db/monoservice_payment_transaction_dao.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_payment_transaction_dao.Tpo monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_payment_transaction_dao.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/db/monoservice_payment_transaction_dao.c' object='monoservice/db/libmonoservice_la-monoservice_payment_transaction_dao.lo' libtool=yes @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -c -o monoservice/db/libmonoservice_la-monoservice_payment_transaction_dao.lo `test -f 'monoservice/db/monoservice_payment_transaction_dao.c' || echo '$(srcdir)/'`monoservice/db/monoservice_payment_transaction_dao.c
 
 monoservice/cgi-bin/config_cgi-monoservice_config.o: monoservice/cgi-bin/monoservice_config.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_config_cgi_CFLAGS) $(CFLAGS) -MT monoservice/cgi-bin/config_cgi-monoservice_config.o -MD -MP -MF monoservice/cgi-bin/$(DEPDIR)/config_cgi-monoservice_config.Tpo -c -o monoservice/cgi-bin/config_cgi-monoservice_config.o `test -f 'monoservice/cgi-bin/monoservice_config.c' || echo '$(srcdir)/'`monoservice/cgi-bin/monoservice_config.c
@@ -1526,6 +1541,7 @@ distclean: distclean-recursive
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_media_account_dao.Plo
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_mysql_connector.Plo
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_mysql_connector_manager.Plo
+	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_payment_transaction_dao.Plo
 	-rm -f monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_media_queue.Plo
 	-rm -f monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Plo
 	-rm -f Makefile
@@ -1586,6 +1602,7 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_media_account_dao.Plo
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_mysql_connector.Plo
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_mysql_connector_manager.Plo
+	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_payment_transaction_dao.Plo
 	-rm -f monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_media_queue.Plo
 	-rm -f monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Plo
 	-rm -f Makefile

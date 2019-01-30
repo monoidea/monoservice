@@ -366,7 +366,7 @@ monoservice_qrcode_real_write(MonoserviceQrcode *qrcode)
     fprintf(f, "\"");
     
     for(j = 0; j < width + (2 * border_width); j++){
-      fputc(f, ' ');
+      fputc(' ', f);
     }
 
     fprintf(f, "\",\n");
@@ -378,21 +378,21 @@ monoservice_qrcode_real_write(MonoserviceQrcode *qrcode)
 
     /* border left */
     for(j = 0; j < border_width; j++){
-      fputc(f, ' ');
+      fputc(' ', f);
     }
 
     /* content */
     for(j = 0; j < width; j++){
       if(qrcode->qrcode->data[i * qrcode->qrcode->width + j] % 2 == 1){
-	fputc(f, '#');
+	fputc('#', f);
       }else{
-	fputc(f, '.');
+	fputc('.', f);
       }
     }
     
     /* border right */
     for(j = 0; j < border_width; j++){
-      fputc(f, ' ');
+      fputc(' ', f);
     }
 
     fprintf(f, "\",\n");
@@ -403,7 +403,7 @@ monoservice_qrcode_real_write(MonoserviceQrcode *qrcode)
     fprintf(f, "\"");
     
     for(j = 0; j < width + (2 * border_width); j++){
-      fputc(f, ' ');
+      fputc(' ', f);
     }
 
     fprintf(f, "\",\n");
