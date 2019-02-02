@@ -27,6 +27,13 @@
 #define _GNU_SOURCE
 #include <string.h>
 
+#include <strings.h>
+
+#include <time.h>
+
+void monoservice_upload_write_status(gchar *status_message, guint status_code);
+gboolean monoservice_upload_authenticate(gchar *username, gchar *token);
+
 #define MONOSERVICE_UPLOAD_DEFAULT_BUFFER_SIZE (131072)
 
 #define MONOSERVICE_UPLOAD_FORM_DATA_USERNAME "Content-Disposition: form-data; name=\"username\"\r\n\r\n"
@@ -42,6 +49,9 @@
 #define MONOSERVICE_UPLOAD_DEFAULT_URI "http://monothek.ch/upload/media"
 
 #define MONOSERVICE_UPLOAD_DEFAULT_CONTENT_TYPE "multipart/form-data"
+
+#define MONOSERVICE_UPLOAD_VIDEO_DIRECTORY "/home/joelkraehemann/monoservice/upload/media/video"
+#define MONOSERVICE_UPLOAD_AUDIO_DIRECTORY "/home/joelkraehemann/monoservice/upload/media/audio"
 
 #define HTTP_STATUS_MESSAGE_OK "OK"
 #define HTTP_STATUS_CODE_OK (200)
@@ -93,6 +103,10 @@ main(int argc, char **argv)
   SoupMessage *media_message;
 
   SoupBuffer *file;
+
+  GHashTable *form_data_table;
+
+  struct tm *upload_date;
   
   char *str;
   char *buffer;
@@ -103,9 +117,13 @@ main(int argc, char **argv)
   gchar *username, *token;
   gchar *filename;
   gchar *file_content_type;
-  
+  gchar *upload_dir;
+  gchar *upload_filename;
+
+  gsize pre_buffer_length;
   gsize content_length;
   gsize num_read;
+  time_t upload_timestamp;
   gboolean success;
 
   /* content type */
@@ -151,7 +169,9 @@ main(int argc, char **argv)
   token = NULL;
   
   num_read = fread(pre_buffer, MONOSERVICE_UPLOAD_DEFAULT_BUFFER_SIZE, sizeof(char), stdin);
-  pre_buffer[MONOSERVICE_UPLOAD_DEFAULT_BUFFER_SIZE] = '\0';
+
+  pre_buffer_length = num_read;
+  pre_buffer[pre_buffer_length] = '\0';
 
   /* find username */
   str = pre_buffer;
@@ -210,7 +230,6 @@ main(int argc, char **argv)
       break;
     }
   }
-
     
   if(!monoservice_upload_authenticate(username, token)){
     monoservice_upload_write_status(HTTP_STATUS_MESSAGE_FORBIDDEN,
@@ -223,10 +242,12 @@ main(int argc, char **argv)
 
   memcpy(buffer, pre_buffer, num_read * sizeof(char));
 
-  if(num_read < content_length){
-    fread(buffer + num_read, (content_length - num_read), sizeof(char), stdin);
+  if(pre_buffer_length < content_length){
+    num_read = fread(buffer + pre_buffer_length, (content_length - pre_buffer_length), sizeof(char), stdin);
+    buffer[pre_buffer_length + num_read] = '\0';
   }
-  
+
+  /* media message */
   media_message = soup_message_new(MONOSERVICE_UPLOAD_DEFAULT_METHOD,
 				   MONOSERVICE_UPLOAD_DEFAULT_URI);
   g_object_ref(media_message);
@@ -237,36 +258,90 @@ main(int argc, char **argv)
 			   buffer,
 			   content_length);
 
+  /* decode form data */
   filename = NULL;
   file_content_type = NULL;
   file = NULL;
-  soup_form_decode_multipart(media_message,
-			     NULL,
-			     &filename,
-			     &file_content_type,
-			     &file);
 
+  form_data_table = soup_form_decode_multipart(media_message,
+					       NULL,
+					       &filename,
+					       &file_content_type,
+					       &file);
+
+  /* date */
+  upload_timestamp = 0;
+    
+  str = g_hash_table_lookup(form_data_table,
+			    "media-timestamp");
+
+  if(str != NULL){
+    upload_timestamp = (time_t) g_ascii_strtoull(str,
+						 NULL,
+						 10);
+  }
+    
+  upload_date = localtime(upload_timestamp);
+
+  /* create directory */
+  upload_dir = g_strdup_printf("%s/%d/%d/%d/%d",
+			       MONOSERVICE_UPLOAD_AUDIO_DIRECTORY,
+			       upload_date->tm_year,
+			       upload_date->tm_mon,
+			       upload_date->tm_mday,
+			       upload_date->tm_hour);
+
+  g_mkdir_with_parents(upload_dir,
+		       0755);
+
+  /* upload filename */
+  str = rindex(filename, '/');
+
+  if(str == NULL){
+    str = filename;
+  }else{
+    str++;
+  }
+  
+  upload_filename = g_strdup_printf("%s/%s",
+				    upload_dir,
+				    str);
+  
   if(g_str_has_suffix(filename,
 		      ".wav")){
+    FILE *f;
+
     guint8 *data;
+    
     gsize length;
 
+    /* audio file */
     soup_buffer_get_data(file,
 			 &data,
 			 &length);
     
-    /* audio file */
+    f = fopen(upload_filename,
+	      "w");
+    fwrite(data, length, sizeof(guint8), f);
+
     //TODO:JK: implement me
   }else if(g_str_has_suffix(filename,
 			    ".mp4")){
+    FILE *f;
+
     guint8 *data;
+
     gsize length;
 
+    /* video file */
     soup_buffer_get_data(file,
 			 &data,
 			 &length);
 
-    /* video file */
+    f = fopen(upload_filename,
+	      "w");
+    fwrite(data, length, sizeof(guint8), f);
+
     //TODO:JK: implement me
   }
 
@@ -274,6 +349,11 @@ main(int argc, char **argv)
   g_object_unref(media_message);
 
   soup_buffer_free(file);
+  
+  g_hash_table_destroy(form_data_table);
+
+  g_free(upload_dir);
+  g_free(upload_filename);
   
   g_free(filename);
   g_free(file_content_type);
