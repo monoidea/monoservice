@@ -25,6 +25,9 @@
 
 #include <monoservice/db/monoservice_mysql_connector.h>
 
+#include <time.h>
+#include <unistd.h>
+
 guint64 monoservice_raw_audio_file_dao_create(MonoserviceMysqlConnector *mysql_connector);
 void monoservice_raw_audio_file_dao_delete(MonoserviceMysqlConnector *mysql_connector,
 					   guint64 raw_audio_file_id);
@@ -32,4 +35,20 @@ void monoservice_raw_audio_file_dao_delete(MonoserviceMysqlConnector *mysql_conn
 gchar** monoservice_raw_audio_file_dao_select(MonoserviceMysqlConnector *mysql_connector,
 					      guint64 raw_audio_file_id);
  
+void monoservice_raw_audio_file_dao_set_filename(MonoserviceMysqlConnector *mysql_connector,
+						 guint64 raw_audio_file_id,
+						 gchar *filename);
+
+void monoservice_raw_audio_file_dao_set_creation_time(MonoserviceMysqlConnector *mysql_connector,
+						      guint64 raw_audio_file_id,
+						      time_t creation_time);
+
+void monoservice_raw_audio_file_dao_set_duration(MonoserviceMysqlConnector *mysql_connector,
+						 guint64 raw_audio_file_id,
+						 useconds_t duration);
+
+void monoservice_raw_audio_file_dao_set_available(MonoserviceMysqlConnector *mysql_connector,
+						  guint64 raw_audio_file_id,
+						  gboolean available);
+
 #endif /*__MONOSERVICE_RAW_AUDIO_FILE_DAO_H__*/

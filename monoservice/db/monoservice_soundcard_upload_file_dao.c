@@ -24,7 +24,7 @@
 guint64
 monoservice_soundcard_upload_file_dao_create(MonoserviceMysqlConnector *mysql_connector,
 					     gchar *filename,
-					     time_t timestamp,
+					     time_t creation_time,
 					     useconds_t duration,
 					     gboolean available)
 {
@@ -43,9 +43,9 @@ monoservice_soundcard_upload_file_dao_create(MonoserviceMysqlConnector *mysql_co
   
   duration_value = (gdouble) duration / (gdouble) USECS_PER_SEC;
 
-  query = g_strdup_printf("INSERT INTO SOUNDCARD_UPLOAD_FILE (FILENAME, TIMESTAMP, DURATION, AVAILABLE) VALUES (%s, %ld, %f, %s)",
+  query = g_strdup_printf("INSERT INTO SOUNDCARD_UPLOAD_FILE (FILENAME, CREATION_TIME, DURATION, AVAILABLE) VALUES (%s, %ld, %f, %s)",
 			  filename,
-			  timestamp,
+			  creation_time,
 			  duration_value,
 			  (available ? "true": "false"));
   soundcard_upload_file_id = 0;
@@ -145,15 +145,15 @@ monoservice_soundcard_upload_file_dao_set_filename(MonoserviceMysqlConnector *my
 }
 
 void
-monoservice_soundcard_upload_file_dao_set_timestamp(MonoserviceMysqlConnector *mysql_connector,
-						    guint64 soundcard_upload_file_id,
-						    time_t timestamp)
+monoservice_soundcard_upload_file_dao_set_creation_time(MonoserviceMysqlConnector *mysql_connector,
+							guint64 soundcard_upload_file_id,
+							time_t creation_time)
 {
   gchar *query;
 
   GError *error;
 
-  query = g_strdup_printf("UPDATE SOUNDCARD_UPLOAD_FILE SET TIMESTAMP = %ld WHERE SOUNDCARD_UPLOAD_FILE_ID = '%lu'", timestamp, soundcard_upload_file_id);
+  query = g_strdup_printf("UPDATE SOUNDCARD_UPLOAD_FILE SET CREATION_TIME = %ld WHERE SOUNDCARD_UPLOAD_FILE_ID = '%lu'", creation_time, soundcard_upload_file_id);
 
   error = NULL;
   monoservice_mysql_connector_query(mysql_connector,

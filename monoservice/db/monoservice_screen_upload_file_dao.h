@@ -30,7 +30,7 @@
 
 guint64 monoservice_screen_upload_file_dao_create(MonoserviceMysqlConnector *mysql_connector,
 						  gchar *filename,
-						  time_t timestamp,
+						  time_t creation_time,
 						  useconds_t duration,
 						  gboolean available);
 void monoservice_screen_upload_file_dao_delete(MonoserviceMysqlConnector *mysql_connector,
@@ -43,9 +43,9 @@ void monoservice_screen_upload_file_dao_set_filename(MonoserviceMysqlConnector *
 						     guint64 screen_upload_file_id,
 						     gchar *filename);
 
-void monoservice_screen_upload_file_dao_set_timestamp(MonoserviceMysqlConnector *mysql_connector,
-						      guint64 screen_upload_file_id,
-						      time_t timestamp);
+void monoservice_screen_upload_file_dao_set_creation_time(MonoserviceMysqlConnector *mysql_connector,
+							  guint64 screen_upload_file_id,
+							  time_t creation_time);
 
 void monoservice_screen_upload_file_dao_set_duration(MonoserviceMysqlConnector *mysql_connector,
 						     guint64 screen_upload_file_id,

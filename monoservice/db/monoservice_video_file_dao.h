@@ -25,11 +25,38 @@
 
 #include <monoservice/db/monoservice_mysql_connector.h>
 
+#include <time.h>
+#include <unistd.h>
+
 guint64 monoservice_video_file_dao_create(MonoserviceMysqlConnector *mysql_connector);
 void monoservice_video_file_dao_delete(MonoserviceMysqlConnector *mysql_connector,
 				       guint64 video_file_id);
 
 gchar** monoservice_video_file_dao_select(MonoserviceMysqlConnector *mysql_connector,
 					  guint64 video_file_id);
- 
+
+void monoservice_video_file_dao_set_media_account(MonoserviceMysqlConnector *mysql_connector,
+						  guint64 video_file_id,
+						  guint64 media_acount_id);
+
+void monoservice_video_file_dao_set_resource_id(MonoserviceMysqlConnector *mysql_connector,
+						guint64 video_file_id,
+						gchar *resource_id);
+
+void monoservice_video_file_dao_set_filename(MonoserviceMysqlConnector *mysql_connector,
+					     guint64 video_file_id,
+					     gchar *filename);
+
+void monoservice_video_file_dao_set_creation_time(MonoserviceMysqlConnector *mysql_connector,
+						  guint64 video_file_id,
+						  time_t creation_time);
+
+void monoservice_video_file_dao_set_duration(MonoserviceMysqlConnector *mysql_connector,
+					     guint64 video_file_id,
+					     useconds_t duration);
+
+void monoservice_video_file_dao_set_available(MonoserviceMysqlConnector *mysql_connector,
+					      guint64 video_file_id,
+					      gboolean available);
+
 #endif /*__MONOSERVICE_VIDEO_FILE_DAO_H__*/
