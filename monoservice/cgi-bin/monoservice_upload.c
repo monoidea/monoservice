@@ -22,6 +22,13 @@
 
 #include <libsoup/soup.h>
 
+#include <monoservice/db/monoservice_mysql_connector_manager.h>
+#include <monoservice/db/monoservice_mysql_connector.h>
+#include <monoservice/db/monoservice_cam_upload_file_dao.h>
+#include <monoservice/db/monoservice_screen_upload_file_dao.h>
+#include <monoservice/db/monoservice_mic_upload_file_dao.h>
+#include <monoservice/db/monoservice_soundcard_upload_file_dao.h>
+
 #include <stdlib.h>
 #include <stdio.h>
 #define _GNU_SOURCE
@@ -52,6 +59,8 @@ gboolean monoservice_upload_authenticate(gchar *username, gchar *token);
 
 #define MONOSERVICE_UPLOAD_VIDEO_DIRECTORY "/home/joelkraehemann/monoservice/upload/media/video"
 #define MONOSERVICE_UPLOAD_AUDIO_DIRECTORY "/home/joelkraehemann/monoservice/upload/media/audio"
+
+#define MONOSERVICE_MYSQL_HOSTNAME "localhost"
 
 #define HTTP_STATUS_MESSAGE_OK "OK"
 #define HTTP_STATUS_CODE_OK (200)
@@ -100,12 +109,16 @@ monoservice_upload_authenticate(gchar *username, gchar *token)
 int
 main(int argc, char **argv)
 {
+  MonoserviceMysqlConnectorManager *mysql_connector_manager;
+  MonoserviceMysqlConnector *mysql_connector;
+
   SoupMessage *media_message;
 
   SoupBuffer *file;
 
   GHashTable *form_data_table;
-
+  GList *start_list, *list;
+  
   struct tm *upload_date;
   
   char *str;
@@ -124,6 +137,7 @@ main(int argc, char **argv)
   gsize content_length;
   gsize num_read;
   time_t upload_timestamp;
+  useconds_t upload_duration;
   gboolean success;
 
   /* content type */
@@ -247,6 +261,16 @@ main(int argc, char **argv)
     buffer[pre_buffer_length + num_read] = '\0';
   }
 
+  /* mysql connector */
+  mysql_connector = NULL;
+
+  start_list = monoservice_mysql_connector_manager_get_connector_by_hostname(monoservice_mysql_connector_manager_get_instance(),
+									     MONOSERVICE_MYSQL_HOSTNAME);
+
+  if(start_list != NULL){
+    mysql_connector = start_list->data;
+  }
+  
   /* media message */
   media_message = soup_message_new(MONOSERVICE_UPLOAD_DEFAULT_METHOD,
 				   MONOSERVICE_UPLOAD_DEFAULT_URI);
@@ -281,7 +305,7 @@ main(int argc, char **argv)
 						 10);
   }
     
-  upload_date = localtime(upload_timestamp);
+  upload_date = localtime(&upload_timestamp);
 
   /* create directory */
   upload_dir = g_strdup_printf("%s/%d/%d/%d/%d",
@@ -307,6 +331,18 @@ main(int argc, char **argv)
 				    upload_dir,
 				    str);
   
+  /* duration */
+  upload_duration = 0;
+    
+  str = g_hash_table_lookup(form_data_table,
+			    "media-duration");
+
+  if(str != NULL){
+    upload_duration = (useconds_t) g_ascii_strtoull(str,
+						    NULL,
+						    10);
+  }
+  
   if(g_str_has_suffix(filename,
 		      ".wav")){
     FILE *f;
@@ -324,7 +360,28 @@ main(int argc, char **argv)
 	      "w");
     fwrite(data, length, sizeof(guint8), f);
 
-    //TODO:JK: implement me
+    str = g_hash_table_lookup(form_data_table,
+			      "media-type");
+
+    if(!g_strcmp0(str,
+		  "mic")){
+      guint64 mic_upload_file_id;
+      
+      mic_upload_file_id = monoservice_mic_upload_file_dao_create(mysql_connector,
+								  upload_filename,
+								  upload_timestamp,
+								  upload_duration,
+								  TRUE);
+    }else if(!g_strcmp0(str,
+			"soundcard")){
+      guint64 soundcard_upload_file_id;
+
+      soundcard_upload_file_id = monoservice_soundcard_upload_file_dao_create(mysql_connector,
+									      upload_filename,
+									      upload_timestamp,
+									      upload_duration,
+									      TRUE);
+    }
   }else if(g_str_has_suffix(filename,
 			    ".mp4")){
     FILE *f;
@@ -342,10 +399,31 @@ main(int argc, char **argv)
 	      "w");
     fwrite(data, length, sizeof(guint8), f);
 
-    //TODO:JK: implement me
+    str = g_hash_table_lookup(form_data_table,
+			      "media-type");
+
+    if(!g_strcmp0(str,
+		  "cam")){
+      guint64 cam_upload_file_id;
+      
+      cam_upload_file_id = monoservice_cam_upload_file_dao_create(mysql_connector,
+								  upload_filename,
+								  upload_timestamp,
+								  upload_duration,
+								  TRUE);
+    }else if(!g_strcmp0(str,
+			"screen")){
+      guint64 screen_upload_file_id;
+
+      screen_upload_file_id = monoservice_screen_upload_file_dao_create(mysql_connector,
+									upload_filename,
+									upload_timestamp,
+									upload_duration,
+									TRUE);
+    }
   }
 
-  g_object_run_dispose(media_message);
+  g_object_run_dispose(G_OBJECT(media_message));
   g_object_unref(media_message);
 
   soup_buffer_free(file);

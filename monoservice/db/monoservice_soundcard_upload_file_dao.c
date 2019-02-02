@@ -18,3 +18,189 @@
  */
 
 #include <monoservice/db/monoservice_soundcard_upload_file_dao.h>
+
+#define USECS_PER_SEC (1000000)
+
+guint64
+monoservice_soundcard_upload_file_dao_create(MonoserviceMysqlConnector *mysql_connector,
+					     gchar *filename,
+					     time_t timestamp,
+					     useconds_t duration,
+					     gboolean available)
+{
+  gchar *query;
+
+  guint64 soundcard_upload_file_id;
+  gdouble duration_value;
+
+  GError *error;
+  
+  if(filename == NULL){
+    filename = g_strdup("NULL");
+  }else{
+    filename = g_strdup_printf("'%s'", filename);
+  }
+  
+  duration_value = (gdouble) duration / (gdouble) USECS_PER_SEC;
+
+  query = g_strdup_printf("INSERT INTO SOUNDCARD_UPLOAD_FILE (FILENAME, TIMESTAMP, DURATION, AVAILABLE) VALUES (%s, %ld, %f, %s)",
+			  filename,
+			  timestamp,
+			  duration_value,
+			  (available ? "true": "false"));
+  soundcard_upload_file_id = 0;
+
+  error = NULL;
+  monoservice_mysql_connector_query_extended(mysql_connector,
+					     query,
+					     &soundcard_upload_file_id,
+					     NULL,
+					     NULL,
+					     NULL, NULL,
+					     &error);
+
+  g_free(filename);
+
+  g_free(query);
+  
+  return(soundcard_upload_file_id);
+}
+
+void
+monoservice_soundcard_upload_file_dao_delete(MonoserviceMysqlConnector *mysql_connector,
+					     guint64 soundcard_upload_file_id)
+{
+  gchar *query;
+
+  GError *error;
+
+  query = g_strdup_printf("DELETE FROM SOUNDCARD_UPLOAD_FILE WHERE SOUNDCARD_UPLOAD_FILE_ID = '%lu'", soundcard_upload_file_id);
+
+  error = NULL;
+  monoservice_mysql_connector_query(mysql_connector,
+				    query,
+				    &error);
+
+  g_free(query);
+}
+
+gchar**
+monoservice_soundcard_upload_file_dao_select(MonoserviceMysqlConnector *mysql_connector,
+					     guint64 soundcard_upload_file_id)
+{
+  gchar ***table;
+  gchar **strv;
+  gchar *query;
+
+  GError *error;
+
+  query = g_strdup_printf("SELECT * FROM SOUNDCARD_UPLOAD_FILE WHERE SOUNDCARD_UPLOAD_FILE_ID = '%lu'", soundcard_upload_file_id);
+
+  table = NULL;
+  error = NULL;
+  monoservice_mysql_connector_query_extended(mysql_connector,
+					     query,
+					     NULL,
+					     NULL,
+					     &table,
+					     NULL, NULL,
+					     &error);
+
+  g_free(query);
+
+  if(table != NULL){
+    strv = table[0];
+
+    g_free(table);
+  }
+
+  return(strv);
+}
+
+void
+monoservice_soundcard_upload_file_dao_set_filename(MonoserviceMysqlConnector *mysql_connector,
+						   guint64 soundcard_upload_file_id,
+						   gchar *filename)
+{
+  gchar *query;
+
+  GError *error;
+
+  if(filename == NULL){
+    filename = g_strdup("NULL");
+  }else{
+    filename = g_strdup_printf("'%s'", filename);
+  }
+
+  query = g_strdup_printf("UPDATE SOUNDCARD_UPLOAD_FILE SET FILENAME = %s WHERE SOUNDCARD_UPLOAD_FILE_ID = '%lu'", filename, soundcard_upload_file_id);
+
+  error = NULL;
+  monoservice_mysql_connector_query(mysql_connector,
+				    query,
+				    &error);
+
+  g_free(filename);
+  
+  g_free(query);
+}
+
+void
+monoservice_soundcard_upload_file_dao_set_timestamp(MonoserviceMysqlConnector *mysql_connector,
+						    guint64 soundcard_upload_file_id,
+						    time_t timestamp)
+{
+  gchar *query;
+
+  GError *error;
+
+  query = g_strdup_printf("UPDATE SOUNDCARD_UPLOAD_FILE SET TIMESTAMP = %ld WHERE SOUNDCARD_UPLOAD_FILE_ID = '%lu'", timestamp, soundcard_upload_file_id);
+
+  error = NULL;
+  monoservice_mysql_connector_query(mysql_connector,
+				    query,
+				    &error);
+  
+  g_free(query);
+}
+
+void
+monoservice_soundcard_upload_file_dao_set_duration(MonoserviceMysqlConnector *mysql_connector,
+						   guint64 soundcard_upload_file_id,
+						   useconds_t duration)
+{
+  gchar *query;
+
+  gdouble duration_value;
+
+  GError *error;
+
+  duration_value = (gdouble) duration / (gdouble) USECS_PER_SEC;
+
+  query = g_strdup_printf("UPDATE SOUNDCARD_UPLOAD_FILE SET DURATION = %f WHERE SOUNDCARD_UPLOAD_FILE_ID = '%lu'", duration_value, soundcard_upload_file_id);
+
+  error = NULL;
+  monoservice_mysql_connector_query(mysql_connector,
+				    query,
+				    &error);
+  
+  g_free(query);
+}
+
+void
+monoservice_soundcard_upload_file_dao_set_available(MonoserviceMysqlConnector *mysql_connector,
+						    guint64 soundcard_upload_file_id,
+						    gboolean available)
+{
+  gchar *query;
+
+  GError *error;
+
+  query = g_strdup_printf("UPDATE SOUNDCARD_UPLOAD_FILE SET AVAILABLE = %s WHERE SOUNDCARD_UPLOAD_FILE_ID = '%lu'", (available ? "true": "false"), soundcard_upload_file_id);
+
+  error = NULL;
+  monoservice_mysql_connector_query(mysql_connector,
+				    query,
+				    &error);
+  
+  g_free(query);
+}

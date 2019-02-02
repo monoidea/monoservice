@@ -79,49 +79,49 @@ monoservice_www_SOURCES = $(monoservice_www_c_sources) $(monoservice_wwwheaders)
 
 monoservice_www_CFLAGS += $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
 monoservice_www_LDFLAGS += -pthread
-monoservice_www_LDADD = libmonoservice.la -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+monoservice_www_LDADD = libmonoservice.la -ldl -lm $(MYSQLCLIENT_LIBS) $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
 # monoservice-status.cgi
 monoservice_status_cgi_SOURCES = $(monoservice_status_cgi_c_sources) $(monoservice_status_cgiheaders)
 
-monoservice_status_cgi_CFLAGS += $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
+monoservice_status_cgi_CFLAGS += $(MYSQLCLIENT_CFLAGS) $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
 monoservice_status_cgi_LDFLAGS += -pthread
-monoservice_status_cgi_LDADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+monoservice_status_cgi_LDADD = libmonoservice.la -ldl -lm $(MYSQLCLIENT_LIBS) $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
 # monoservice-config.cgi
 monoservice_config_cgi_SOURCES = $(monoservice_config_cgi_c_sources) $(monoservice_config_cgiheaders)
 
-monoservice_config_cgi_CFLAGS += $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
+monoservice_config_cgi_CFLAGS += $(MYSQLCLIENT_CFLAGS) $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
 monoservice_config_cgi_LDFLAGS += -pthread
-monoservice_config_cgi_LDADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+monoservice_config_cgi_LDADD = libmonoservice.la -ldl -lm $(MYSQLCLIENT_LIBS) $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
 # monoservice-control.cgi
 monoservice_control_cgi_SOURCES = $(monoservice_control_cgi_c_sources) $(monoservice_control_cgiheaders)
 
-monoservice_control_cgi_CFLAGS += $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
+monoservice_control_cgi_CFLAGS += $(MYSQLCLIENT_CFLAGS) $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
 monoservice_control_cgi_LDFLAGS += -pthread
-monoservice_control_cgi_LDADD = -ldl -lm $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+monoservice_control_cgi_LDADD = libmonoservice.la -ldl -lm $(MYSQLCLIENT_LIBS) $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
 # monoservice-upload.cgi
 monoservice_upload_cgi_SOURCES = $(monoservice_upload_cgi_c_sources) $(monoservice_upload_cgiheaders)
 
-monoservice_upload_cgi_CFLAGS += $(LIBSOUP_CFLAGS) $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
+monoservice_upload_cgi_CFLAGS += $(LIBSOUP_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
 monoservice_upload_cgi_LDFLAGS += -pthread
-monoservice_upload_cgi_LDADD = -ldl -lm $(LIBSOUP_LIBS) $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+monoservice_upload_cgi_LDADD = libmonoservice.la -ldl -lm $(LIBSOUP_LIBS) $(MYSQLCLIENT_LIBS) $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
 # monoservice-download.cgi
 monoservice_download_cgi_SOURCES = $(monoservice_download_cgi_c_sources) $(monoservice_download_cgiheaders)
 
-monoservice_download_cgi_CFLAGS += $(LIBXSLT_CFLAGS) $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
+monoservice_download_cgi_CFLAGS += $(LIBXSLT_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
 monoservice_download_cgi_LDFLAGS += -pthread
-monoservice_download_cgi_LDADD = -ldl -lm $(LIBXSLT_LIBS) $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+monoservice_download_cgi_LDADD = libmonoservice.la -ldl -lm $(LIBXSLT_LIBS) $(MYSQLCLIENT_LIBS) $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
 # monoservice-video.cgi
 monoservice_video_cgi_SOURCES = $(monoservice_video_cgi_c_sources) $(monoservice_video_cgiheaders)
 
-monoservice_video_cgi_CFLAGS += $(LIBXSLT_CFLAGS) $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
+monoservice_video_cgi_CFLAGS += $(LIBXSLT_CFLAGS) $(MYSQLCLIENT_CFLAGS) $(LIBXML2_CFLAGS) $(GOBJECT_CFLAGS) $(LIBQRENCODE_CFLAGS) $(CAIRO_CFLAGS)
 monoservice_video_cgi_LDFLAGS += -pthread
-monoservice_video_cgi_LDADD = -ldl -lm $(LIBXSLT_LIBS) $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
+monoservice_video_cgi_LDADD = libmonoservice.la -ldl -lm $(LIBXSLT_LIBS) $(MYSQLCLIENT_LIBS) $(LIBXML2_LIBS) $(GOBJECT_LIBS) $(LIBQRENCODE_LIBS) $(CAIRO_LIBS)
 
 # libmonoservice lib files
 deprecated_libmonoservice_lib_h_sources =

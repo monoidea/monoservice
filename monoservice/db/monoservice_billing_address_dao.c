@@ -31,6 +31,7 @@ monoservice_billing_address_dao_create(MonoserviceMysqlConnector *mysql_connecto
 				       gchar *country)
 {
   gchar *query;
+
   guint64 billing_address_id;
 
   GError *error;
