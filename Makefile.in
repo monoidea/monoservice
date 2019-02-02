@@ -187,8 +187,8 @@ am__objects_5 = $(am__objects_1) \
 	monoservice/db/libmonoservice_la-monoservice_screen_upload_file_dao.lo \
 	monoservice/db/libmonoservice_la-monoservice_mic_upload_file_dao.lo \
 	monoservice/db/libmonoservice_la-monoservice_soundcard_upload_file_dao.lo \
-	monoservice/db/libmonoservice_la-monoservice_vproc_queue_file_dao.lo \
-	monoservice/db/libmonoservice_la-monoservice_aproc_queue_file_dao.lo
+	monoservice/db/libmonoservice_la-monoservice_vproc_queue_dao.lo \
+	monoservice/db/libmonoservice_la-monoservice_aproc_queue_dao.lo
 am_libmonoservice_la_OBJECTS = $(am__objects_3) $(am__objects_4) \
 	$(am__objects_5)
 libmonoservice_la_OBJECTS = $(am_libmonoservice_la_OBJECTS)
@@ -306,7 +306,7 @@ am__depfiles_remade = monoservice/$(DEPDIR)/www-monoservice_main.Po \
 	monoservice/cgi-bin/$(DEPDIR)/status_cgi-monoservice_status.Po \
 	monoservice/cgi-bin/$(DEPDIR)/upload_cgi-monoservice_upload.Po \
 	monoservice/cgi-bin/$(DEPDIR)/video_cgi-monoservice_video.Po \
-	monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_file_dao.Plo \
+	monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_dao.Plo \
 	monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_mic_upload_file_dao.Plo \
 	monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_soundcard_upload_file_dao.Plo \
 	monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_billing_address_dao.Plo \
@@ -327,7 +327,7 @@ am__depfiles_remade = monoservice/$(DEPDIR)/www-monoservice_main.Po \
 	monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_title_strip_video_file_dao.Plo \
 	monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_video_file_dao.Plo \
 	monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_cam_upload_file_dao.Plo \
-	monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_file_dao.Plo \
+	monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_dao.Plo \
 	monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_screen_upload_file_dao.Plo \
 	monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_media_queue.Plo \
 	monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Plo
@@ -738,8 +738,8 @@ libmonoservice_db_h_sources = \
 	monoservice/db/monoservice_screen_upload_file_dao.h \
 	monoservice/db/monoservice_mic_upload_file_dao.h \
 	monoservice/db/monoservice_soundcard_upload_file_dao.h \
-	monoservice/db/monoservice_vproc_queue_file_dao.h \
-	monoservice/db/monoservice_aproc_queue_file_dao.h
+	monoservice/db/monoservice_vproc_queue_dao.h \
+	monoservice/db/monoservice_aproc_queue_dao.h
 
 deprecated_libmonoservice_db_c_sources = 
 libmonoservice_db_c_sources = \
@@ -765,8 +765,8 @@ libmonoservice_db_c_sources = \
 	monoservice/db/monoservice_screen_upload_file_dao.c \
 	monoservice/db/monoservice_mic_upload_file_dao.c \
 	monoservice/db/monoservice_soundcard_upload_file_dao.c \
-	monoservice/db/monoservice_vproc_queue_file_dao.c \
-	monoservice/db/monoservice_aproc_queue_file_dao.c
+	monoservice/db/monoservice_vproc_queue_dao.c \
+	monoservice/db/monoservice_aproc_queue_dao.c
 
 
 # monoservice_www all files
@@ -1029,10 +1029,10 @@ monoservice/db/libmonoservice_la-monoservice_mic_upload_file_dao.lo:  \
 monoservice/db/libmonoservice_la-monoservice_soundcard_upload_file_dao.lo:  \
 	monoservice/db/$(am__dirstamp) \
 	monoservice/db/$(DEPDIR)/$(am__dirstamp)
-monoservice/db/libmonoservice_la-monoservice_vproc_queue_file_dao.lo:  \
+monoservice/db/libmonoservice_la-monoservice_vproc_queue_dao.lo:  \
 	monoservice/db/$(am__dirstamp) \
 	monoservice/db/$(DEPDIR)/$(am__dirstamp)
-monoservice/db/libmonoservice_la-monoservice_aproc_queue_file_dao.lo:  \
+monoservice/db/libmonoservice_la-monoservice_aproc_queue_dao.lo:  \
 	monoservice/db/$(am__dirstamp) \
 	monoservice/db/$(DEPDIR)/$(am__dirstamp)
 
@@ -1119,7 +1119,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/cgi-bin/$(DEPDIR)/status_cgi-monoservice_status.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/cgi-bin/$(DEPDIR)/upload_cgi-monoservice_upload.Po@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/cgi-bin/$(DEPDIR)/video_cgi-monoservice_video.Po@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_file_dao.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_dao.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_mic_upload_file_dao.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_soundcard_upload_file_dao.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_billing_address_dao.Plo@am__quote@ # am--include-marker
@@ -1140,7 +1140,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_title_strip_video_file_dao.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_video_file_dao.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_cam_upload_file_dao.Plo@am__quote@ # am--include-marker
-@AMDEP_TRUE@@am__include@ @am__quote@monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_file_dao.Plo@am__quote@ # am--include-marker
+@AMDEP_TRUE@@am__include@ @am__quote@monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_dao.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_screen_upload_file_dao.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_media_queue.Plo@am__quote@ # am--include-marker
 @AMDEP_TRUE@@am__include@ @am__quote@monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Plo@am__quote@ # am--include-marker
@@ -1336,19 +1336,19 @@ monoservice/db/libmonoservice_la-monoservice_soundcard_upload_file_dao.lo: monos
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -c -o monoservice/db/libmonoservice_la-monoservice_soundcard_upload_file_dao.lo `test -f 'monoservice/db/monoservice_soundcard_upload_file_dao.c' || echo '$(srcdir)/'`monoservice/db/monoservice_soundcard_upload_file_dao.c
 
-monoservice/db/libmonoservice_la-monoservice_vproc_queue_file_dao.lo: monoservice/db/monoservice_vproc_queue_file_dao.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -MT monoservice/db/libmonoservice_la-monoservice_vproc_queue_file_dao.lo -MD -MP -MF monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_file_dao.Tpo -c -o monoservice/db/libmonoservice_la-monoservice_vproc_queue_file_dao.lo `test -f 'monoservice/db/monoservice_vproc_queue_file_dao.c' || echo '$(srcdir)/'`monoservice/db/monoservice_vproc_queue_file_dao.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_file_dao.Tpo monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_file_dao.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/db/monoservice_vproc_queue_file_dao.c' object='monoservice/db/libmonoservice_la-monoservice_vproc_queue_file_dao.lo' libtool=yes @AMDEPBACKSLASH@
+monoservice/db/libmonoservice_la-monoservice_vproc_queue_dao.lo: monoservice/db/monoservice_vproc_queue_dao.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -MT monoservice/db/libmonoservice_la-monoservice_vproc_queue_dao.lo -MD -MP -MF monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_dao.Tpo -c -o monoservice/db/libmonoservice_la-monoservice_vproc_queue_dao.lo `test -f 'monoservice/db/monoservice_vproc_queue_dao.c' || echo '$(srcdir)/'`monoservice/db/monoservice_vproc_queue_dao.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_dao.Tpo monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_dao.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/db/monoservice_vproc_queue_dao.c' object='monoservice/db/libmonoservice_la-monoservice_vproc_queue_dao.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -c -o monoservice/db/libmonoservice_la-monoservice_vproc_queue_file_dao.lo `test -f 'monoservice/db/monoservice_vproc_queue_file_dao.c' || echo '$(srcdir)/'`monoservice/db/monoservice_vproc_queue_file_dao.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -c -o monoservice/db/libmonoservice_la-monoservice_vproc_queue_dao.lo `test -f 'monoservice/db/monoservice_vproc_queue_dao.c' || echo '$(srcdir)/'`monoservice/db/monoservice_vproc_queue_dao.c
 
-monoservice/db/libmonoservice_la-monoservice_aproc_queue_file_dao.lo: monoservice/db/monoservice_aproc_queue_file_dao.c
-@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -MT monoservice/db/libmonoservice_la-monoservice_aproc_queue_file_dao.lo -MD -MP -MF monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_file_dao.Tpo -c -o monoservice/db/libmonoservice_la-monoservice_aproc_queue_file_dao.lo `test -f 'monoservice/db/monoservice_aproc_queue_file_dao.c' || echo '$(srcdir)/'`monoservice/db/monoservice_aproc_queue_file_dao.c
-@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_file_dao.Tpo monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_file_dao.Plo
-@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/db/monoservice_aproc_queue_file_dao.c' object='monoservice/db/libmonoservice_la-monoservice_aproc_queue_file_dao.lo' libtool=yes @AMDEPBACKSLASH@
+monoservice/db/libmonoservice_la-monoservice_aproc_queue_dao.lo: monoservice/db/monoservice_aproc_queue_dao.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -MT monoservice/db/libmonoservice_la-monoservice_aproc_queue_dao.lo -MD -MP -MF monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_dao.Tpo -c -o monoservice/db/libmonoservice_la-monoservice_aproc_queue_dao.lo `test -f 'monoservice/db/monoservice_aproc_queue_dao.c' || echo '$(srcdir)/'`monoservice/db/monoservice_aproc_queue_dao.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_dao.Tpo monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_dao.Plo
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='monoservice/db/monoservice_aproc_queue_dao.c' object='monoservice/db/libmonoservice_la-monoservice_aproc_queue_dao.lo' libtool=yes @AMDEPBACKSLASH@
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
-@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -c -o monoservice/db/libmonoservice_la-monoservice_aproc_queue_file_dao.lo `test -f 'monoservice/db/monoservice_aproc_queue_file_dao.c' || echo '$(srcdir)/'`monoservice/db/monoservice_aproc_queue_file_dao.c
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(LIBTOOL) $(AM_V_lt) --tag=CC $(AM_LIBTOOLFLAGS) $(LIBTOOLFLAGS) --mode=compile $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(libmonoservice_la_CFLAGS) $(CFLAGS) -c -o monoservice/db/libmonoservice_la-monoservice_aproc_queue_dao.lo `test -f 'monoservice/db/monoservice_aproc_queue_dao.c' || echo '$(srcdir)/'`monoservice/db/monoservice_aproc_queue_dao.c
 
 monoservice/cgi-bin/config_cgi-monoservice_config.o: monoservice/cgi-bin/monoservice_config.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(monoservice_config_cgi_CFLAGS) $(CFLAGS) -MT monoservice/cgi-bin/config_cgi-monoservice_config.o -MD -MP -MF monoservice/cgi-bin/$(DEPDIR)/config_cgi-monoservice_config.Tpo -c -o monoservice/cgi-bin/config_cgi-monoservice_config.o `test -f 'monoservice/cgi-bin/monoservice_config.c' || echo '$(srcdir)/'`monoservice/cgi-bin/monoservice_config.c
@@ -1818,7 +1818,7 @@ distclean: distclean-recursive
 	-rm -f monoservice/cgi-bin/$(DEPDIR)/status_cgi-monoservice_status.Po
 	-rm -f monoservice/cgi-bin/$(DEPDIR)/upload_cgi-monoservice_upload.Po
 	-rm -f monoservice/cgi-bin/$(DEPDIR)/video_cgi-monoservice_video.Po
-	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_file_dao.Plo
+	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_dao.Plo
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_mic_upload_file_dao.Plo
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_soundcard_upload_file_dao.Plo
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_billing_address_dao.Plo
@@ -1839,7 +1839,7 @@ distclean: distclean-recursive
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_title_strip_video_file_dao.Plo
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_video_file_dao.Plo
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_cam_upload_file_dao.Plo
-	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_file_dao.Plo
+	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_dao.Plo
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_screen_upload_file_dao.Plo
 	-rm -f monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_media_queue.Plo
 	-rm -f monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Plo
@@ -1897,7 +1897,7 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f monoservice/cgi-bin/$(DEPDIR)/status_cgi-monoservice_status.Po
 	-rm -f monoservice/cgi-bin/$(DEPDIR)/upload_cgi-monoservice_upload.Po
 	-rm -f monoservice/cgi-bin/$(DEPDIR)/video_cgi-monoservice_video.Po
-	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_file_dao.Plo
+	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_dao.Plo
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_mic_upload_file_dao.Plo
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_aproc_queue_soundcard_upload_file_dao.Plo
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_billing_address_dao.Plo
@@ -1918,7 +1918,7 @@ maintainer-clean: maintainer-clean-recursive
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_title_strip_video_file_dao.Plo
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_video_file_dao.Plo
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_cam_upload_file_dao.Plo
-	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_file_dao.Plo
+	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_dao.Plo
 	-rm -f monoservice/db/$(DEPDIR)/libmonoservice_la-monoservice_vproc_queue_screen_upload_file_dao.Plo
 	-rm -f monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_media_queue.Plo
 	-rm -f monoservice/lib/$(DEPDIR)/libmonoservice_la-monoservice_qrcode.Plo

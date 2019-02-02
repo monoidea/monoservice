@@ -164,8 +164,8 @@ libmonoservice_db_h_sources = \
 	monoservice/db/monoservice_screen_upload_file_dao.h \
 	monoservice/db/monoservice_mic_upload_file_dao.h \
 	monoservice/db/monoservice_soundcard_upload_file_dao.h \
-	monoservice/db/monoservice_vproc_queue_file_dao.h \
-	monoservice/db/monoservice_aproc_queue_file_dao.h
+	monoservice/db/monoservice_vproc_queue_dao.h \
+	monoservice/db/monoservice_aproc_queue_dao.h
 
 deprecated_libmonoservice_db_c_sources =
 
@@ -192,8 +192,8 @@ libmonoservice_db_c_sources = \
 	monoservice/db/monoservice_screen_upload_file_dao.c \
 	monoservice/db/monoservice_mic_upload_file_dao.c \
 	monoservice/db/monoservice_soundcard_upload_file_dao.c \
-	monoservice/db/monoservice_vproc_queue_file_dao.c \
-	monoservice/db/monoservice_aproc_queue_file_dao.c
+	monoservice/db/monoservice_vproc_queue_dao.c \
+	monoservice/db/monoservice_aproc_queue_dao.c
 
 # monoservice_www all files
 monoservice_wwwheaders = \
