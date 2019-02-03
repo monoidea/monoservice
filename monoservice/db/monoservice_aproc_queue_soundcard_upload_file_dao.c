@@ -18,3 +18,49 @@
  */
 
 #include <monoservice/db/monoservice_aproc_queue_soundcard_upload_file_dao.h>
+
+void
+monoservice_aproc_queue_soundcard_upload_file_dao_create(MonoserviceMysqlConnector *mysql_connector,
+							 guint64 aproc_queue,
+							 guint64 soundcard_upload_file)
+{
+  gchar *query;
+
+  GError *error;
+  
+  query = g_strdup_printf("INSERT INTO APROC_QUEUE_SOUNDCARD_UPLOAD_FILE (APROC_QUEUE, SOUNDCARD_UPLOAD_FILE) VALUES (%lu, %lu)",
+			  aproc_queue,
+			  soundcard_upload_file);
+
+  error = NULL;
+  monoservice_mysql_connector_query_extended(mysql_connector,
+					     query,
+					     NULL,
+					     NULL,
+					     NULL,
+					     NULL, NULL,
+					     &error);
+
+  g_free(query);
+}
+
+void
+monoservice_aproc_queue_soundcard_upload_file_dao_delete(MonoserviceMysqlConnector *mysql_connector,
+							 guint64 aproc_queue,
+							 guint64 soundcard_upload_file)
+{
+  gchar *query;
+
+  GError *error;
+
+  query = g_strdup_printf("DELETE FROM APROC_QUEUE_SOUNDCARD_UPLOAD_FILE WHERE APROC_QUEUE = '%lu' AND SOUNDCARD_UPLOAD_FILE = '%lu'",
+			  aproc_queue,
+			  soundcard_upload_file);
+
+  error = NULL;
+  monoservice_mysql_connector_query(mysql_connector,
+				    query,
+				    &error);
+
+  g_free(query);
+}

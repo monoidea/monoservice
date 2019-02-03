@@ -25,11 +25,11 @@
 
 #include <monoservice/db/monoservice_mysql_connector.h>
 
-guint64 monoservice_aproc_queue_mic_upload_file_dao_create(MonoserviceMysqlConnector *mysql_connector);
+void monoservice_aproc_queue_mic_upload_file_dao_create(MonoserviceMysqlConnector *mysql_connector,
+							guint64 aproc_queue,
+							guint64 mic_upload_file);
 void monoservice_aproc_queue_mic_upload_file_dao_delete(MonoserviceMysqlConnector *mysql_connector,
-							guint64 aproc_queue_mic_upload_file_id);
-
-gchar** monoservice_aproc_queue_mic_upload_file_dao_select(MonoserviceMysqlConnector *mysql_connector,
-							   guint64 aproc_queue_mic_upload_file_id);
+							guint64 aproc_queue,
+							guint64 mic_upload_file);
  
 #endif /*__MONOSERVICE_APROC_QUEUE_MIC_UPLOAD_FILE_DAO_H__*/

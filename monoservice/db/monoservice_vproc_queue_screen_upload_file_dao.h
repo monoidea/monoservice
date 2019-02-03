@@ -25,11 +25,11 @@
 
 #include <monoservice/db/monoservice_mysql_connector.h>
 
-guint64 monoservice_vproc_queue_screen_upload_file_dao_create(MonoserviceMysqlConnector *mysql_connector);
+void monoservice_vproc_queue_screen_upload_file_dao_create(MonoserviceMysqlConnector *mysql_connector,
+							   guint64 vproc_queue,
+							   guint64 screen_upload_file);
 void monoservice_vproc_queue_screen_upload_file_dao_delete(MonoserviceMysqlConnector *mysql_connector,
-							   guint64 vproc_queue_screen_upload_file_id);
-
-gchar** monoservice_vproc_queue_screen_upload_file_dao_select(MonoserviceMysqlConnector *mysql_connector,
-							      guint64 vproc_queue_screen_upload_file_id);
+							   guint64 vproc_queue,
+							   guint64 screen_upload_file);
  
 #endif /*__MONOSERVICE_VPROC_QUEUE_SCREEN_UPLOAD_FILE_DAO_H__*/

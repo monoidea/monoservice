@@ -18,3 +18,49 @@
  */
 
 #include <monoservice/db/monoservice_vproc_queue_cam_upload_file_dao.h>
+
+void
+monoservice_vproc_queue_cam_upload_file_dao_create(MonoserviceMysqlConnector *mysql_connector,
+						   guint64 vproc_queue,
+						   guint64 cam_upload_file)
+{
+  gchar *query;
+
+  GError *error;
+  
+  query = g_strdup_printf("INSERT INTO VPROC_QUEUE_CAM_UPLOAD_FILE (VPROC_QUEUE, CAM_UPLOAD_FILE) VALUES (%lu, %lu)",
+			  vproc_queue,
+			  cam_upload_file);
+
+  error = NULL;
+  monoservice_mysql_connector_query_extended(mysql_connector,
+					     query,
+					     NULL,
+					     NULL,
+					     NULL,
+					     NULL, NULL,
+					     &error);
+
+  g_free(query);
+}
+
+void
+monoservice_vproc_queue_cam_upload_file_dao_delete(MonoserviceMysqlConnector *mysql_connector,
+						   guint64 vproc_queue,
+						   guint64 cam_upload_file)
+{
+  gchar *query;
+
+  GError *error;
+
+  query = g_strdup_printf("DELETE FROM VPROC_QUEUE_CAM_UPLOAD_FILE WHERE VPROC_QUEUE = '%lu' AND CAM_UPLOAD_FILE = '%lu'",
+			  vproc_queue,
+			  cam_upload_file);
+
+  error = NULL;
+  monoservice_mysql_connector_query(mysql_connector,
+				    query,
+				    &error);
+
+  g_free(query);
+}
