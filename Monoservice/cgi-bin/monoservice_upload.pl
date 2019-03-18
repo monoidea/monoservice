@@ -21,6 +21,9 @@
 use Modern::Perl '2015';
 use autodie;
 
+use Monoservice::DB::ConnectorManager '../db/';
+use Monoservice::DB::Connector '../db/';
+
 my $HTTP_STATUS_MESSAGE_OK = "OK";
 my $HTTP_STATUS_CODE_OK = 200;
 
@@ -126,4 +129,6 @@ if($bytes_read < $content_length){
     $bytes_read = read STDIN, $bytes, $content_length - $bytes_read, $bytes_read;
 }
 
+# mysql connector
+my mysql_connector = 
 #TODO:JK: implement me
