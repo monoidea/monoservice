@@ -21,9 +21,12 @@
 use Modern::Perl '2015';
 use autodie;
 
-use Monoservice::DB::ConnectorManager '../db/';
-use Monoservice::DB::Connector '../db/';
+use lib '.';
+use Monoservice::DB::MySQLConnectorManager;
 
+use Glib;
+use HTTP::Soup;
+    
 my $HTTP_STATUS_MESSAGE_OK = "OK";
 my $HTTP_STATUS_CODE_OK = 200;
 
@@ -37,6 +40,11 @@ my $MONOSERVICE_UPLOAD_DEFAULT_USERNAME = "monothek";
 my $MONOSERVICE_UPLOAD_DEFAULT_TOKEN = "monothek";
 
 my $MONOSERVICE_UPLOAD_DEFAULT_BUFFER_SIZE = 131072;
+
+my $MONOSERVICE_UPLOAD_DEFAULT_METHOD = "PUT";
+my $MONOSERVICE_UPLOAD_DEFAULT_URI = "http://monothek.ch/upload/media";
+
+my $MONOSERVICE_UPLOAD_DEFAULT_CONTENT_TYPE = "multipart/form-data";
 
 sub monoservice_upload_write_status {
     my $status_message = $_[0];
@@ -130,5 +138,18 @@ if($bytes_read < $content_length){
 }
 
 # mysql connector
-my mysql_connector = 
+my $mysql_connector_manager = Monoservice::DB::MySQLConnectorManager->get_instance();
+my $mysql_connector = $mysql_connector_manager->get_connector_by_hostname("localhost");
+
+print $log_file "db_name = " . $mysql_connector->{db_name} . "\n";
+
+# media message
+my $media_message = HTTP::Soup::Message->new($MONOSERVICE_UPLOAD_DEFAULT_METHOD,
+					     $MONOSERVICE_UPLOAD_DEFAULT_URI);
+
+my @garr = unpack('C*', $bytes);
+$media_message->set_request($MONOSERVICE_UPLOAD_DEFAULT_CONTENT_TYPE,
+			    'static',
+			    \@garr);
+
 #TODO:JK: implement me

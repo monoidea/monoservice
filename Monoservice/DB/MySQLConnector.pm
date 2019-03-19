@@ -18,51 +18,54 @@
 # You should have received a copy of the GNU General Public License
 # along with Monoservice.  If not, see <http://www.gnu.org/licenses/>.
 
-package Monoservice::DB::ConnectorManager;
+package Monoservice::DB::MySQLConnector;
 
 use Modern::Perl '2015';
 use autodie;
 
-use List::Util qw(first);
+use lib '/home/joelkraehemann/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/';
+use DBI;
 
-my $mysql_connector_manager;
-
-sub add_connector {
+sub do_connect {
     my $self = shift;
 
-    my $connector = $_[0];
-
-    push $self->{connector}, $connector;
+    $self->{dbh} = DBI->connect($self->{dsn}, $self->{username}, $self->{password});
 }
 
-sub remove_connector {
+sub do_query {
     my $self = shift;
 
-    my $connector = $_[0];
+    my @row;
+    my $query = $_[0];
 
-    delete $self->{connector}[first { $self->{connector}[$_] eq $connector }];
+    my $sth = $self->{dbh}->prepare($query);
+    $sth->execute();
+
+    @row = $sth->fetchrow_array();
+
+    $sth->finish();
+
+    return(@row);
 }
 
-sub get_connector_by_hostname {
+sub do_close {
     my $self = shift;
 
-    my $hostname = $_[0];
-
-    return $self->{connector}[first { $self->{connector}[$_]->{hostname} eq $hostname }];
+    $self->{dbh}->disconnect();
 }
 
-sub get_instance {
-    if(!(defined $mysql_connector_manager)){
-	$mysql_connector_manager = new({});
-    }
-
-    return($mysql_connector_manager);
-}
 
 sub new {
     my ($class, $args) = @_;
 
     my $self = bless {
-	connector => $args->{connector}
+	hostname => $args->{hostname},
+	user => $args->{user},
+	password => $args->{password},
+	db_name => $args->{db_name},
+	port => $args->{port},
+	dsn => "DBI:mysql:" . $args->{db_name} . "@" . $args->{hostname} . ":" . $args->{port}
     }, $class;
 }
+
+1;
