@@ -21,7 +21,6 @@
 use Modern::Perl '2015';
 use autodie;
 
-use lib '.';
 use Monoservice::DB::MySQLConnectorManager;
 
 use Glib;
@@ -151,5 +150,12 @@ my @garr = unpack('C*', $bytes);
 $media_message->set_request($MONOSERVICE_UPLOAD_DEFAULT_CONTENT_TYPE,
 			    'static',
 			    \@garr);
+
+# decode form data
+my $filename;
+my $file_content_type;
+my $file;
+
+($filename, $file_content_type, $file) = HTTP::Soup->form_decode_multipart($media_message);
 
 #TODO:JK: implement me

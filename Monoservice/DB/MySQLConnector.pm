@@ -23,7 +23,7 @@ package Monoservice::DB::MySQLConnector;
 use Modern::Perl '2015';
 use autodie;
 
-use lib '/home/joelkraehemann/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/';
+use lib '~/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/';
 use DBI;
 
 sub do_connect {

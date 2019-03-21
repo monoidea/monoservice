@@ -25,7 +25,6 @@ use autodie;
 
 use List::Util qw(first);
 
-use lib '.';
 use Monoservice::DB::MySQLConnector;
 
 my $mysql_connector_manager;

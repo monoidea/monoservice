@@ -23,6 +23,7 @@ package Monothek::DB;
 use Modern::Perl '2015';
 use autodie;
 
+use lib '~/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/';
 use DBI;
 
 sub monoservice_aproc_queue_dao_create {
