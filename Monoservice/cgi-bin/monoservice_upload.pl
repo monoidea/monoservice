@@ -21,11 +21,18 @@
 use Modern::Perl '2015';
 use autodie;
 
+use CGI;
+use CGI::Header;
+
+use File::HomeDir;
+
+use lib "/var/cgi-bin";
 use Monoservice::DB::MySQLConnectorManager;
 
 use Glib;
-use HTTP::Soup;
-    
+
+use Data::Dumper qw(Dumper);
+
 my $HTTP_STATUS_MESSAGE_OK = "OK";
 my $HTTP_STATUS_CODE_OK = 200;
 
@@ -45,11 +52,15 @@ my $MONOSERVICE_UPLOAD_DEFAULT_URI = "http://monothek.ch/upload/media";
 
 my $MONOSERVICE_UPLOAD_DEFAULT_CONTENT_TYPE = "multipart/form-data";
 
+my $MONOSERVICE_UPLOAD_VIDEO_DIRECTORY = File::HomeDir->my_home . "/monoservice/upload/media/video";
+my $MONOSERVICE_UPLOAD_AUDIO_DIRECTORY = File::HomeDir->my_home . "/monoservice/upload/media/audio";
+
 sub monoservice_upload_write_status {
-    my $status_message = $_[0];
-    my $status_code = $_[1];
-    
-    print "HTTP/1.1 " . $status_code . " " . $status_message .  "\r\n";
+    my $cgi_header = $_[0];
+    my $status_message = $_[1];
+    my $status_code = $_[2];
+
+    $cgi_header->status($status_code . " " . $status_message);
 }
 
 sub monoservice_upload_authenticate{
@@ -68,72 +79,36 @@ sub monoservice_upload_authenticate{
     return($success);
 }
 
-# log file handle
-open my $log_file, '>', '/dev/stderr';
+my $cgi = CGI->new();
+my $cgi_header = CGI::Header->new(query => $cgi,
+    );
 
-# content type and its boundary
+# log file handle
+open my $log_file, '>', '/var/cgi-bin/log/log.txt'; #  '/dev/stderr'
+
+# content type
 my $content_length;
 my $content_type;
 
-my $boundary;
-
-# check content type
-$content_type = $ENV{'CONTENT_TYPE'};
-$content_length = $ENV{'CONTENT_LENGTH'};
-
-if(!(defined $content_type &&
-     defined $content_length)){
-    monoservice_upload_write_status($HTTP_STATUS_MESSAGE_MALFORMED, $HTTP_STATUS_CODE_MALFORMED);
-    
-    exit(0);
-}
-
-if(!($content_type =~ /^Content-Type: multipart\/form-data;/)){
-    monoservice_upload_write_status($HTTP_STATUS_MESSAGE_MALFORMED, $HTTP_STATUS_CODE_MALFORMED);
-    
-    exit(0);
-}
-
-# get boundary
-($boundary) = ($content_type =~ /boundary=([\d\w'()+,-.\/:=?]+)/);
-
-# print $log_file "got boundary: " . $boundary . "\n";
-
 # find username and token
-my $username;
-my $token;
+my $username = $cgi->param('username');
+my $token = $cgi->param('token');
 
-my $bytes;
-my $bytes_read;
-
-$bytes_read = read STDIN, $bytes, $MONOSERVICE_UPLOAD_DEFAULT_BUFFER_SIZE;
-
-my @http_params = ($bytes =~ m/((?:\Q${boundary}\E(?:\r\n.*?){3})(?:(?=\r\n)))/sgmp);
-
-for(my $i = 0; $i < scalar(@http_params); $i += 1){
-#    print $log_file "nth: " . $i . "\n";
-#    print $log_file $http_params[$i] . "\n";
-    
-    if($http_params[$i] =~ /Content-Disposition: form-data; name=\"username\"/g){
-	($username) = $http_params[$i] =~ m/([\w\d\-_]+)$/;
-
-	print $log_file "username: ****\n";
-    }elsif($http_params[$i] =~ /Content-Disposition: form-data; name=\"token\"/g){
-	($token) = $http_params[$i] =~ m/([\w\d\-_]+)$/;
-
-	print $log_file "token : ****\n";
-    }
-}
+print $log_file "username = ****\n";
+print $log_file "token = ****\n";
 
 # authenticate
-if(!monoservice_upload_authenticate($username, $token)){
-    monoservice_upload_write_status($HTTP_STATUS_MESSAGE_FORBIDDEN, $HTTP_STATUS_CODE_FORBIDDEN);
+if(!(defined $username && defined $token) ||
+   monoservice_upload_authenticate($username, $token) == 0){
+    monoservice_upload_write_status($cgi_header, $HTTP_STATUS_MESSAGE_FORBIDDEN, $HTTP_STATUS_CODE_FORBIDDEN);
 
-    exit(0);
-}
+    print $log_file "access denied\n";
 
-if($bytes_read < $content_length){
-    $bytes_read = read STDIN, $bytes, $content_length - $bytes_read, $bytes_read;
+    $cgi_header->finalize();
+    
+    print $CGI::header($cgi_header);
+
+    exit(1);
 }
 
 # mysql connector
@@ -142,20 +117,45 @@ my $mysql_connector = $mysql_connector_manager->get_connector_by_hostname("local
 
 print $log_file "db_name = " . $mysql_connector->{db_name} . "\n";
 
-# media message
-my $media_message = HTTP::Soup::Message->new($MONOSERVICE_UPLOAD_DEFAULT_METHOD,
-					     $MONOSERVICE_UPLOAD_DEFAULT_URI);
-
-my @garr = unpack('C*', $bytes);
-$media_message->set_request($MONOSERVICE_UPLOAD_DEFAULT_CONTENT_TYPE,
-			    'static',
-			    \@garr);
-
 # decode form data
 my $filename;
 my $file_content_type;
 my $file;
 
-($filename, $file_content_type, $file) = HTTP::Soup->form_decode_multipart($media_message);
+# date
+my $upload_timestamp;
+my $str;
+my $sec;
+my $min;
+my $hour;
+my $mday;
+my $mon;
+my $year;
+my $wday;
+my $yday;
+my $isdst;
 
-#TODO:JK: implement me
+$upload_timestamp = 0;
+
+$str = $cgi->param('media-timestamp');
+
+if(defined $str){
+    $upload_timestamp = $str;
+}
+
+($sec,$min,$hour,$mday,$mon,$year,$wday,$yday,$isdst) = localtime($upload_timestamp);
+
+# create directory
+my $upload_dir;
+
+$upload_dir = $MONOSERVICE_UPLOAD_AUDIO_DIRECTORY . "-" . ($year + 1900) . "-" . $mon . "-" . $mday . "-" . $hour . ":" . $min;
+
+print $log_file $upload_dir . "\n";
+
+monoservice_upload_write_status($cgi_header, $HTTP_STATUS_MESSAGE_OK, $HTTP_STATUS_CODE_OK);
+
+$cgi_header->finalize();
+
+print $CGI::header($cgi_header);
+
+1;
