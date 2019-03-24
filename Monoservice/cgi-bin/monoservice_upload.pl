@@ -26,12 +26,11 @@ use CGI::Header;
 
 use File::HomeDir;
 
-use lib "/var/cgi-bin";
-use Monoservice::DB::MySQLConnectorManager;
-
 use Glib;
 
-use Data::Dumper qw(Dumper);
+use lib "/var/cgi-bin";
+use Monoservice::Log::Logger;
+use Monoservice::DB::MySQLConnectorManager;
 
 my $HTTP_STATUS_MESSAGE_OK = "OK";
 my $HTTP_STATUS_CODE_OK = 200;
@@ -52,8 +51,9 @@ my $MONOSERVICE_UPLOAD_DEFAULT_URI = "http://monothek.ch/upload/media";
 
 my $MONOSERVICE_UPLOAD_DEFAULT_CONTENT_TYPE = "multipart/form-data";
 
-my $MONOSERVICE_UPLOAD_VIDEO_DIRECTORY = File::HomeDir->my_home . "/monoservice/upload/media/video";
-my $MONOSERVICE_UPLOAD_AUDIO_DIRECTORY = File::HomeDir->my_home . "/monoservice/upload/media/audio";
+my $MONOSERVICE_HOME_DIR = "/home/monoservice";
+my $MONOSERVICE_UPLOAD_VIDEO_DIRECTORY = $MONOSERVICE_HOME_DIR . "/monoservice/upload/media/video";
+my $MONOSERVICE_UPLOAD_AUDIO_DIRECTORY = $MONOSERVICE_HOME_DIR . "/monoservice/upload/media/audio";
 
 sub monoservice_upload_write_status {
     my $cgi_header = $_[0];
@@ -79,12 +79,24 @@ sub monoservice_upload_authenticate{
     return($success);
 }
 
+# create logger
+my $logger_conf = q(
+log4perl.category.Monoservice.Log.Logger         = INFO, Logfile
+log4perl.appender.Logfile          = Log::Log4perl::Appender::File
+log4perl.appender.Logfile.filename = /var/log/monoservice/monoservice.log
+log4perl.appender.Logfile.layout = \
+    Log::Log4perl::Layout::PatternLayout
+log4perl.appender.Logfile.layout.ConversionPattern = %d %F{1} %L> %m %n
+);
+
+my $logger = Monoservice::Log::Logger->new({conf => $logger_conf});
+my $log = $logger->{log};
+
 my $cgi = CGI->new();
-my $cgi_header = CGI::Header->new(query => $cgi,
-    );
+my $cgi_header = CGI::Header->new(query => $cgi);
 
 # log file handle
-open my $log_file, '>', '/var/cgi-bin/log/log.txt'; #  '/dev/stderr'
+# open my $log_file, '>>', '~/log/monoservice.log'; #  '/dev/stderr'
 
 # content type
 my $content_length;
@@ -94,15 +106,16 @@ my $content_type;
 my $username = $cgi->param('username');
 my $token = $cgi->param('token');
 
-print $log_file "username = ****\n";
-print $log_file "token = ****\n";
+$log->info("authenticate using:");
+$log->info("  username = ****");
+$log->info("  token = ****");
 
 # authenticate
 if(!(defined $username && defined $token) ||
    monoservice_upload_authenticate($username, $token) == 0){
     monoservice_upload_write_status($cgi_header, $HTTP_STATUS_MESSAGE_FORBIDDEN, $HTTP_STATUS_CODE_FORBIDDEN);
 
-    print $log_file "access denied\n";
+    $log->info("access denied");
 
     $cgi_header->finalize();
     
@@ -115,7 +128,7 @@ if(!(defined $username && defined $token) ||
 my $mysql_connector_manager = Monoservice::DB::MySQLConnectorManager->get_instance();
 my $mysql_connector = $mysql_connector_manager->get_connector_by_hostname("localhost");
 
-print $log_file "db_name = " . $mysql_connector->{db_name} . "\n";
+$log->info("db_name = " . $mysql_connector->{db_name} . "");
 
 # decode form data
 my $filename;
@@ -150,7 +163,7 @@ my $upload_dir;
 
 $upload_dir = $MONOSERVICE_UPLOAD_AUDIO_DIRECTORY . "-" . ($year + 1900) . "-" . $mon . "-" . $mday . "-" . $hour . ":" . $min;
 
-print $log_file $upload_dir . "\n";
+$log->info("creating - " . $upload_dir);
 
 monoservice_upload_write_status($cgi_header, $HTTP_STATUS_MESSAGE_OK, $HTTP_STATUS_CODE_OK);
 
