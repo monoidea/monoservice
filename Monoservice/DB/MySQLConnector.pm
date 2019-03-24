@@ -26,13 +26,13 @@ use autodie;
 # use lib '~/perl5/lib/perl5/x86_64-linux-gnu-thread-multi/';
 use DBI;
 
-sub do_connect {
+sub connect {
     my $self = shift;
 
     $self->{dbh} = DBI->connect($self->{dsn}, $self->{username}, $self->{password});
 }
 
-sub do_query {
+sub query {
     my $self = shift;
 
     my @row;
@@ -48,7 +48,7 @@ sub do_query {
     return(@row);
 }
 
-sub do_close {
+sub close {
     my $self = shift;
 
     $self->{dbh}->disconnect();
