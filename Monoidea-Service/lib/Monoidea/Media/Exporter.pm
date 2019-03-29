@@ -21,11 +21,16 @@ package Monoidea::Media::Exporter;
 use Moose;
 use namespace::clean -except => 'meta';
 
+has 'session_id' => (is => 'rw', isa => 'Str', required => 1);
+has 'token' => (is => 'rw', isa => 'Str', required => 1);
 has 'start_time_usec' => (is => 'rw', isa => 'Num', required => 1);
 has 'end_time_usec' => (is => 'rw', isa => 'Num', required => 1);
 has 'renderer' => (is => 'rw', isa => 'Monoidea::Media::Renderer', lazy_build => 1);
 
-sub lookup_resources {
+sub query {
+}
+
+sub persist {
 }
 
 sub export {

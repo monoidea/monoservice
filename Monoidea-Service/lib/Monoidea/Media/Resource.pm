@@ -23,10 +23,10 @@ use namespace::clean -except => 'meta';
 
 has 'filename' => (is => 'rw', isa => 'Str', required => 1);
 has 'content_type' => (is => 'rw', isa => 'Str', lazy_build => 1);
-has 'timestamp_usec' => (is 'rw', isa => 'Num', lazy_build => 1);
-has 'duration_usec' => (is 'rw', isa => 'Num', lazy_build => 1);
-has 'start_offset_usec' => (is 'rw', isa => 'Num', required => 1);
-has 'end_offset_usec' => (is 'rw', isa => 'Num', required => 1);
+has 'timestamp_usec' => (is => 'rw', isa => 'Num', lazy_build => 1);
+has 'duration_usec' => (is => 'rw', isa => 'Num', lazy_build => 1);
+has 'start_offset_usec' => (is => 'rw', isa => 'Num', required => 1);
+has 'end_offset_usec' => (is => 'rw', isa => 'Num', required => 1);
 
 sub check_content_type {
 }

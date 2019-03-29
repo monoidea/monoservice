@@ -1,0 +1,4 @@
+cam_upload_dir: /home/jkraehemann/srv/media/cam
+audio_upload_dir: /home/jkraehemann/srv/media/audio
+export_dir: /home/jkraehemann/srv/download
+ffmpeg_bin: /home/jkraehemann/bin/ffmpeg

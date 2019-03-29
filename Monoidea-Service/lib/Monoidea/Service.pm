@@ -19,6 +19,13 @@
 package Monoidea::Service;
 use Moose;
 
+with 'MooseX::SimpleConfig';
+
+has 'cam_upload_dir' => (is => 'ro', isa => 'Str', required => 1);
+has 'audio_upload_dir' => (is => 'ro', isa => 'Str', required => 1);
+has 'export_dir' => (is => 'ro', isa => 'Str', required => 1);
+has 'ffmpeg_bin' => (is => 'ro', isa => 'Str', required => 1);
+
 1;
 __END__
 =head1 NAME
