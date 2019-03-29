@@ -30,11 +30,22 @@ The root page (/)
 
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
-
-    # Hello World
-    $c->response->body( $c->welcome_message );
 }
 
+
+sub download :Local {
+    my ($self, $c) = @_;
+    my $session_id = $c->req->body_params->{session_id}; # only for a POST request
+    my $token = $c->req->body_params->{token}; # only for a POST request
+# $c->req->params->{lol} would catch GET or POST
+# $c->req->query_params would catch GET params only
+    $c->stash(
+	session_id => $session_id,
+	token => $token,
+	result => $c->model('Download')->download($session_id, $token),
+	template => 'index.tt',
+	);
+}
 =head2 default
 
 Standard 404 error page
@@ -53,7 +64,16 @@ Attempt to render a view, if needed.
 
 =cut
 
-sub end : ActionClass('RenderView') {}
+sub end : ActionClass('RenderView') {
+    my ($self, $c) = @_;
+    my $errors = scalar @{$c->error};
+
+    if($errors){
+	$c->res->status(500);
+	$c->res->body('internal server error');
+	$c->clear_errors;
+    }
+}
 
 =head1 AUTHOR
 
