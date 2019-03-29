@@ -16,25 +16,37 @@
 # You should have received a copy of the GNU General Public License
 # along with Monoservice.  If not, see <http://www.gnu.org/licenses/>.
 
-package Monoidea::Media::Exporter;
-
+package Monoidea::WWW::Model::Upload;
 use Moose;
-use namespace::clean -except => 'meta';
+use namespace::autoclean;
 
-has 'session_id' => (is => 'rw', isa => 'Str', required => 1);
-has 'token' => (is => 'rw', isa => 'Str', required => 1);
-has 'start_time_sec' => (is => 'rw', isa => 'Num', required => 1);
-has 'end_time_sec' => (is => 'rw', isa => 'Num', required => 1);
-has 'renderer' => (is => 'rw', isa => 'Monoidea::Media::Renderer', lazy_build => 1);
+use Monoidea::Service::Media::Importer;
 
-sub query {
-}
+extends 'Catalyst::Model';
 
-sub persist {
-}
+has 'importer' => (is => 'rw', isa => 'Monoidea::Service::Media::Importer', required => 1);
 
-sub export {
-}
+=head1 NAME
+
+Monoidea::WWW::Model::Upload - Catalyst Model
+
+=head1 DESCRIPTION
+
+Catalyst Model.
+
+
+=encoding utf8
+
+=head1 AUTHOR
+
+Joël Krähemann
+
+=head1 LICENSE
+
+This library is free software. You can redistribute it and/or modify
+it under the same terms as Perl itself.
+
+=cut
 
 __PACKAGE__->meta->make_immutable;
 

@@ -16,24 +16,22 @@
 # You should have received a copy of the GNU General Public License
 # along with Monoservice.  If not, see <http://www.gnu.org/licenses/>.
 
-package Monoidea::Media::Exporter;
+package Monoidea::Media::Importer;
 
 use Moose;
 use namespace::clean -except => 'meta';
 
-has 'session_id' => (is => 'rw', isa => 'Str', required => 1);
-has 'token' => (is => 'rw', isa => 'Str', required => 1);
-has 'start_time_sec' => (is => 'rw', isa => 'Num', required => 1);
-has 'end_time_sec' => (is => 'rw', isa => 'Num', required => 1);
-has 'renderer' => (is => 'rw', isa => 'Monoidea::Media::Renderer', lazy_build => 1);
+has 'filename' => (is => 'rw', isa => 'Str', required => 1);
+has 'timestamp_sec' => (is => 'rw', isa => 'Num', required => 1);
+has 'duration_sec' => (is => 'rw', isa => 'Num', required => 1);
 
-sub query {
+sub decode_base64 {
 }
 
 sub persist {
 }
 
-sub export {
+sub import {
 }
 
 __PACKAGE__->meta->make_immutable;
