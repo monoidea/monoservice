@@ -16,15 +16,27 @@
 # You should have received a copy of the GNU General Public License
 # along with Monoservice.  If not, see <http://www.gnu.org/licenses/>.
 
-package Monoidea::Service;
+package Monoidea::Media::Resource;
+
 use Moose;
+use namespace::clean -except => 'meta';
+
+has 'filename' => (is => 'rw', isa => 'Str', required => 1);
+has 'content_type' => (is => 'rw', isa => 'Str', lazy_build => 1);
+has 'timestamp_usec' => (is 'rw', isa => 'Num', lazy_build => 1);
+has 'duration_usec' => (is 'rw', isa => 'Num', lazy_build => 1);
+has 'start_offset_usec' => (is 'rw', isa => 'Num', required => 1);
+has 'end_offset_usec' => (is 'rw', isa => 'Num', required => 1);
+
+sub check_content_type {
+}
+
+sub check_timestamp {
+}
+
+sub check_duration {
+}
+
+__PACKAGE__->meta->make_immutable;
 
 1;
-__END__
-=head1 NAME
-
-Monoidea::Service
-
-=head1 SYNOPSIS
-
-The monoidea's monothek service library routines.

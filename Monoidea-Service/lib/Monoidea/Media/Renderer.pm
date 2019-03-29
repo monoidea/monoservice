@@ -16,15 +16,18 @@
 # You should have received a copy of the GNU General Public License
 # along with Monoservice.  If not, see <http://www.gnu.org/licenses/>.
 
-package Monoidea::Service;
+package Monoidea::Media::Renderer;
+
 use Moose;
+use namespace::clean -except => 'meta';
+
+has 'audio_source' => (is => 'rw', isa => 'ArrayRef[Monoidea::Media::Resource]', required => 1);
+has 'video_source' => (is => 'rw', isa => 'ArrayRef[Monoidea::Media::Resource]', required => 1);
+has 'destination_filename' => (is => 'rw', isa => 'Str', required => 1);
+
+sub concat {
+}
+
+__PACKAGE__->meta->make_immutable;
 
 1;
-__END__
-=head1 NAME
-
-Monoidea::Service
-
-=head1 SYNOPSIS
-
-The monoidea's monothek service library routines.

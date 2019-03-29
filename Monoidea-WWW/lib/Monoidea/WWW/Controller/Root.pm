@@ -35,15 +35,17 @@ sub index :Path :Args(0) {
 
 sub download :Local {
     my ($self, $c) = @_;
+
     my $session_id = $c->req->body_params->{session_id}; # only for a POST request
     my $token = $c->req->body_params->{token}; # only for a POST request
+
 # $c->req->params->{lol} would catch GET or POST
 # $c->req->query_params would catch GET params only
+    
     $c->stash(
 	session_id => $session_id,
 	token => $token,
-	result => $c->model('Download')->download($session_id, $token),
-	template => 'index.tt',
+	current_view => 'Download',
 	);
 }
 =head2 default

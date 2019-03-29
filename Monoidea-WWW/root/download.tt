@@ -1,0 +1,10 @@
+[% WRAPPER page.tt title = "monoidea's monothek download" %]
+
+<h1>monoidea's monothek - download</h1>
+
+<p>
+session_id = [% session_id %];<br/>
+token = [% token %];
+</p>
+
+[% END %]
