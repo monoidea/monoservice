@@ -12,6 +12,44 @@ USE MONOSERVICE;
 
 #----------------------------------------------------------------------------------------
 
+DROP TABLE IF EXISTS `USERS`;
+
+
+CREATE TABLE `USERS`
+(
+  `USERS_ID` INTEGER NOT NULL auto_increment,
+  `USERNAME` VARCHAR(255) NOT NULL,
+  `PASSWORD` VARCHAR(255) NOT NULL,
+  `STATUS` VARCHAR(255) NOT NULL,
+  `LAST_WHISPER` VARCHAR(255),
+  PRIMARY KEY (`USERS_ID`)
+)ENGINE=InnoDB DEFAULT CHARSET utf8;
+
+#----------------------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `ROLES`;
+
+
+CREATE TABLE `ROLES`  
+(
+  `ROLES_ID` INTEGER NOT NULL auto_increment,
+  `ROLE_NAME` VARCHAR(255) DEFAULT NULL,
+  PRIMARY KEY (`ROLES_ID`)
+)ENGINE=InnoDB DEFAULT CHARSET utf8;
+
+#----------------------------------------------------------------------------------------
+
+DROP TABLE IF EXISTS `USERS_ROLES`;
+
+
+CREATE TABLE `USERS_ROLES` (
+  `USERS` INTEGER REFERENCES USERS(USERS_ID),
+  `ROLES` INTEGER REFERENCES ROLES(ROLES_ID),
+  PRIMARY KEY (`USERS`, `ROLES`)
+)ENGINE=InnoDB DEFAULT CHARSET utf8;
+
+#----------------------------------------------------------------------------------------
+
 DROP TABLE IF EXISTS `PRODUCT`;
 
 
@@ -353,6 +391,18 @@ CREATE TABLE `APROC_QUEUE`
   CONSTRAINT APROC_QUEUE_REF_TITLE_STRIP_AUDIO_FILE FOREIGN KEY (TITLE_STRIP_AUDIO_FILE) REFERENCES TITLE_STRIP_AUDIO_FILE (TITLE_STRIP_AUDIO_FILE_ID),
   CONSTRAINT APROC_QUEUE_REF_END_CREDITS_AUDIO_FILE FOREIGN KEY (END_CREDITS_AUDIO_FILE) REFERENCES END_CREDITS_AUDIO_FILE (END_CREDITS_AUDIO_FILE_ID)
 )ENGINE=InnoDB DEFAULT CHARSET utf8;
+
+#----------------------------------------------------------------------------------------
+
+ALTER TABLE USERS_ROLES
+ADD CONSTRAINT USERS_ROLES_REF_USERS
+FOREIGN KEY (USERS)
+REFERENCES USERS(USERS_ID);
+
+ALTER TABLE USERS_ROLES
+ADD CONSTRAINT USERS_ROLES_REF_ROLES
+FOREIGN KEY (ROLES)
+REFERENCES ROLES(ROLES_ID);
 
 #----------------------------------------------------------------------------------------
 
