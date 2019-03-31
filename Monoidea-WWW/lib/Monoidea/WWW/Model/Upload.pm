@@ -24,7 +24,7 @@ use Monoidea::Service::Media::Importer;
 
 extends 'Catalyst::Model';
 
-has 'importer' => (is => 'rw', isa => 'Monoidea::Service::Media::Importer', required => 1);
+has 'importer' => (is => 'rw', isa => 'Monoidea::Service::Media::Importer', lazy_build => 1);
 
 =head1 NAME
 

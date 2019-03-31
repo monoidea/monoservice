@@ -48,6 +48,11 @@ sub download :Local {
 	current_view => 'Download',
 	);
 }
+
+sub login :Local {
+    my ($self, $c) = @_;
+}
+
 =head2 default
 
 Standard 404 error page
