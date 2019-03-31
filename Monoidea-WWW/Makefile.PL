@@ -9,11 +9,41 @@ use Module::Install::Catalyst; # Complain loudly if you don't have
 name 'Monoidea-WWW';
 all_from 'lib/Monoidea/WWW.pm';
 
+requires 'Test::More';
+requires 'Data::Dumper';
+requires 'Test::Builder::Tester';
+requires 'Test::Pod';
+requires 'Module::Starter';
+requires 'Module::Install';
+requires 'DBD::mysql';
+requires 'YAML';
+requires 'Moose';
+requires 'DBI';
+requires 'Catalyst';
+requires 'SQL::Translator';
+requires 'JSON::Any';
+requires 'MooseX::Types::JSON';
+requires 'MooseX::NonMoose';
+requries 'Class::DBI';
+requries 'DBIx::Class';
+requires 'Catalyst::Helper::Model::DBIC::Schema';
+requires 'Catalyst::Model::DBIC::Schema';
+requries 'DBIx::Class::TimeStamp';
+requires 'Email::Valid';
+requires 'Catalyst::Plugin::Authentication';
+requires 'Catalyst::Authentication::Store::DBIx::Class';
+requires 'Catalyst::Plugin::Authorization::Roles';
+requires 'Catalyst::Plugin::Session';
+requires 'Catalyst::Plugin::Session::State::Cookie';
+requires 'Catalyst::Plugin::Session::Store::FastMmap';
 requires 'Catalyst::Runtime' => '5.90124';
 requires 'Catalyst::Plugin::ConfigLoader';
 requires 'Catalyst::Plugin::Static::Simple';
 requires 'Catalyst::Action::RenderView';
-requires 'Moose';
+requires 'Catalyst::View::TT';
+requires 'Catalyst::View::JSON';
+requires 'Catalyst::Plugin::Unicode';
+
 requires 'namespace::autoclean';
 requires 'Config::General'; # This should reflect the config file format you've chosen
                  # See Catalyst::Plugin::ConfigLoader for supported formats
