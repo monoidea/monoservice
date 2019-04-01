@@ -10,7 +10,7 @@
   You might want to enter your session ID and the token.
 </p>
 
-<form name="download" method=POST action="download">
+<form name="download" method="get" action="download">
   <span>Session ID: <input type="text" name="session_id" value="" title="enter session ID"></span><br/>
   <span>Token: <input type="text" name="token" value="" title="enter token"></span><br/>
   <input type="submit" value="Download">

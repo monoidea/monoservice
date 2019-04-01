@@ -24,9 +24,28 @@ Catalyst Controller.
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
-    $c->response->body('Matched Monoidea::WWW::Controller::Download in Download.');
+    my $session_id = $c->req->params->{'session_id'};
+    my $token = $c->req->params->{'token'};
+
+    my $session_store_rs = $c->model('MONOSERVICE::SessionStore');
+
+    if($session_store_rs->find({session_id => $session_id},
+			       {toke => $token})){
+	$c->stash(
+	    session_id => $session_id,
+	    token => $token,
+	    current_view => 'Download',
+	    );
+    }else{
+	$c->detach("access_denied");
+    }
 }
 
+sub access_denied :Local :Args(0) {
+    my ( $self, $c ) = @_;
+
+    $c->stash->{'template'} = 'accessdenied.tt';
+}
 
 
 =encoding utf8

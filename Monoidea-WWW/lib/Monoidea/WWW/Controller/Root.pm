@@ -32,23 +32,6 @@ sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 }
 
-
-sub download :Local {
-    my ($self, $c) = @_;
-
-    my $session_id = $c->req->body_params->{session_id}; # only for a POST request
-    my $token = $c->req->body_params->{token}; # only for a POST request
-
-# $c->req->params->{lol} would catch GET or POST
-# $c->req->query_params would catch GET params only
-    
-    $c->stash(
-	session_id => $session_id,
-	token => $token,
-	current_view => 'Download',
-	);
-}
-
 sub login :Local {
     my ($self, $c) = @_;
 }
