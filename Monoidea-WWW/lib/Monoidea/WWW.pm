@@ -65,7 +65,8 @@ __PACKAGE__->config(
 	    store => {
 		class => 'DBIx::Class',
 		user_model => 'MONOSERVICE::User',
-		role_column => 'ROLES',
+		role_relation => 'roles',
+		role_field => 'role_name',
 	    }
 	}
     }

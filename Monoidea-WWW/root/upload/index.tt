@@ -1,0 +1,63 @@
+[% WRAPPER page.tt title = "monoidea's monothek - upload" %]
+
+<h2>Cam record upload</h2>
+<div>
+<form enctype="multipart/form-data" action="[% c.uri_for('/upload/put_cam_record') %]"
+<label for="filename">filename</label>
+<input type="text" name="filename" value="" id="filename"/>
+<br/><br/>
+<label for="file">file</label>
+<input type="file" name="file" value="" id="file"/>
+<p><input type="submit" value="Upload &rarr;"></p>
+<br/><br/>
+</form>
+</div>
+
+<hr/>
+
+<h2>Screen capture upload</h2>
+<div>
+<form enctype="multipart/form-data" action="[% c.uri_for('/upload/put_screen_capture') %]"
+<label for="filename">filename</label>
+<input type="text" name="filename" value="" id="filename"/>
+<br/><br/>
+<label for="file">file</label>
+<input type="file" name="file" value="" id="file"/>
+<p><input type="submit" value="Upload &rarr;"></p>
+<br/><br/>
+</form>
+</div>
+
+<hr/>
+
+<h2>Mic capture upload</h2>
+<div>
+<form enctype="multipart/form-data" action="[% c.uri_for('/upload/put_mic_capture') %]"
+<label for="filename">filename</label>
+<input type="text" name="filename" value="" id="filename"/>
+<br/><br/>
+<label for="file">file</label>
+<input type="file" name="file" value="" id="file"/>
+<p><input type="submit" value="Upload &rarr;"></p>
+<br/><br/>
+</form>
+</div>
+
+<hr/>
+
+<h2>Audio export upload</h2>
+<div>
+<form enctype="multipart/form-data" action="[% c.uri_for('/upload/put_audio_export') %]"
+<label for="filename">filename</label>
+<input type="text" name="filename" value="" id="filename"/>
+<br/><br/>
+<label for="file">file</label>
+<input type="file" name="file" value="" id="file"/>
+<p><input type="submit" value="Upload &rarr;"></p>
+<br/><br/>
+</form>
+</div>
+
+<hr/>
+
+[% END %]
