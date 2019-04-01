@@ -60,7 +60,7 @@ __PACKAGE__->table("PAYMENT");
 
   data_type: 'timestamp'
   datetime_undef_if_invalid: 1
-  default_value: current_timestamp
+  default_value: '0000-00-00 00:00:00'
   is_nullable: 0
 
 =head2 completed
@@ -81,7 +81,7 @@ __PACKAGE__->add_columns(
   {
     data_type => "timestamp",
     datetime_undef_if_invalid => 1,
-    default_value => \"current_timestamp",
+    default_value => "0000-00-00 00:00:00",
     is_nullable => 0,
   },
   "completed",
@@ -138,8 +138,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-03-29 22:56:48
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:HxPTi+DDy9BrfFeYTL3XYg
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-04-01 07:33:52
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:rDt8+JjbL/76DnwKY9cS4g
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

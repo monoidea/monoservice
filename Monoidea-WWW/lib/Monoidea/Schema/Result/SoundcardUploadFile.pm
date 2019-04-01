@@ -54,7 +54,7 @@ __PACKAGE__->table("SOUNDCARD_UPLOAD_FILE");
 
   data_type: 'timestamp'
   datetime_undef_if_invalid: 1
-  default_value: current_timestamp
+  default_value: '0000-00-00 00:00:00'
   is_nullable: 0
 
 =head2 duration
@@ -78,7 +78,7 @@ __PACKAGE__->add_columns(
   {
     data_type => "timestamp",
     datetime_undef_if_invalid => 1,
-    default_value => \"current_timestamp",
+    default_value => "0000-00-00 00:00:00",
     is_nullable => 0,
   },
   "duration",
@@ -133,8 +133,8 @@ __PACKAGE__->many_to_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-03-29 22:56:48
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:ffeu7sVVimsiFdxhK7y+5w
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-04-01 07:33:52
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:jSqTRH3njDeRJtfdWBL4oQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

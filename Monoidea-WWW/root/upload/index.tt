@@ -2,12 +2,18 @@
 
 <h2>Cam record upload</h2>
 <div>
-<form enctype="multipart/form-data" action="[% c.uri_for('/upload/put_cam_record') %]"
+<form method="post" enctype="multipart/form-data" action="[% c.uri_for('/upload/put_cam') %]"
 <label for="filename">filename</label>
 <input type="text" name="filename" value="" id="filename"/>
 <br/><br/>
-<label for="file">file</label>
-<input type="file" name="file" value="" id="file"/>
+<label for="creation_time">creation time</label>
+<input type="text" name="creation_time" value="" id="creation_time"/>
+<br/><br/>
+<label for="duration">duration</label>
+<input type="text" name="duration" value="" id="duration"/>
+<br/><br/>
+<label for="media_file">file</label>
+<input type="file" name="media_file" value="" id="media_file"/>
 <p><input type="submit" value="Upload &rarr;"></p>
 <br/><br/>
 </form>
@@ -17,12 +23,18 @@
 
 <h2>Screen capture upload</h2>
 <div>
-<form enctype="multipart/form-data" action="[% c.uri_for('/upload/put_screen_capture') %]"
+<form method="post" enctype="multipart/form-data" action="[% c.uri_for('/upload/put_raw_video') %]"
 <label for="filename">filename</label>
 <input type="text" name="filename" value="" id="filename"/>
 <br/><br/>
-<label for="file">file</label>
-<input type="file" name="file" value="" id="file"/>
+<label for="creation_time">creation time</label>
+<input type="text" name="creation_time" value="" id="creation_time"/>
+<br/><br/>
+<label for="duration">duration</label>
+<input type="text" name="duration" value="" id="duration"/>
+<br/><br/>
+<label for="media_file">file</label>
+<input type="file" name="media_file" value="" id="media_file"/>
 <p><input type="submit" value="Upload &rarr;"></p>
 <br/><br/>
 </form>
@@ -32,12 +44,18 @@
 
 <h2>Mic capture upload</h2>
 <div>
-<form enctype="multipart/form-data" action="[% c.uri_for('/upload/put_mic_capture') %]"
+<form method="post" enctype="multipart/form-data" action="[% c.uri_for('/upload/put_mic') %]"
 <label for="filename">filename</label>
 <input type="text" name="filename" value="" id="filename"/>
 <br/><br/>
-<label for="file">file</label>
-<input type="file" name="file" value="" id="file"/>
+<label for="creation_time">creation time</label>
+<input type="text" name="creation_time" value="" id="creation_time"/>
+<br/><br/>
+<label for="duration">duration</label>
+<input type="text" name="duration" value="" id="duration"/>
+<br/><br/>
+<label for="media_file">file</label>
+<input type="file" name="media_file" value="" id="media_file"/>
 <p><input type="submit" value="Upload &rarr;"></p>
 <br/><br/>
 </form>
@@ -47,12 +65,18 @@
 
 <h2>Audio export upload</h2>
 <div>
-<form enctype="multipart/form-data" action="[% c.uri_for('/upload/put_audio_export') %]"
+<form method="post" enctype="multipart/form-data" action="[% c.uri_for('/upload/put_raw_audio') %]"
 <label for="filename">filename</label>
 <input type="text" name="filename" value="" id="filename"/>
 <br/><br/>
-<label for="file">file</label>
-<input type="file" name="file" value="" id="file"/>
+<label for="creation_time">creation time</label>
+<input type="text" name="creation_time" value="" id="creation_time"/>
+<br/><br/>
+<label for="duration">duration</label>
+<input type="text" name="duration" value="" id="duration"/>
+<br/><br/>
+<label for="media_file">file</label>
+<input type="file" name="media_file" value="" id="media_file"/>
 <p><input type="submit" value="Upload &rarr;"></p>
 <br/><br/>
 </form>
