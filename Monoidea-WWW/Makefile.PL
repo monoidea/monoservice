@@ -43,6 +43,8 @@ requires 'Catalyst::Action::RenderView';
 requires 'Catalyst::View::TT';
 requires 'Catalyst::View::JSON';
 requires 'Catalyst::Plugin::Unicode';
+requires 'ExtUtils::Command::MM';
+requires 'XML::LibXML';
 
 requires 'namespace::autoclean';
 requires 'Config::General'; # This should reflect the config file format you've chosen

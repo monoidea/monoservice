@@ -29,8 +29,8 @@ sub index :Path :Args(0) {
     my $token = $c->req->params->{'token'};
 
     my $session_store_rs = $c->model('MONOSERVICE::SessionStore');
-    my $session_store = $session_store_rs->find({session_id => $session_id},
-						{toke => $token});
+    my $session_store = $session_store_rs->find({session_id => $session_id,
+						 token => $token});
 
     if($session_store){
 	my $video_file_rs = $c->model('MONOSERVICE::VideoFile');

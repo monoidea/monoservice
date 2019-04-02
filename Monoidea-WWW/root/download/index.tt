@@ -8,6 +8,7 @@ token = [% token %];
 </p>
 
 [% FOREACH v = video_file %]
+
 <div>
 <video width="320" height="240" controls>
   <source src="http://localhost:3000/download/media?session_id=[% session_id %]&token=[% token %]&video_file_id=[% v.video_file_id %]" type="video/mp4">
