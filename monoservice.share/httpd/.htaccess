@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteCond %{REQUEST_URI} !^/?script/monoidea_www_fastcgi.pl
+RewriteRule ^(.*)$ script/monoidea_www_fastcgi.pl/$1 [PT,L]
+RewriteRule ^static/(.*)$ static/$1 [PT,L]

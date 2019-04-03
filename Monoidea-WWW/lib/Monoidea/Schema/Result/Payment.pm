@@ -44,11 +44,11 @@ __PACKAGE__->table("PAYMENT");
   is_auto_increment: 1
   is_nullable: 0
 
-=head2 billing_address
+=head2 recipe_id
 
-  data_type: 'integer'
-  is_foreign_key: 1
-  is_nullable: 1
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 256
 
 =head2 invoice_amount
 
@@ -56,12 +56,23 @@ __PACKAGE__->table("PAYMENT");
   is_nullable: 1
   size: [15,2]
 
+=head2 billing_address
+
+  data_type: 'integer'
+  is_foreign_key: 1
+  is_nullable: 1
+
 =head2 due_date
 
   data_type: 'timestamp'
   datetime_undef_if_invalid: 1
   default_value: '0000-00-00 00:00:00'
   is_nullable: 0
+
+=head2 canceled
+
+  data_type: 'tinyint'
+  is_nullable: 1
 
 =head2 completed
 
@@ -73,10 +84,12 @@ __PACKAGE__->table("PAYMENT");
 __PACKAGE__->add_columns(
   "payment_id",
   { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
-  "billing_address",
-  { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
+  "recipe_id",
+  { data_type => "varchar", is_nullable => 0, size => 256 },
   "invoice_amount",
   { data_type => "decimal", is_nullable => 1, size => [15, 2] },
+  "billing_address",
+  { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
   "due_date",
   {
     data_type => "timestamp",
@@ -84,6 +97,8 @@ __PACKAGE__->add_columns(
     default_value => "0000-00-00 00:00:00",
     is_nullable => 0,
   },
+  "canceled",
+  { data_type => "tinyint", is_nullable => 1 },
   "completed",
   { data_type => "tinyint", is_nullable => 1 },
 );
@@ -138,8 +153,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-04-01 07:33:52
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:rDt8+JjbL/76DnwKY9cS4g
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-04-03 18:23:49
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:IKxLXSWr+o1bqt88DoF+hg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

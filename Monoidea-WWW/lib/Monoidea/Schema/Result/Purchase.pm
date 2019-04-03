@@ -44,6 +44,12 @@ __PACKAGE__->table("PURCHASE");
   is_auto_increment: 1
   is_nullable: 0
 
+=head2 position_id
+
+  data_type: 'varchar'
+  is_nullable: 0
+  size: 256
+
 =head2 payment
 
   data_type: 'integer'
@@ -68,6 +74,8 @@ __PACKAGE__->table("PURCHASE");
 __PACKAGE__->add_columns(
   "purchase_id",
   { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
+  "position_id",
+  { data_type => "varchar", is_nullable => 0, size => 256 },
   "payment",
   { data_type => "integer", is_foreign_key => 1, is_nullable => 1 },
   "product",
@@ -136,8 +144,8 @@ __PACKAGE__->belongs_to(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-04-01 07:33:52
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:R3/smMytr1+ALKE/+v4CQA
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-04-03 17:40:54
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:xIO28tFFEUvuUDtNSYIeLQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

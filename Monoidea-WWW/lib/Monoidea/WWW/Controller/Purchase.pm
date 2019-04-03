@@ -1,7 +1,9 @@
 package Monoidea::WWW::Controller::Purchase;
 use Moose;
-use XML::LibXML;
 use namespace::autoclean;
+use XML::LibXML;
+use Monoidea::Schema;
+use Data::GUID;
 
 BEGIN { extends 'Catalyst::Controller'; }
 
@@ -25,7 +27,13 @@ Catalyst Controller.
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
-    $c->response->body('Matched Monoidea::WWW::Controller::Purchase in Purchase.');
+#    $c->response->body('Matched Monoidea::WWW::Controller::Purchase in Purchase.');
+}
+
+sub access_denied :Local :Args(0) {
+    my ( $self, $c ) = @_;
+
+    $c->stash->{'template'} = 'accessdenied.tt';
 }
 
 sub prepare :Local {
@@ -51,18 +59,28 @@ sub prepare :Local {
 	my $purchase_rs = $c->model('MONOSERVICE::Purchase');
 
 	# prepare
-	my $current_time = time();
+	my $current_time = time;
 
 	my $product = $product_rs->find({ product_name => $product_name});
 
+	my ($due_date_sec, $due_date_min, $due_date_hr, $due_date_day, $due_date_month, $due_date_year, $due_date_wday, $due_date_yday, $due_date_isdst) = localtime($current_time);
+	$due_date_month += 1;
+	$due_date_year += 1900;
+
 	my $payment = $payment_rs->create({ recipe_id => $recipe_id,
 					    invoice_amount => $invoice_amount,
-					    due_date => $current_time});
+					    due_date => sprintf('%04d-%02d-%02d %02d:%02d:%02d', $due_date_year, $due_date_month, $due_date_day, $due_date_hr, $due_date_min, $due_date_sec),
+					  });
+
+	my ($billing_time_sec, $billing_time_min, $billing_time_hr, $billing_time_day, $billing_time_month, $billing_time_year, $billing_time_wday, $billing_time_yday, $billing_time_isdst) = localtime($current_time);
+	$billing_time_month += 1;
+	$billing_time_year += 1900;
 
 	my $purchase = $purchase_rs->create({ position_id => $position_id,
 					      payment => $payment->payment_id,
 					      product => $product->product_id,
-					      billing_time => $current_time });
+					      billing_time => sprintf('%04d-%02d-%02d %02d:%02d:%02d', $billing_time_year, $billing_time_month, $billing_time_day, $billing_time_hr, $billing_time_min, $billing_time_sec),
+					    });
 
 	# find billing address, media account and session
 	my $session_store;
@@ -107,32 +125,32 @@ sub prepare :Local {
 	# create response
 	my $dom = XML::LibXML::Document->new('1.0', 'UTF-8');
 
-	my $root_node = $dom->createElement('monoidea-order');
+	my $root_node = XML::LibXML::Element->new('monoidea-order');
 	$dom->setDocumentElement($root_node);
 
 	my $node;
 
-	$node = $dom->createElement('session-id');
+	$node = XML::LibXML::Element->new('session-id');
 	$node->appendText($session_id);
 	$root_node->appendChild($node);
 
-	$node = $dom->createElement('token');
+	$node = XML::LibXML::Element->new('token');
 	$node->appendText($token);
 	$root_node->appendChild($node);
 
-	$node = $dom->createElement('media-account');
-	$node->appendText($media_account_id);
+	$node = XML::LibXML::Element->new('media-account');
+	$node->appendText($media_account->media_account_id);
 	$root_node->appendChild($node);
 
-	$node = $dom->createElement('payment');
+	$node = XML::LibXML::Element->new('payment');
 	$node->appendText($payment->payment_id);
 	$root_node->appendChild($node);
 
 	# write response
-	my $response_body = $dom.toString();
+	my $response_body = $dom->toString(1);
 
 	$c->response->headers->content_type('text/xml');
-	$c->response->headers->content_length(length($response_body));
+	$c->response->headers->content_length(length $response_body);
 	$c->response->headers->last_modified($current_time);
 
 	$c->response->body($response_body);
@@ -151,7 +169,10 @@ sub cancel :Local {
 
 	my $payment = $payment_rs->find({ payment_id => $payment_id });
 
-	$payment->update({ due_date => undef });
+	$payment->update({ canceled => 1 });
+
+	$c->response->body('success');
+	$c->response->status(200);
     }else{
 	$c->detach("access_denied");
     }
@@ -168,6 +189,9 @@ sub completed :Local {
 	my $payment = $payment_rs->find({ payment_id => $payment_id });
 
 	$payment->update({ completed => 1 });
+
+	$c->response->body('success');
+	$c->response->status(200);
     }else{
 	$c->detach("access_denied");
     }

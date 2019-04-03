@@ -47,13 +47,13 @@ __PACKAGE__->table("BILLING_ADDRESS");
 =head2 firstname
 
   data_type: 'varchar'
-  is_nullable: 0
+  is_nullable: 1
   size: 255
 
 =head2 surname
 
   data_type: 'varchar'
-  is_nullable: 0
+  is_nullable: 1
   size: 255
 
 =head2 phone
@@ -71,25 +71,25 @@ __PACKAGE__->table("BILLING_ADDRESS");
 =head2 street
 
   data_type: 'varchar'
-  is_nullable: 0
+  is_nullable: 1
   size: 255
 
 =head2 zip
 
   data_type: 'varchar'
-  is_nullable: 0
+  is_nullable: 1
   size: 255
 
 =head2 city
 
   data_type: 'varchar'
-  is_nullable: 0
+  is_nullable: 1
   size: 255
 
 =head2 country
 
   data_type: 'varchar'
-  is_nullable: 0
+  is_nullable: 1
   size: 255
 
 =cut
@@ -98,21 +98,21 @@ __PACKAGE__->add_columns(
   "billing_address_id",
   { data_type => "integer", is_auto_increment => 1, is_nullable => 0 },
   "firstname",
-  { data_type => "varchar", is_nullable => 0, size => 255 },
+  { data_type => "varchar", is_nullable => 1, size => 255 },
   "surname",
-  { data_type => "varchar", is_nullable => 0, size => 255 },
+  { data_type => "varchar", is_nullable => 1, size => 255 },
   "phone",
   { data_type => "varchar", is_nullable => 1, size => 255 },
   "email",
   { data_type => "varchar", is_nullable => 1, size => 255 },
   "street",
-  { data_type => "varchar", is_nullable => 0, size => 255 },
+  { data_type => "varchar", is_nullable => 1, size => 255 },
   "zip",
-  { data_type => "varchar", is_nullable => 0, size => 255 },
+  { data_type => "varchar", is_nullable => 1, size => 255 },
   "city",
-  { data_type => "varchar", is_nullable => 0, size => 255 },
+  { data_type => "varchar", is_nullable => 1, size => 255 },
   "country",
-  { data_type => "varchar", is_nullable => 0, size => 255 },
+  { data_type => "varchar", is_nullable => 1, size => 255 },
 );
 
 =head1 PRIMARY KEY
@@ -160,8 +160,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-03-29 22:56:48
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:yWFy7io+jmi9MCWJVFVR4Q
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-04-03 17:40:54
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:V9PymJJPBLSglJKjxtmSwQ
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

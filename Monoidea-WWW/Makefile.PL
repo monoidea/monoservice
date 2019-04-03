@@ -10,13 +10,13 @@ name 'Monoidea-WWW';
 all_from 'lib/Monoidea/WWW.pm';
 
 requires 'Test::More';
+requires 'YAML';
 requires 'Data::Dumper';
 requires 'Test::Builder::Tester';
 requires 'Test::Pod';
 requires 'Module::Starter';
 requires 'Module::Install';
 requires 'DBD::mysql';
-requires 'YAML';
 requires 'Moose';
 requires 'DBI';
 requires 'Catalyst';
@@ -45,6 +45,9 @@ requires 'Catalyst::View::JSON';
 requires 'Catalyst::Plugin::Unicode';
 requires 'ExtUtils::Command::MM';
 requires 'XML::LibXML';
+requires 'Cairo';
+requires 'Text::QRCode';
+requires 'Data::GUID';
 
 requires 'namespace::autoclean';
 requires 'Config::General'; # This should reflect the config file format you've chosen
