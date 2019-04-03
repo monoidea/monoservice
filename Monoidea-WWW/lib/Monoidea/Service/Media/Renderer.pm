@@ -24,6 +24,8 @@ use namespace::clean -except => 'meta';
 has 'audio_source' => (is => 'rw', isa => 'ArrayRef[Monoidea::Media::Resource]', required => 1);
 has 'video_source' => (is => 'rw', isa => 'ArrayRef[Monoidea::Media::Resource]', required => 1);
 has 'destination_filename' => (is => 'rw', isa => 'Str', required => 1);
+has 'start_timestamp_sec' => (is => 'rw', isa => 'Num', required => 1);
+has 'end_timestamp_sec' => (is => 'rw', isa => 'Num', required => 1);
 
 sub concat {
 }

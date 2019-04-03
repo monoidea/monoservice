@@ -25,8 +25,6 @@ has 'filename' => (is => 'rw', isa => 'Str', required => 1);
 has 'content_type' => (is => 'rw', isa => 'Str', lazy_build => 1);
 has 'timestamp_sec' => (is => 'rw', isa => 'Num', lazy_build => 1);
 has 'duration_sec' => (is => 'rw', isa => 'Num', lazy_build => 1);
-has 'start_offset_sec' => (is => 'rw', isa => 'Num', required => 1);
-has 'end_offset_sec' => (is => 'rw', isa => 'Num', required => 1);
 
 sub check_content_type {
 }
