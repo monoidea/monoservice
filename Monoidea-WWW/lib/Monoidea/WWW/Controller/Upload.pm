@@ -2,6 +2,7 @@ package Monoidea::WWW::Controller::Upload;
 use Moose;
 use namespace::autoclean;
 use Data::Integer;
+use File::Path;
 use File::Copy;
 use Monoidea::Schema;
 
@@ -58,15 +59,15 @@ sub put_cam :Local {
 	my ($duration_sec, $duration_min, $duration_hr, $duration_day, $duration_month, $duration_year, $duration_wday, $duration_yday, $duration_isdst) = localtime($duration);
 	$duration_hr -= 1;
 
-	printf("%04d-%02d-%02d %02d:%02d:%02d\n", $creation_time_year, $creation_time_month, $creation_time_day, $creation_time_hr, $creation_time_min, $creation_time_sec);
+	File::Path->make_path($c->config->{upload_dir} . '/media/cam/' . $creation_time_hr . '/');
 
-	my $new_cam_upload = $cam_upload_rs->create({ filename => $c->config->{upload_dir} . '/media/cam/' . $filename,
+	my $new_cam_upload = $cam_upload_rs->create({ filename => $c->config->{upload_dir} . '/media/cam/' .  $creation_time_hr . '/' . $filename,
 						      creation_time => sprintf('%04d-%02d-%02d %02d:%02d:%02d', $creation_time_year, $creation_time_month, $creation_time_day, $creation_time_hr, $creation_time_min, $creation_time_sec),
 						      duration => sprintf('%02d:%02d:%02d.00000', $duration_hr, $duration_min, $duration_sec),
 						    });
 	
 
-	copy($media_file->fh, $c->config->{upload_dir} . '/media/cam/' . $filename);
+	copy($media_file->fh, $c->config->{upload_dir} . '/media/cam/' .  $creation_time_hr . '/' . $filename);
 
 	$new_cam_upload->update({available => 1});
 
@@ -95,15 +96,15 @@ sub put_raw_video :Local {
 	my ($duration_sec, $duration_min, $duration_hr, $duration_day, $duration_month, $duration_year, $duration_wday, $duration_yday, $duration_isdst) = localtime($duration);
 	$duration_hr -= 1;
 
-	printf("%04d-%02d-%02d %02d:%02d:%02d\n", $creation_time_year, $creation_time_month, $creation_time_day, $creation_time_hr, $creation_time_min, $creation_time_sec);
+	File::Path->make_path($c->config->{upload_dir} . '/media/raw-video/' . $creation_time_hr . '/');
 
-	my $new_raw_video = $raw_video_rs->create({ filename => $c->config->{upload_dir} . '/media/raw-video/' . $filename,
+	my $new_raw_video = $raw_video_rs->create({ filename => $c->config->{upload_dir} . '/media/raw-video/' .  $creation_time_hr . '/' . $filename,
 						    creation_time => sprintf('%04d-%02d-%02d %02d:%02d:%02d', $creation_time_year, $creation_time_month, $creation_time_day, $creation_time_hr, $creation_time_min, $creation_time_sec),
 						    duration => sprintf('%02d:%02d:%02d.00000', $duration_hr, $duration_min, $duration_sec),
 						  });
 	
 
-	copy($media_file->fh, $c->config->{upload_dir} . '/media/screen/' . $filename);
+	copy($media_file->fh, $c->config->{upload_dir} . '/media/raw-video/' .  $creation_time_hr . '/' . $filename);
 
 	$new_raw_video->update({available => 1});
 
@@ -132,15 +133,15 @@ sub put_mic :Local {
 	my ($duration_sec, $duration_min, $duration_hr, $duration_day, $duration_month, $duration_year, $duration_wday, $duration_yday, $duration_isdst) = localtime($duration);
 	$duration_hr -= 1;
 
-	printf("%04d-%02d-%02d %02d:%02d:%02d\n", $creation_time_year, $creation_time_month, $creation_time_day, $creation_time_hr, $creation_time_min, $creation_time_sec);
+	File::Path->make_path($c->config->{upload_dir} . '/media/mic/' . $creation_time_hr . '/');
 
-	my $new_mic_upload = $mic_upload_rs->create({ filename => $c->config->{upload_dir} . '/media/mic/' . $filename,
+	my $new_mic_upload = $mic_upload_rs->create({ filename => $c->config->{upload_dir} . '/media/mic/' .  $creation_time_hr . '/' . $filename,
 						      creation_time => sprintf('%04d-%02d-%02d %02d:%02d:%02d', $creation_time_year, $creation_time_month, $creation_time_day, $creation_time_hr, $creation_time_min, $creation_time_sec),
 						      duration => sprintf('%02d:%02d:%02d.00000', $duration_hr, $duration_min, $duration_sec),
 						    });
 	
 
-	copy($media_file->fh, $c->config->{upload_dir} . '/media/mic/' . $filename);
+	copy($media_file->fh, $c->config->{upload_dir} . '/media/mic/' .  $creation_time_hr . '/' . $filename);
 
 	$new_mic_upload->update({available => 1});
 
@@ -169,15 +170,15 @@ sub put_raw_audio :Local {
 	my ($duration_sec, $duration_min, $duration_hr, $duration_day, $duration_month, $duration_year, $duration_wday, $duration_yday, $duration_isdst) = localtime($duration);
 	$duration_hr -= 1;
 
-	printf("%04d-%02d-%02d %02d:%02d:%02d\n", $creation_time_year, $creation_time_month, $creation_time_day, $creation_time_hr, $creation_time_min, $creation_time_sec);
+	File::Path->make_path($c->config->{upload_dir} . '/media/raw-audio/' . $creation_time_hr . '/');
 
-	my $new_raw_audio = $raw_audio_rs->create({ filename => $c->config->{upload_dir} . '/media/raw-audio/' . $filename,
+	my $new_raw_audio = $raw_audio_rs->create({ filename => $c->config->{upload_dir} . '/media/raw-audio/' .  $creation_time_hr . '/' . $filename,
 						    creation_time => sprintf('%04d-%02d-%02d %02d:%02d:%02d', $creation_time_year, $creation_time_month, $creation_time_day, $creation_time_hr, $creation_time_min, $creation_time_sec),
 						    duration => sprintf('%02d:%02d:%02d.00000', $duration_hr, $duration_min, $duration_sec),
 						  });
 	
 
-	copy($media_file->fh, $c->config->{upload_dir} . '/media/audio/' . $filename);
+	copy($media_file->fh, $c->config->{upload_dir} . '/media/raw-audio/' .  $creation_time_hr . '/' . $filename);
 
 	$new_raw_audio->update({available => 1});
 
