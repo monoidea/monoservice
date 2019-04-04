@@ -2,6 +2,7 @@ package Monoidea::WWW::Controller::MediaQueue;
 use Moose;
 use namespace::autoclean;
 use File::Path;
+use Monoidea::Schema;
 
 BEGIN { extends 'Catalyst::Controller'; }
 
@@ -37,14 +38,40 @@ sub export :Local {
 	my $duration = $c->req->params->{'duration'};
 
 	my $video_file_rs = $c->model('MONOSERVICE::VideoFile');
-	my $media_account_rs = $c->model('MONOSERVICE::MediaAccount');
+
+	my ($creation_time_sec, $creation_time_min, $creation_time_hr, $creation_time_day, $creation_time_month, $creation_time_year, $creation_time_wday, $creation_time_yday, $creation_time_isdst) = localtime($creation_time);
+	$creation_time_month += 1;
+	$creation_time_year += 1900;
+
+	my ($duration_sec, $duration_min, $duration_hr, $duration_day, $duration_month, $duration_year, $duration_wday, $duration_yday, $duration_isdst) = localtime($duration);
+	$duration_hr -= 1;
 
 	File::Path->make_path($c->config->{download_dir} . '/media/video/' . $creation_time . '/');
 
-	my $video_file = $video_file_rs->create({ filename => $c->config->{download_dir} . '/media/video/' . $creation_time . '/monothek_download.mp4' });
+	my $resource_guid = Data::GUID->new;
+
+	my $video_file = $video_file_rs->create({ filename => $c->config->{download_dir} . '/media/video/' . $creation_time . '/monothek_download.mp4',
+						  media_account => $media_account_id,
+						  resource_id => $resource_guid->as_string,
+						  creation_time => sprintf('%04d-%02d-%02d %02d:%02d:%02d', $creation_time_year, $creation_time_month, $creation_time_day, $creation_time_hr, $creation_time_min, $creation_time_sec),
+						  duration => sprintf('%02d:%02d:%02d.00000', $duration_hr, $duration_min, $duration_sec),
+						});
+
+	my $media_renderer = Monoidea::Media::Renderer->new(ffmpeg_path => $c->config->{ffmpeg_path},
+							    destination_filename => $video_file->filename,
+							    start_timestamp_sec => $creation_time,
+							    end_timestamp_sec => $creation_time + $duration);
 
 
-	
+	my $raw_audio_rs = $c->model('MONOSERVICE::RawAudioFile');
+	my $raw_video_rs = $c->model('MONOSERVICE::RawVideoFile');
+
+	$media_renderer->find_audio_source($raw_audio_rs);
+	$media_renderer->find_video_source($raw_video_rs);
+
+	$media_renderer->process_source();
+
+	$video_file->update({ available => 1 });
     }
 }
 
