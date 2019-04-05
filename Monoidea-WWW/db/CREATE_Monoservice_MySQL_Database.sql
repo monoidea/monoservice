@@ -1,6 +1,7 @@
 # author: 	J. Kraehemann
 # created:	27.01.2019
 
+SET time_zone='+00:00';
 
 DROP DATABASE IF EXISTS MONOSERVICE;
 
