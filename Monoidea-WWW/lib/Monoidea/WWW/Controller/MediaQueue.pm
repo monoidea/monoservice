@@ -26,7 +26,17 @@ Catalyst Controller.
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
-    $c->response->body('Matched Monoidea::WWW::Controller::MediaQueue in MediaQueue.');
+    if($c->user_exists() && $c->check_user_roles( qw / can_export / )){
+#TODO:JK: implement me
+    }else{
+	$c->detach("access_denied");
+    }
+}
+
+sub access_denied :Local :Args(0) {
+    my ( $self, $c ) = @_;
+
+    $c->stash->{'template'} = 'accessdenied.tt';
 }
 
 sub export :Local {
@@ -72,6 +82,8 @@ sub export :Local {
 	$media_renderer->process_source();
 
 	$video_file->update({ available => 1 });
+    }else{
+	$c->detach("access_denied");
     }
 }
 
