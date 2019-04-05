@@ -27,7 +27,11 @@ Catalyst Controller.
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
-#    $c->response->body('Matched Monoidea::WWW::Controller::Purchase in Purchase.');
+    if($c->user_exists() && $c->check_user_roles( qw / can_transaction / )){
+#TODO:JK: implement me
+    }else{
+	$c->detach("access_denied");
+    }
 }
 
 sub access_denied :Local :Args(0) {

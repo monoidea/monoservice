@@ -16,15 +16,28 @@
 # You should have received a copy of the GNU General Public License
 # along with Monoservice.  If not, see <http://www.gnu.org/licenses/>.
 
-package Monoidea::Service::Media::Resource;
+package Monoidea::HTTP::Action::Login;
 
 use Moose;
 use namespace::clean -except => 'meta';
 
-has 'filename' => (is => 'rw', isa => 'Str', required => 1);
-has 'content_type' => (is => 'rw', isa => 'Str', lazy_build => 1);
-has 'timestamp_sec' => (is => 'rw', isa => 'Num', lazy_build => 1);
-has 'duration_sec' => (is => 'rw', isa => 'Num', lazy_build => 1);
+use LWP::UserAgent;
+use HTTP::Request;
+use HTTP::Request::Common;
+
+has 'url' => (is => 'rw', isa => 'Str', required => 1);
+has 'username' => (is => 'rw', isa => 'Str', required => 1);
+has 'password' => (is => 'rw', isa => 'Str', required => 1);
+
+sub do_login {
+    my ( $self, $user_agent ) = @_;
+
+    my $request = HTTP::Request::Common::POST($self->url, [ 'username' => $self->username,
+							    'password' => $self->password ] );
+    my $response = $user_agent->request($request);
+
+    return($response);
+}
 
 __PACKAGE__->meta->make_immutable;
 

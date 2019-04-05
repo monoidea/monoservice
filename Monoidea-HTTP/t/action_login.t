@@ -1,3 +1,5 @@
+#!/usr/bin/env perl
+
 # Monoservice - monoidea's monoservice
 # Copyright (C) 2019 Joël Krähemann
 #
@@ -16,16 +18,24 @@
 # You should have received a copy of the GNU General Public License
 # along with Monoservice.  If not, see <http://www.gnu.org/licenses/>.
 
-package Monoidea::Service::Media::Resource;
+use warnings;
+use strict;
+use Test::More tests => 5;
 
-use Moose;
-use namespace::clean -except => 'meta';
+use LWP::UserAgent;
 
-has 'filename' => (is => 'rw', isa => 'Str', required => 1);
-has 'content_type' => (is => 'rw', isa => 'Str', lazy_build => 1);
-has 'timestamp_sec' => (is => 'rw', isa => 'Num', lazy_build => 1);
-has 'duration_sec' => (is => 'rw', isa => 'Num', lazy_build => 1);
+BEGIN {
+    use_ok( 'Monoidea::HTTP::Action::Login' );
+}
 
-__PACKAGE__->meta->make_immutable;
+my $login = Monoidea::HTTP::Action::Login->new(url => 'http://localhost:3000/people/login',
+					       username => 'admin',
+					       password => 'secret');
 
-1;
+# now test it works as advertised
+cmp_ok(ref($login), 'eq', 'Monoidea::HTTP::Action::Login', "is a Monoidea::HTTP::Action::Login");
+cmp_ok($login->url, 'eq', 'http://localhost:3000/people/login', 'correct URL');
+cmp_ok($login->username, 'eq', 'admin', 'correct username');
+cmp_ok($login->password, 'eq', 'secret', 'correct password');
+
+my $response = $login->do_login(LWP::UserAgent->new());

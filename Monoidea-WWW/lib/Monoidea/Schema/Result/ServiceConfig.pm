@@ -78,6 +78,30 @@ __PACKAGE__->table("SERVICE_CONFIG");
   default_value: '0000-00-00 00:00:00'
   is_nullable: 0
 
+=head2 scheduled_upload
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
+=head2 upload_schedule_time
+
+  data_type: 'timestamp'
+  datetime_undef_if_invalid: 1
+  default_value: '0000-00-00 00:00:00'
+  is_nullable: 0
+
+=head2 delayed_upload
+
+  data_type: 'tinyint'
+  is_nullable: 1
+
+=head2 upload_delay_time
+
+  data_type: 'timestamp'
+  datetime_undef_if_invalid: 1
+  default_value: '0000-00-00 00:00:00'
+  is_nullable: 0
+
 =cut
 
 __PACKAGE__->add_columns(
@@ -113,6 +137,24 @@ __PACKAGE__->add_columns(
     default_value => "0000-00-00 00:00:00",
     is_nullable => 0,
   },
+  "scheduled_upload",
+  { data_type => "tinyint", is_nullable => 1 },
+  "upload_schedule_time",
+  {
+    data_type => "timestamp",
+    datetime_undef_if_invalid => 1,
+    default_value => "0000-00-00 00:00:00",
+    is_nullable => 0,
+  },
+  "delayed_upload",
+  { data_type => "tinyint", is_nullable => 1 },
+  "upload_delay_time",
+  {
+    data_type => "timestamp",
+    datetime_undef_if_invalid => 1,
+    default_value => "0000-00-00 00:00:00",
+    is_nullable => 0,
+  },
 );
 
 =head1 PRIMARY KEY
@@ -128,8 +170,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("service_config_id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-04-05 03:04:37
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:CzvYIcnElElaNmVjOU5h8A
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-04-05 06:01:42
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:DgenzkM7lhM3ldYpWPqFVw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

@@ -16,15 +16,35 @@
 # You should have received a copy of the GNU General Public License
 # along with Monoservice.  If not, see <http://www.gnu.org/licenses/>.
 
-package Monoidea::Service::Media::Resource;
+package Monoidea::HTTP::Action::Upload;
+
+use LWP::UserAgent;
+use HTTP::Request;
+use HTTP::Request::Common;
 
 use Moose;
 use namespace::clean -except => 'meta';
 
+has 'url' => (is => 'rw', isa => 'Str', required => 1);
 has 'filename' => (is => 'rw', isa => 'Str', required => 1);
-has 'content_type' => (is => 'rw', isa => 'Str', lazy_build => 1);
-has 'timestamp_sec' => (is => 'rw', isa => 'Num', lazy_build => 1);
-has 'duration_sec' => (is => 'rw', isa => 'Num', lazy_build => 1);
+has 'creation_time' => (is => 'rw', isa => 'Num', required => 1);
+has 'duration' => (is => 'rw', isa => 'Num', required => 1);
+has 'media_file' => (is => 'rw', isa => 'Str', required => 1);
+
+sub do_upload {
+    my ( $self, $user_agent) = @_;
+
+    my $request = HTTP::Request::Common::POST($self->url,
+					      Content_Type  => 'form-data',
+					      Content       => [ 'filename' => $self->filename,
+								 'creation_time' => $self->creation_time,
+								 'duration' => $self->duration,
+								 'media_file' => [ $self->media_file ]]);
+
+    my $response = $user_agent->request($request);
+
+    return($response);
+}
 
 __PACKAGE__->meta->make_immutable;
 
