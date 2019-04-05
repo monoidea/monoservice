@@ -12,6 +12,23 @@ USE MONOSERVICE;
 
 #----------------------------------------------------------------------------------------
 
+DROP TABLE IF EXISTS `SERVICE_CONFIG`;
+
+
+CREATE TABLE `SERVICE_CONFIG`
+(
+  `SERVICE_CONFIG_ID` INTEGER NOT NULL auto_increment,
+  `PROFILE_NAME` VARCHAR(255) NOT NULL,
+  `UPLOAD_MAX_AGE` TIMESTAMP DEFAULT 0,
+  `DOWNLOAD_MAX_AGE` TIMESTAMP DEFAULT 0,
+  `CLEAN_INTERVAL` TIMESTAMP DEFAULT 0,
+  `LAST_CLEANED` TIMESTAMP DEFAULT 0,
+  PRIMARY KEY (`SERVICE_CONFIG_ID`)
+)ENGINE=InnoDB DEFAULT CHARSET utf8;
+
+
+#----------------------------------------------------------------------------------------
+
 DROP TABLE IF EXISTS `USERS`;
 
 

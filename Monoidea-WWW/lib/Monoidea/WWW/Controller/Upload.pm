@@ -69,7 +69,7 @@ sub put_cam :Local {
 
 	copy($media_file->fh, $c->config->{upload_dir} . '/media/cam/' .  $creation_time_hr . '/' . $filename);
 
-	$new_cam_upload->update({available => 1});
+	$new_cam_upload->update({ available => 1 });
 
 	$c->response->body('success');
 	$c->response->status(200);
@@ -106,7 +106,7 @@ sub put_raw_video :Local {
 
 	copy($media_file->fh, $c->config->{upload_dir} . '/media/raw-video/' .  $creation_time_hr . '/' . $filename);
 
-	$new_raw_video->update({available => 1});
+	$new_raw_video->update({ available => 1 });
 
 	$c->response->body('success');
 	$c->response->status(200);
@@ -143,7 +143,7 @@ sub put_mic :Local {
 
 	copy($media_file->fh, $c->config->{upload_dir} . '/media/mic/' .  $creation_time_hr . '/' . $filename);
 
-	$new_mic_upload->update({available => 1});
+	$new_mic_upload->update({ available => 1 });
 
 	$c->response->body('success');
 	$c->response->status(200);
@@ -180,7 +180,7 @@ sub put_raw_audio :Local {
 
 	copy($media_file->fh, $c->config->{upload_dir} . '/media/raw-audio/' .  $creation_time_hr . '/' . $filename);
 
-	$new_raw_audio->update({available => 1});
+	$new_raw_audio->update({ available => 1 });
 
 	$c->response->body('success');
 	$c->response->status(200);

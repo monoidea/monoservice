@@ -22,6 +22,7 @@ use Moose;
 use namespace::clean -except => 'meta';
 use Monoidea::Schema;
 use File::Temp;
+use DateTime::Format::Strptime;
 
 use Monoidea::Media::Resource;
 
@@ -76,16 +77,32 @@ sub find_audio_source {
 
     my $raw_audio;
 
+    # start time
+    my ($start_sec, $start_min, $start_hr, $start_day, $start_month, $start_year, $start_wday, $start_yday, $start_isdst) = localtime($self->start_timestamp_sec);
+    $start_month += 1;
+    $start_year += 1900;
+
+    my $start_time = sprintf('%04d-%02d-%02d %02d:%02d:%02d', $start_year, $start_month, $start_day, $start_hr, $start_min, $start_sec);
+
     while(!$raw_audio) {
-	$raw_audio = $raw_audio_rs->find({ creation_time => $self->start_timestamp_sec,
+	$raw_audio = $raw_audio_rs->find({ creation_time => $start_time,
 					   available => 1,
 					 });
 
 	if($raw_audio){
 	    my @audio_arr = @{$self->audio_source};
+
+	    my $strp = DateTime::Format::Strptime->new(
+		pattern => '%Y-%m-%d  %T',
+		time_zone => 'GMT-0',
+		);
+
+	    my $dt = $strp->parse_datetime($raw_audio->creation_time);
+	    my $creation_time = $dt->epoch;
+
 	    push(@audio_arr, Monoidea::Service::Media::Resource->new( filename => $raw_audio->filename,
 								      content_type => 'audio/wav',
-								      creation_time => $raw_audio->creation_time,
+								      creation_time => $creation_time,
 								      duration => $raw_audio->duration));
 	}else{
 	    sleep(10);
@@ -98,9 +115,23 @@ sub find_video_source {
 
     my $completed = 0;
 
+    # start time
+    my ($start_sec, $start_min, $start_hr, $start_day, $start_month, $start_year, $start_wday, $start_yday, $start_isdst) = localtime($self->start_timestamp_sec);
+    $start_month += 1;
+    $start_year += 1900;
+
+    my $start_time = sprintf('%04d-%02d-%02d %02d:%02d:%02d', $start_year, $start_month, $start_day, $start_hr, $start_min, $start_sec);
+
+    # end time
+    my ($end_sec, $end_min, $end_hr, $end_day, $end_month, $end_year, $end_wday, $end_yday, $end_isdst) = localtime($self->end_timestamp_sec);
+    $end_month += 1;
+    $end_year += 1900;
+
+    my $end_time = sprintf('%04d-%02d-%02d %02d:%02d:%02d', $end_year, $end_month, $end_day, $end_hr, $end_min, $end_sec);
+
     while(!$completed) {
-	my $raw_video = $raw_video_rs->search({ creation_time => { '>=' => $self->start_timestamp_sec },
-						creation_time => { '<' => $self->end_timestamp_sec },
+	my $raw_video = $raw_video_rs->search({ creation_time => { '>=' =>  $start_time},
+						creation_time => { '<' => $end_time },
 						available => 1,
 					      });
 	
@@ -108,9 +139,17 @@ sub find_video_source {
 	    my @video_arr = @{$self->video_source};
 
 	    if(!(any { $_->filename() eq $current->filename } @video_arr)){
+		my $strp = DateTime::Format::Strptime->new(
+		    pattern => '%Y-%m-%d  %T',
+		    time_zone => 'GMT-0',
+		    );
+
+		my $dt = $strp->parse_datetime($current->creation_time);
+		my $creation_time = $dt->epoch;
+
 		push(@video_arr, Monoidea::Service::Media::Resource->new( filename => $current->filename,
 									  content_type => 'video/mp4',
-									  timestamp_sec => $current->creation_time,
+									  timestamp_sec => $creation_time,
 									  duration_sec => $current->duration));
 	    }
 
