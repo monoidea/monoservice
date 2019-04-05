@@ -73,7 +73,6 @@ sub check_clean :Local {
 
 	    # update last cleaned
 	    my ($current_time_sec, $current_time_min, $current_time_hr, $current_time_day, $current_time_month, $current_time_year, $current_time_wday, $current_time_yday, $current_time_isdst) = localtime($timestamp_sec);
-	    $current_time_month += 1;
 	    $current_time_year += 1900;
 
 	    $service_config->update({ last_cleaned => sprintf('%04d-%02d-%02d %02d:%02d:%02d', $current_time_year, $current_time_month, $current_time_day, $current_time_hr, $current_time_min, $current_time_sec) });
@@ -85,7 +84,6 @@ sub check_clean :Local {
 	    my $upload_deprecated_timestamp_sec = $timestamp_sec - $upload_max_age_timestamp_sec;
 
 	    my ($upload_deprecated_sec, $upload_deprecated_min, $upload_deprecated_hr, $upload_deprecated_day, $upload_deprecated_month, $upload_deprecated_year, $upload_deprecated_wday, $upload_deprecated_yday, $upload_deprecated_isdst) = localtime($upload_deprecated_timestamp_sec);
-	    $upload_deprecated_month += 1;
 	    $upload_deprecated_year += 1900;
 
 	    my $upload_deprecated_time = sprintf('%04d-%02d-%02d %02d:%02d:%02d', $upload_deprecated_year, $upload_deprecated_month, $upload_deprecated_day, $upload_deprecated_hr, $upload_deprecated_min, $upload_deprecated_sec);
@@ -141,7 +139,6 @@ sub check_clean :Local {
 	    my $download_deprecated_timestamp_sec = $timestamp_sec - $download_max_age_timestamp_sec;
 
 	    my ($download_deprecated_sec, $download_deprecated_min, $download_deprecated_hr, $download_deprecated_day, $download_deprecated_month, $download_deprecated_year, $download_deprecated_wday, $download_deprecated_yday, $download_deprecated_isdst) = localtime($download_deprecated_timestamp_sec);
-	    $download_deprecated_month += 1;
 	    $download_deprecated_year += 1900;
 
 	    my $download_deprecated_time = sprintf('%04d-%02d-%02d %02d:%02d:%02d', $download_deprecated_year, $download_deprecated_month, $download_deprecated_day, $download_deprecated_hr, $download_deprecated_min, $download_deprecated_sec);

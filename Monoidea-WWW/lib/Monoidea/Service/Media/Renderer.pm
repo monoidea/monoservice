@@ -79,7 +79,6 @@ sub find_audio_source {
 
     # start time
     my ($start_sec, $start_min, $start_hr, $start_day, $start_month, $start_year, $start_wday, $start_yday, $start_isdst) = localtime($self->start_timestamp_sec);
-    $start_month += 1;
     $start_year += 1900;
 
     my $start_time = sprintf('%04d-%02d-%02d %02d:%02d:%02d', $start_year, $start_month, $start_day, $start_hr, $start_min, $start_sec);
@@ -117,14 +116,12 @@ sub find_video_source {
 
     # start time
     my ($start_sec, $start_min, $start_hr, $start_day, $start_month, $start_year, $start_wday, $start_yday, $start_isdst) = localtime($self->start_timestamp_sec);
-    $start_month += 1;
     $start_year += 1900;
 
     my $start_time = sprintf('%04d-%02d-%02d %02d:%02d:%02d', $start_year, $start_month, $start_day, $start_hr, $start_min, $start_sec);
 
     # end time
     my ($end_sec, $end_min, $end_hr, $end_day, $end_month, $end_year, $end_wday, $end_yday, $end_isdst) = localtime($self->end_timestamp_sec);
-    $end_month += 1;
     $end_year += 1900;
 
     my $end_time = sprintf('%04d-%02d-%02d %02d:%02d:%02d', $end_year, $end_month, $end_day, $end_hr, $end_min, $end_sec);

@@ -50,11 +50,9 @@ sub export :Local {
 	my $video_file_rs = $c->model('MONOSERVICE::VideoFile');
 
 	my ($creation_time_sec, $creation_time_min, $creation_time_hr, $creation_time_day, $creation_time_month, $creation_time_year, $creation_time_wday, $creation_time_yday, $creation_time_isdst) = localtime($creation_time);
-	$creation_time_month += 1;
 	$creation_time_year += 1900;
 
 	my ($duration_sec, $duration_min, $duration_hr, $duration_day, $duration_month, $duration_year, $duration_wday, $duration_yday, $duration_isdst) = localtime($duration);
-	$duration_hr -= 1;
 
 	File::Path->make_path($c->config->{download_dir} . '/media/video/' . $creation_time . '/');
 

@@ -4,6 +4,8 @@ use namespace::autoclean;
 
 use Catalyst::Runtime 5.80;
 
+$ENV{"TZ"} = "UTC";
+
 # Set flags and add plugins for the application.
 #
 # Note that ORDERING IS IMPORTANT here as plugins are initialized in order,

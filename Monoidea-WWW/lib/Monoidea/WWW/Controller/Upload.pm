@@ -53,11 +53,9 @@ sub put_cam :Local {
 	my $cam_upload_rs = $c->model('MONOSERVICE::CamUploadFile');
 
 	my ($creation_time_sec, $creation_time_min, $creation_time_hr, $creation_time_day, $creation_time_month, $creation_time_year, $creation_time_wday, $creation_time_yday, $creation_time_isdst) = localtime($creation_time);
-	$creation_time_month += 1;
 	$creation_time_year += 1900;
 
 	my ($duration_sec, $duration_min, $duration_hr, $duration_day, $duration_month, $duration_year, $duration_wday, $duration_yday, $duration_isdst) = localtime($duration);
-	$duration_hr -= 1;
 
 	File::Path->make_path($c->config->{upload_dir} . '/media/cam/' . $creation_time_hr . '/');
 
@@ -90,11 +88,9 @@ sub put_raw_video :Local {
 	my $raw_video_rs = $c->model('MONOSERVICE::RawVideoFile');
 
 	my ($creation_time_sec, $creation_time_min, $creation_time_hr, $creation_time_day, $creation_time_month, $creation_time_year, $creation_time_wday, $creation_time_yday, $creation_time_isdst) = localtime($creation_time);
-	$creation_time_month += 1;
 	$creation_time_year += 1900;
 
 	my ($duration_sec, $duration_min, $duration_hr, $duration_day, $duration_month, $duration_year, $duration_wday, $duration_yday, $duration_isdst) = localtime($duration);
-	$duration_hr -= 1;
 
 	File::Path->make_path($c->config->{upload_dir} . '/media/raw-video/' . $creation_time_hr . '/');
 
@@ -127,11 +123,9 @@ sub put_mic :Local {
 	my $mic_upload_rs = $c->model('MONOSERVICE::MicUploadFile');
 
 	my ($creation_time_sec, $creation_time_min, $creation_time_hr, $creation_time_day, $creation_time_month, $creation_time_year, $creation_time_wday, $creation_time_yday, $creation_time_isdst) = localtime($creation_time);
-	$creation_time_month += 1;
 	$creation_time_year += 1900;
 
 	my ($duration_sec, $duration_min, $duration_hr, $duration_day, $duration_month, $duration_year, $duration_wday, $duration_yday, $duration_isdst) = localtime($duration);
-	$duration_hr -= 1;
 
 	File::Path->make_path($c->config->{upload_dir} . '/media/mic/' . $creation_time_hr . '/');
 
@@ -164,11 +158,9 @@ sub put_raw_audio :Local {
 	my $raw_audio_rs = $c->model('MONOSERVICE::RawAudioFile');
 
 	my ($creation_time_sec, $creation_time_min, $creation_time_hr, $creation_time_day, $creation_time_month, $creation_time_year, $creation_time_wday, $creation_time_yday, $creation_time_isdst) = localtime($creation_time);
-	$creation_time_month += 1;
 	$creation_time_year += 1900;
 
 	my ($duration_sec, $duration_min, $duration_hr, $duration_day, $duration_month, $duration_year, $duration_wday, $duration_yday, $duration_isdst) = localtime($duration);
-	$duration_hr -= 1;
 
 	File::Path->make_path($c->config->{upload_dir} . '/media/raw-audio/' . $creation_time_hr . '/');
 
