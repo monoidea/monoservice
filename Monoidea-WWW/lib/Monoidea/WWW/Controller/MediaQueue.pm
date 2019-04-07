@@ -3,6 +3,7 @@ use Moose;
 use namespace::autoclean;
 use File::Path;
 use Monoidea::Schema;
+use Monoidea::Service::Media::Renderer;
 
 BEGIN { extends 'Catalyst::Controller'; }
 
@@ -51,6 +52,7 @@ sub export :Local {
 
 	my ($creation_time_sec, $creation_time_min, $creation_time_hr, $creation_time_day, $creation_time_month, $creation_time_year, $creation_time_wday, $creation_time_yday, $creation_time_isdst) = localtime($creation_time);
 	$creation_time_year += 1900;
+	$creation_time_month += 1900;
 
 	my ($duration_sec, $duration_min, $duration_hr, $duration_day, $duration_month, $duration_year, $duration_wday, $duration_yday, $duration_isdst) = localtime($duration);
 
@@ -65,21 +67,31 @@ sub export :Local {
 						  duration => sprintf('%02d:%02d:%02d.00000', $duration_hr, $duration_min, $duration_sec),
 						});
 
-	my $media_renderer = Monoidea::Media::Renderer->new(ffmpeg_path => $c->config->{ffmpeg_path},
-							    destination_filename => $video_file->filename,
-							    start_timestamp_sec => $creation_time,
-							    end_timestamp_sec => $creation_time + $duration);
+	my $media_renderer = Monoidea::Service::Media::Renderer->new(ffmpeg_path => $c->config->{ffmpeg_path},
+								     destination_filename => $video_file->filename,
+								     start_timestamp_sec => $creation_time,
+								     end_timestamp_sec => ($creation_time + $duration));
 
 
 	my $raw_audio_rs = $c->model('MONOSERVICE::RawAudioFile');
-	my $raw_video_rs = $c->model('MONOSERVICE::RawVideoFile');
+	my $cam_upload_rs = $c->model('MONOSERVICE::CamUploadFile');
+
+	printf "**** find audio\n";
 
 	$media_renderer->find_audio_source($raw_audio_rs);
-	$media_renderer->find_video_source($raw_video_rs);
 
-	$media_renderer->process_source();
+	printf "**** find video\n";
+
+	$media_renderer->find_video_source($cam_upload_rs);
+
+	printf "**** process\n";
+
+	$media_renderer->process_source($c->config->{tmp_dir});
 
 	$video_file->update({ available => 1 });
+
+	$c->response->body('success');
+	$c->response->status(200);
     }else{
 	$c->detach("access_denied");
     }

@@ -54,6 +54,7 @@ sub put_cam :Local {
 
 	my ($creation_time_sec, $creation_time_min, $creation_time_hr, $creation_time_day, $creation_time_month, $creation_time_year, $creation_time_wday, $creation_time_yday, $creation_time_isdst) = localtime($creation_time);
 	$creation_time_year += 1900;
+	$creation_time_month += 1;
 
 	my ($duration_sec, $duration_min, $duration_hr, $duration_day, $duration_month, $duration_year, $duration_wday, $duration_yday, $duration_isdst) = localtime($duration);
 
@@ -89,6 +90,7 @@ sub put_raw_video :Local {
 
 	my ($creation_time_sec, $creation_time_min, $creation_time_hr, $creation_time_day, $creation_time_month, $creation_time_year, $creation_time_wday, $creation_time_yday, $creation_time_isdst) = localtime($creation_time);
 	$creation_time_year += 1900;
+	$creation_time_month += 1;
 
 	my ($duration_sec, $duration_min, $duration_hr, $duration_day, $duration_month, $duration_year, $duration_wday, $duration_yday, $duration_isdst) = localtime($duration);
 
@@ -124,6 +126,7 @@ sub put_mic :Local {
 
 	my ($creation_time_sec, $creation_time_min, $creation_time_hr, $creation_time_day, $creation_time_month, $creation_time_year, $creation_time_wday, $creation_time_yday, $creation_time_isdst) = localtime($creation_time);
 	$creation_time_year += 1900;
+	$creation_time_month += 1;
 
 	my ($duration_sec, $duration_min, $duration_hr, $duration_day, $duration_month, $duration_year, $duration_wday, $duration_yday, $duration_isdst) = localtime($duration);
 
@@ -159,6 +162,7 @@ sub put_raw_audio :Local {
 
 	my ($creation_time_sec, $creation_time_min, $creation_time_hr, $creation_time_day, $creation_time_month, $creation_time_year, $creation_time_wday, $creation_time_yday, $creation_time_isdst) = localtime($creation_time);
 	$creation_time_year += 1900;
+	$creation_time_month += 1;
 
 	my ($duration_sec, $duration_min, $duration_hr, $duration_day, $duration_month, $duration_year, $duration_wday, $duration_yday, $duration_isdst) = localtime($duration);
 

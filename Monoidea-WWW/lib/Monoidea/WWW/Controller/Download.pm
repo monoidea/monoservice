@@ -29,18 +29,26 @@ sub index :Path :Args(0) {
     my $token = $c->req->params->{'token'};
 
     my $session_store_rs = $c->model('MONOSERVICE::SessionStore');
-    my $session_store = $session_store_rs->find({session_id => $session_id,
-						 token => $token});
+    my $session_store = $session_store_rs->find({ session_id => { '=' => $session_id },
+						  token => { '=' => $token },
+						});
 
     if($session_store){
 	my $video_file_rs = $c->model('MONOSERVICE::VideoFile');
-	my $video_file = $video_file_rs->find({media_account => $session_store->media_account});
+	my $video_file = $video_file_rs->search({ media_account => $session_store->media_account->media_account_id,
+						});
+
+	my @arr;
+
+	while( my $v = $video_file->next){
+	    push @arr, ( $v->video_file_id );
+	}
 
 	$c->stash(
 	    session_id => $session_id,
 	    token => $token,
-	    video_file => $video_file,
 	    current_view => 'Download',
+	    video_file_id => \@arr,
 	    );
     }else{
 	$c->detach("access_denied");
@@ -69,8 +77,8 @@ sub media :Local {
 	my $media_account = $media_account_rs->find({media_account_id => $session_store->media_account});
 
 	my $video_file_rs = $c->model('MONOSERVICE::VideoFile');
-	my $video_file = $video_file_rs->find({media_account => $session_store->media_account},
-					      {video_file_id => $video_file_id});
+	my $video_file = $video_file_rs->find({media_account => $session_store->media_account,
+					       video_file_id => $video_file_id});
 
 	if($video_file && $video_file->available){
 	    $c->response->headers->content_type('video/mp4');

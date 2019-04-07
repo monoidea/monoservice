@@ -69,6 +69,7 @@ sub prepare :Local {
 
 	my ($due_date_sec, $due_date_min, $due_date_hr, $due_date_day, $due_date_month, $due_date_year, $due_date_wday, $due_date_yday, $due_date_isdst) = localtime($current_time);
 	$due_date_year += 1900;
+	$due_date_month += 1;
 
 	my $payment = $payment_rs->create({ recipe_id => $recipe_id,
 					    invoice_amount => $invoice_amount,
@@ -77,6 +78,7 @@ sub prepare :Local {
 
 	my ($billing_time_sec, $billing_time_min, $billing_time_hr, $billing_time_day, $billing_time_month, $billing_time_year, $billing_time_wday, $billing_time_yday, $billing_time_isdst) = localtime($current_time);
 	$billing_time_year += 1900;
+	$billing_time_month += 1;
 
 	my $purchase = $purchase_rs->create({ position_id => $position_id,
 					      payment => $payment->payment_id,

@@ -7,11 +7,11 @@ session_id = [% session_id %];<br/>
 token = [% token %];
 </p>
 
-[% FOREACH v = video_file %]
+[% FOREACH v IN video_file_id %]
 
 <div>
 <video width="320" height="240" controls>
-  <source src="http://localhost:3000/download/media?session_id=[% session_id %]&token=[% token %]&video_file_id=[% v.video_file_id %]" type="video/mp4">
+  <source src="http://localhost:3000/download/media?session_id=[% session_id %]&token=[% token %]&video_file_id=[% v %]" type="video/mp4">
   Your browser does not support the video tag.
 </video> 
 </div>
