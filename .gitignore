@@ -4,5 +4,7 @@ Monoidea-WWW/root/*.html
 Monoidea-WWW/root/*.xml
 Monoidea-WWW/root/fonts/*
 Monoidea-WWW/root/scripts/*
+!Monoidea-WWW/root/scripts/ajaxTable.js
+!Monoidea-WWW/root/scripts/downloadList.js
 Monoidea-WWW/root/css/*
 Monoidea-WWW/root/images/*
