@@ -19,6 +19,33 @@ var tableCounter = 0;
  */
 var rowCounter = 0;
 
+var tables = [{
+    ajaxTable: null,
+    htmlCallbacks: null,
+    dataPoll: null
+}];
+
+function TableFactory(){
+    this.createTable = createTable;
+    
+    function createTable(t){
+	var row;
+	
+	switch(t){
+	case "Download":
+	    row = new Download();
+	    break;
+	}
+	row.isDefaultRow = true;
+	row.columns[0].ID[0].value = "*";
+
+	tables[0].ajaxTable = new AjaxTable($("#content_0"),  row, 0);
+	tables[0].htmlCallbacks = new AjaxTableHtmlCallbacks(0);
+
+	tables[0].ajaxTable.insertRow(null, -1);
+    }
+}
+
 function AjaxRow(){
     this.row = null;
     this.isDefaultRow = false;
@@ -482,7 +509,6 @@ function AjaxTable(p, r, i){
     rows = r;
     index = i;
     tableId = tableCounter;
-    createTable(p);
 }
 
 function AjaxTableHtmlCallbacks(i){
@@ -671,14 +697,21 @@ function WebService(){
     function encodeFormData(data) {
 	if (!data) return ""; // Always return a string
 	var pairs = []; // To hold name=value pairs
-	for(var name in data) { // For each name
-	    if (!data.hasOwnProperty(name)) continue; // Skip inherited
-	    if (typeof data[name] === "function") continue; // Skip methods
-	    var value = data[name].toString(); // Value as string
-	    name = encodeURIComponent(name.replace(" ", "+")); // Encode name
-	    value = encodeURIComponent(value.replace(" ", "+")); // Encode value
-	    pairs.push(name + "=" + value); // Remember name=value pair
+
+	var i;
+
+	for(i = 0; i < data.length; i++){
+	    for(var name in data[i]) { // For each name
+		if (!data[i].hasOwnProperty(name)) continue; // Skip inherited
+		if (typeof data[i][name] === "function") continue; // Skip methods
+		var value = data[i][name].toString(); // Value as string
+		name = encodeURIComponent(name.replace(" ", "+")); // Encode name
+		value = encodeURIComponent(value.replace(" ", "+")); // Encode value
+
+		pairs.push(name + "=" + value); // Remember name=value pair
+	    }
 	}
+
 	return pairs.join('&'); // Return joined pairs separated with &
     }
 

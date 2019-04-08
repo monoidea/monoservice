@@ -24,10 +24,74 @@ Catalyst Controller.
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
-    $c->response->body('Matched Monoidea::WWW::Controller::Monoservice::Download in Monoservice::Download.');
+    my $session_id = $c->req->params->{'session_id'};
+    my $token = $c->req->params->{'token'};
+
+    my $command = $c->req->params->{'command'};
+
+    my $session_store_rs = $c->model('MONOSERVICE::SessionStore');
+    my $session_store = $session_store_rs->find({ session_id => { '=' => $session_id },
+						  token => { '=' => $token },
+						});
+
+    if($session_store){
+	if($command &&
+	   $command eq 'list-record'){
+	    # create response
+	    my $dom = XML::LibXML::Document->new('1.0', 'UTF-8');
+
+	    my $root_node = XML::LibXML::Element->new('monoidea-download');
+	    $dom->setDocumentElement($root_node);
+
+	    my $video_file_rs = $c->model('MONOSERVICE::VideoFile');
+	    my $video_file = $video_file_rs->search({ media_account => $session_store->media_account->media_account_id,
+						    });
+
+	    while( my $v = $video_file->next){
+		my $media_node;
+		my $node;
+
+		$media_node = XML::LibXML::Element->new('media');
+		$root_node->appendChild($media_node);
+
+		$node = XML::LibXML::Element->new('session-id');
+		$node->appendText($session_id);
+		$media_node->appendChild($node);
+
+		$node = XML::LibXML::Element->new('token');
+		$node->appendText($token);
+		$media_node->appendChild($node);
+
+		$node = XML::LibXML::Element->new('video-file-id');
+		$node->appendText($v->video_file_id);
+		$media_node->appendChild($node);
+	    }
+
+	    # write response
+	    my $response_body = $dom->toString(1);
+
+	    $c->response->headers->content_type('application/xml');
+	    $c->response->headers->content_length(length $response_body);
+	    $c->response->headers->last_modified(time);
+
+	    $c->response->body($response_body);
+	}else{
+	    $c->stash(
+		session_id => $session_id,
+		token => $token,
+		template => 'monoservice/download.tt',
+		);
+	}
+    }else{
+	$c->detach("access_denied");
+    }
 }
 
+sub access_denied :Local :Args(0) {
+    my ( $self, $c ) = @_;
 
+    $c->stash->{'template'} = 'accessdenied.tt';
+}
 
 =encoding utf8
 

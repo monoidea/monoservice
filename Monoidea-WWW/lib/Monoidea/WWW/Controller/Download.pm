@@ -29,13 +29,13 @@ sub index :Path :Args(0) {
     my $token = $c->req->params->{'token'};
 
     my $session_store_rs = $c->model('MONOSERVICE::SessionStore');
-    my $session_store = $session_store_rs->find({ session_id => { '=' => $session_id },
-						  token => { '=' => $token },
+    my $session_store = $session_store_rs->find({ session_id => { 'eq' => $session_id },
+						  token => { 'eq' => $token },
 						});
 
     if($session_store){
 	my $video_file_rs = $c->model('MONOSERVICE::VideoFile');
-	my $video_file = $video_file_rs->search({ media_account => $session_store->media_account->media_account_id,
+	my $video_file = $video_file_rs->search({ media_account => { '=' => $session_store->media_account->media_account_id },
 						});
 
 	my @arr;
