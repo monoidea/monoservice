@@ -62,6 +62,18 @@ __PACKAGE__->table("SCREEN_UPLOAD_FILE");
   data_type: 'time'
   is_nullable: 0
 
+=head2 fps
+
+  data_type: 'float'
+  default_value: 25
+  is_nullable: 1
+
+=head2 bitrate
+
+  data_type: 'integer'
+  default_value: 15000000
+  is_nullable: 1
+
 =head2 available
 
   data_type: 'tinyint'
@@ -83,6 +95,10 @@ __PACKAGE__->add_columns(
   },
   "duration",
   { data_type => "time", is_nullable => 0 },
+  "fps",
+  { data_type => "float", default_value => 25, is_nullable => 1 },
+  "bitrate",
+  { data_type => "integer", default_value => 15000000, is_nullable => 1 },
   "available",
   { data_type => "tinyint", is_nullable => 1 },
 );
@@ -131,8 +147,8 @@ __PACKAGE__->many_to_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-04-01 07:33:52
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:osmQRZgACpq5jU0ksfC8mw
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-04-08 05:41:38
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:5bMq4jij+/vNjK37FjzJIw
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

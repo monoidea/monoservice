@@ -1,2 +1,8 @@
 *~
 autom4te.cache
+Monoidea-WWW/root/*.html
+Monoidea-WWW/root/*.xml
+Monoidea-WWW/root/fonts/*
+Monoidea-WWW/root/scripts/*
+Monoidea-WWW/root/css/*
+Monoidea-WWW/root/images/*

@@ -27,6 +27,7 @@ use Catalyst qw/
     Session
     Session::State::Cookie
     Session::Store::FastMmap
+    Static::Simple
 /;
 
 extends 'Catalyst';
@@ -49,7 +50,6 @@ __PACKAGE__->config(
     enable_catalyst_header => 1, # Send X-Catalyst header
     'View::TT' => {
 	INCLUDE_PATH => [
-	    __PACKAGE__->path_to('root', 'src'),
 	    __PACKAGE__->path_to('root', 'lib'),
 	    ],
 	    TEMPLATE_EXTENSION => '.tt',
@@ -71,7 +71,14 @@ __PACKAGE__->config(
 		role_field => 'role_name',
 	    }
 	}
-    }
+    },
+    'Plugin::Static::Simple' => {
+        dirs => [
+            'static',
+            qr/^(images|css|scripts|fonts)/,
+	    ],
+	    ignore_extensions => [ qw/ tt / ],
+    },
 );
 
 # Start the application

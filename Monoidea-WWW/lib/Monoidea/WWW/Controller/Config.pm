@@ -2,6 +2,8 @@ package Monoidea::WWW::Controller::Config;
 use Moose;
 use namespace::autoclean;
 
+use Config::Simple;
+
 BEGIN { extends 'Catalyst::Controller'; }
 
 =head1 NAME
@@ -43,8 +45,11 @@ sub service_config :Local {
     if($c->user_exists() && $c->check_user_roles( qw / can_config / )){
 	# config profile
 	my $simple_config = new Config::Simple($c->config->{service_config_file});
-	
-	my $profile_name = $simple_config->param("profile_name");
+	my $profile_name;
+
+	if($simple_config){
+	    $profile_name = $simple_config->param("profile_name");
+	}
 
 	if(!$profile_name){
 	    $profile_name = 'default';
@@ -67,13 +72,21 @@ sub service_config :Local {
 	$node->setAttribute(value => $service_config->scheduled_upload);
 	$root_node->appendChild($node);
 
+	if($service_config->upload_schedule_time){
+	    $node = XML::LibXML::Element->new('upload-schedule-time');
+	    $node->setAttribute(value => $service_config->upload_schedule_time);
+	    $root_node->appendChild($node);
+	}
+
 	$node = XML::LibXML::Element->new('delayed-upload');
 	$node->setAttribute(value => $service_config->delayed_upload);
 	$root_node->appendChild($node);
 
-	$node = XML::LibXML::Element->new('upload-time');
-	$node->setAttribute(value => $service_config->upload_time);
-	$root_node->appendChild($node);
+	if($service_config->upload_delay_time){
+	    $node = XML::LibXML::Element->new('upload-delay-time');
+	    $node->setAttribute(value => $service_config->upload_delay_time);
+	    $root_node->appendChild($node);
+	}
 
 	# write response
 	my $response_body = $dom->toString(1);

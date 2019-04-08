@@ -48,6 +48,7 @@ requires 'XML::LibXML';
 requires 'Cairo';
 requires 'Text::QRCode';
 requires 'Data::GUID';
+requires 'Config::Simple';
 
 requires 'namespace::autoclean';
 requires 'Config::General'; # This should reflect the config file format you've chosen

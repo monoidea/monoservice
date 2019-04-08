@@ -30,6 +30,8 @@ The root page (/)
 
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
+
+    $c->response->redirect('index.html');
 }
 
 sub login :Local {
