@@ -32,6 +32,9 @@ test_requires (
 requires (
    #'ABC'              => '1.6',
    #'Foo::Bar::Module' => '5.0401',
+    Log::Log4perl,
+    Config::Simple,
+    LWP::UserAgent,
 );
 
 install_as_cpan;

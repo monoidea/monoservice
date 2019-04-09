@@ -76,15 +76,9 @@ sub export :Local {
 	my $raw_audio_rs = $c->model('MONOSERVICE::RawAudioFile');
 	my $cam_upload_rs = $c->model('MONOSERVICE::CamUploadFile');
 
-	printf "**** find audio\n";
-
 	$media_renderer->find_audio_source($raw_audio_rs);
 
-	printf "**** find video\n";
-
 	$media_renderer->find_video_source($cam_upload_rs);
-
-	printf "**** process\n";
 
 	$media_renderer->process_source($c->config->{tmp_dir});
 

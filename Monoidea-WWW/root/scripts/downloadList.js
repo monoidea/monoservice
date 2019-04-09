@@ -64,17 +64,8 @@ function DownloadListFactory(){
 	
 	switch(t){
 	case "Download":
-	    row = new DownloadItem();
-
-	    row.columns[0]["SessionID"][0].value = session_id;
-	    row.columns[0]["Token"][0].value = token;
-	    row.columns[0]["VideoFileID"][0].value = -1;
-
 	    break;
 	}
-
-	row.isDefaultRow = false;
-	row.columns[0].ID[0].value = "*";
 
 	lists[0].downloadList =
 	    tables[0].ajaxTable = new DownloadList($("#content_0"),  row, 0);
@@ -86,7 +77,6 @@ function DownloadListFactory(){
 	    tables[0].DataPoll = new DownloadListService(0);
 
 	lists[0].downloadList.createList($("#content_0"));
-	lists[0].downloadList.insertItem(row, -1);
 
 	setInterval(function(){
 	    params = [{
