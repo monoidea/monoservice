@@ -35,6 +35,7 @@ requires (
     Log::Log4perl,
     Config::Simple,
     LWP::UserAgent,
+    Date::Leapyear,
 );
 
 install_as_cpan;

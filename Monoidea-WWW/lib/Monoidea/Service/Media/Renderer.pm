@@ -83,7 +83,7 @@ sub process_source {
     
     system(@concat_args);
 
-    my @audio_args = ($self->ffmpeg_path, , '-r', 25, '-i', $video_filename, '-i', @{$self->audio_source}[0]->filename, '-c:v', 'copy', '-c:a', 'libfdk_aac', '-b:a', '128k', $self->destination_filename);
+    my @audio_args = ($self->ffmpeg_path, '-r', 25, '-i', $video_filename, '-i', @{$self->audio_source}[0]->filename, '-c:v', 'copy', '-c:a', 'libfdk_aac', '-b:a', '128k', $self->destination_filename);
 
     system(@audio_args);
 }

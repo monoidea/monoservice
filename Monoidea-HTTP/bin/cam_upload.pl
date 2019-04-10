@@ -31,11 +31,11 @@ sub upload_file {
 
     my $creation_year = $path_arr[$path_length - 4];
     my $creation_yday = $path_arr[$path_length - 3];
-    my $creation_hr = $path_arr[$path_length - 2];
+    my $creation_hour = $path_arr[$path_length - 2];
     my $creation_min = ($path_arr[$path_length - 1] =~ /[a-zA-Z-_]*(\d\d)*/)[0];
     my $creation_sec = '00';
     
-    my $creation_time_str = $creation_year . ' ' . $creation_yday . ' ' . $creation_hr . ':' . $creation_min . ':' . $creation_sec;
+    my $creation_time_str = $creation_year . ' ' . $creation_yday . ' ' . $creation_hour . ':' . $creation_min . ':' . $creation_sec;
 
     my $date_parser = DateTime::Format::Strptime::->new(
 	pattern => ("%Y %j %T"),
@@ -66,7 +66,7 @@ sub upload_file {
     HTTP::Request::Common::GET($logout_url);
 }
 
-$cfg = new Config::Simple('monoidea_http.conf');
+my $cfg = new Config::Simple('monoidea_http.conf');
 
 my $cam_export_path = $cfg->param('cam_export_path');
 
@@ -94,25 +94,25 @@ while($running){
 
 	    foreach my $f_day (sort @file_day){
 		if($f_day ne '.' && $f_day ne '..'){
-		    opendir(my $dir_hr, $cam_export_path . '/' . $f_year . '/' . $f_day);
+		    opendir(my $dir_hour, $cam_export_path . '/' . $f_year . '/' . $f_day);
 
-		    my @file_hr = readdir($dir_hr);
-		    closedir($dir_hr);
+		    my @file_hour = readdir($dir_hour);
+		    closedir($dir_hour);
 
-		    foreach my $f_hr (sort @file_hr){
-			if($f_hr ne '.' && $f_hr ne '..'){
-			    opendir(my $dir_min, $cam_export_path . '/' . $f_year . '/' . $f_day . '/' . $f_hr);
+		    foreach my $f_hour (sort @file_hour){
+			if($f_hour ne '.' && $f_hour ne '..'){
+			    opendir(my $dir_min, $cam_export_path . '/' . $f_year . '/' . $f_day . '/' . $f_hour);
 
 			    my @file_min = readdir($dir_min);
 			    closedir($dir_min);
 
 			    if(scalar @file_min > 2){
-				DEBUG 'found files in: ' . $cam_export_path . '/' . $f_year . '/' . $f_day . "/" . $f_hr . "\n";
+				DEBUG 'found files in: ' . $cam_export_path . '/' . $f_year . '/' . $f_day . "/" . $f_hour . "\n";
 			    }
 
 			    foreach my $f_min (sort @file_min){
 				if($f_min ne '.' && $f_min ne '..'){
-				    my $cam_filename = $cam_export_path . '/' . $f_year . '/' . $f_day . '/' . $f_hr . '/' . $f_min;
+				    my $cam_filename = $cam_export_path . '/' . $f_year . '/' . $f_day . '/' . $f_hour . '/' . $f_min;
 
 				    upload_file($user_agent, $host, $username, $password, $cam_filename);
 				}
@@ -124,7 +124,7 @@ while($running){
 	}
     }
 
-    sleep(10);
+    sleep(60);
 }
 
 0;
