@@ -102,6 +102,18 @@ __PACKAGE__->table("SERVICE_CONFIG");
   default_value: '0000-00-00 00:00:00'
   is_nullable: 0
 
+=head2 mov_width
+
+  data_type: 'float'
+  default_value: 1080
+  is_nullable: 1
+
+=head2 mov_height
+
+  data_type: 'float'
+  default_value: 1080
+  is_nullable: 1
+
 =head2 mov_fps
 
   data_type: 'float'
@@ -111,7 +123,7 @@ __PACKAGE__->table("SERVICE_CONFIG");
 =head2 mov_bitrate
 
   data_type: 'integer'
-  default_value: 15000000
+  default_value: 1200000
   is_nullable: 1
 
 =head2 snd_channels
@@ -185,10 +197,14 @@ __PACKAGE__->add_columns(
     default_value => "0000-00-00 00:00:00",
     is_nullable => 0,
   },
+  "mov_width",
+  { data_type => "float", default_value => 1080, is_nullable => 1 },
+  "mov_height",
+  { data_type => "float", default_value => 1080, is_nullable => 1 },
   "mov_fps",
   { data_type => "float", default_value => 25, is_nullable => 1 },
   "mov_bitrate",
-  { data_type => "integer", default_value => 15000000, is_nullable => 1 },
+  { data_type => "integer", default_value => 1200000, is_nullable => 1 },
   "snd_channels",
   { data_type => "integer", default_value => 2, is_nullable => 1 },
   "snd_samplerate",
@@ -210,8 +226,8 @@ __PACKAGE__->add_columns(
 __PACKAGE__->set_primary_key("service_config_id");
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-04-08 05:41:38
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:X/OObvWQ6F2UhUlfC0cy9Q
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-04-11 01:10:47
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Koj60DbBt53gdvy5n+JKJg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

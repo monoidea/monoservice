@@ -55,6 +55,18 @@ __PACKAGE__->table("TITLE_STRIP_VIDEO_FILE");
   data_type: 'time'
   is_nullable: 0
 
+=head2 width
+
+  data_type: 'float'
+  default_value: 1080
+  is_nullable: 1
+
+=head2 height
+
+  data_type: 'float'
+  default_value: 1080
+  is_nullable: 1
+
 =head2 fps
 
   data_type: 'float'
@@ -64,7 +76,7 @@ __PACKAGE__->table("TITLE_STRIP_VIDEO_FILE");
 =head2 bitrate
 
   data_type: 'integer'
-  default_value: 15000000
+  default_value: 1200000
   is_nullable: 1
 
 =cut
@@ -76,10 +88,14 @@ __PACKAGE__->add_columns(
   { data_type => "varchar", is_nullable => 0, size => 255 },
   "duration",
   { data_type => "time", is_nullable => 0 },
+  "width",
+  { data_type => "float", default_value => 1080, is_nullable => 1 },
+  "height",
+  { data_type => "float", default_value => 1080, is_nullable => 1 },
   "fps",
   { data_type => "float", default_value => 25, is_nullable => 1 },
   "bitrate",
-  { data_type => "integer", default_value => 15000000, is_nullable => 1 },
+  { data_type => "integer", default_value => 1200000, is_nullable => 1 },
 );
 
 =head1 PRIMARY KEY
@@ -114,8 +130,8 @@ __PACKAGE__->has_many(
 );
 
 
-# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-04-08 05:41:38
-# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:Yv8PFq54ntUUWdeW6FCXNQ
+# Created by DBIx::Class::Schema::Loader v0.07049 @ 2019-04-11 01:10:47
+# DO NOT MODIFY THIS OR ANYTHING ABOVE! md5sum:mzdv2Gf7mHNBPGycz6xeFg
 
 
 # You can replace this text with custom code or comments, and it will be preserved on regeneration

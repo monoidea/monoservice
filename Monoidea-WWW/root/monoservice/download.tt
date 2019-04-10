@@ -13,6 +13,9 @@ function monoideaInit() {
 session_id = "[% session_id %]";
 token = "[% token %]";
 
+videoWidth = [% videoWidth %];
+videoHeight = [% videoHeight %];
+
 $(document).ready(monoideaInit);
 </script>
   </head>

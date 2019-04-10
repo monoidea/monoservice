@@ -88,6 +88,34 @@ sub service_config :Local {
 	    $root_node->appendChild($node);
 	}
 
+	$node = XML::LibXML::Element->new('mov-width');
+	$node->setAttribute(value => $service_config->mov_width);
+	$root_node->appendChild($node);
+
+	$node = XML::LibXML::Element->new('mov-height');
+	$node->setAttribute(value => $service_config->mov_height);
+	$root_node->appendChild($node);
+
+	$node = XML::LibXML::Element->new('mov-fps');
+	$node->setAttribute(value => $service_config->mov_fps);
+	$root_node->appendChild($node);
+
+	$node = XML::LibXML::Element->new('mov-bitrate');
+	$node->setAttribute(value => $service_config->mov_bitrate);
+	$root_node->appendChild($node);
+
+	$node = XML::LibXML::Element->new('snd-channels');
+	$node->setAttribute(value => $service_config->snd_channels);
+	$root_node->appendChild($node);
+
+	$node = XML::LibXML::Element->new('snd-samplerate');
+	$node->setAttribute(value => $service_config->snd_samplerate);
+	$root_node->appendChild($node);
+
+	$node = XML::LibXML::Element->new('snd-bitrate');
+	$node->setAttribute(value => $service_config->snd_bitrate);
+	$root_node->appendChild($node);
+
 	# write response
 	my $response_body = $dom->toString(1);
 

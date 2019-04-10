@@ -10,6 +10,14 @@ var session_id;
  * the page's token
  */
 var token;
+/**
+ * the video's width
+ */
+var videoWidth;
+/**
+ * the video's height
+ */
+var videoHeight;
 
 var lists = [{
     downloadList: null,
@@ -170,7 +178,7 @@ function DownloadList(p, r, i){
 	itemTemplate += "<div><a href=\"http://" + serverAddress + ":" + serverPort + "/download/media?session_id=" + sessionIDCol[0].value + "&token=" + tokenCol[0].value + "&video_file_id=" + videoFileIDCol[0].value + "\">Download your Monothek Session</a></div>";
 
 
-	itemTemplate += "<div><video width=\"1280\" height=\"720\" controls><source src=\"http://" + serverAddress + ":" + serverPort + "/download/media?session_id=" + sessionIDCol[0].value + "&token=" + tokenCol[0].value + "&video_file_id=" + videoFileIDCol[0].value + "\" type=\"video/mp4\">Your browser does not support the video tag.</video></div>";
+	itemTemplate += "<div><video width=\"" + videoWidth + "\" height=\"" + videoHeight + "\" controls><source src=\"http://" + serverAddress + ":" + serverPort + "/download/media?session_id=" + sessionIDCol[0].value + "&token=" + tokenCol[0].value + "&video_file_id=" + videoFileIDCol[0].value + "\" type=\"video/mp4\">Your browser does not support the video tag.</video></div>";
 
 	
 	itemTemplate += "</li>";

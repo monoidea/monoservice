@@ -19,13 +19,6 @@ sub upload_file {
     my $logout_url = 'http://' . $host . '/people/logout';
     my $upload_url = 'http://' . $host . '/upload/put_cam';
 
-    DEBUG "login: ****";
-
-    my $login = Monoidea::HTTP::Action::Login->new(url => $login_url,
-						   username => $username,
-						   password => $password);
-    $login->do_login($user_agent);
-
     my @path_arr = split /\//, $filename;
     my $path_length = scalar(@path_arr);
 
@@ -43,11 +36,21 @@ sub upload_file {
 	);
     my $dt;
 
-    DEBUG "upload - filename: " . $filename;
-
     $dt = $date_parser->parse_datetime($creation_time_str);
     my $creation_time = $dt->epoch();
 
+    if($creation_time + 60 < time){
+	return;
+    }
+
+    DEBUG "login: ****";
+
+    my $login = Monoidea::HTTP::Action::Login->new(url => $login_url,
+						   username => $username,
+						   password => $password);
+    $login->do_login($user_agent);
+
+    DEBUG "upload - filename: " . $filename;
     DEBUG "upload - creation_time: " . $creation_time_str . "[" . $creation_time. "]";
 
     my $upload = Monoidea::HTTP::Action::Upload->new(url => $upload_url,

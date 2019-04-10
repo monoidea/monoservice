@@ -16,10 +16,10 @@ my $raspivid_path = $cfg->param('raspivid_path');
 my $cam_export_path = $cfg->param('cam_export_path');
 
 # presets
-my $cam_width = 1080;
-my $cam_height = 1080;
-my $cam_fps = 25;
-my $cam_birate = 1200000;
+my $cam_width = $cfg->param('cam_width');
+my $cam_height = $cfg->param('cam_height');
+my $cam_fps = $cfg->param('cam_fps');
+my $cam_birate = $cfg->param('cam_bitrate');
 
 # wait for the next minute
 my ($start_sec, $start_usec) = gettimeofday();

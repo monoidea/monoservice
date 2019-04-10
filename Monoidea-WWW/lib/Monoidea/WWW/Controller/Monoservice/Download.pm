@@ -76,9 +76,26 @@ sub index :Path :Args(0) {
 
 	    $c->response->body($response_body);
 	}else{
+	    # config profile
+	    my $simple_config = new Config::Simple($c->config->{service_config_file});
+	    
+	    my $www_video_width = $simple_config->param("www_video_width");
+
+	    if(!$www_video_width){
+		$www_video_width = 720;
+	    }
+
+	    my $www_video_height = $simple_config->param("www_video_height");
+
+	    if(!$www_video_height){
+		$www_video_height = 720;
+	    }
+
 	    $c->stash(
 		session_id => $session_id,
 		token => $token,
+		videoWidth => $www_video_width,
+		videoHeight => $www_video_height,
 		template => 'monoservice/download.tt',
 		);
 	}
