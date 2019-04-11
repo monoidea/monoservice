@@ -36,6 +36,7 @@ requires (
     Config::Simple,
     LWP::UserAgent,
     Date::Leapyear,
+    XML::LibXML,
 );
 
 install_as_cpan;

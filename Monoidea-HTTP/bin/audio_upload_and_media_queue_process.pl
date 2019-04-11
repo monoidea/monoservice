@@ -20,8 +20,8 @@ my $cfg = new Config::Simple('monoidea_http.conf');
 
 my ($media_account_id, $audio_export_filename) = @ARGV;
 
-if(!$audio_export_filename ||
-   !$media_account_id){
+if(!$media_account_id ||
+   !$audio_export_filename){
     printf "audio_upload_and_media_queue_process.pl MEDIA_ACCOUNT_ID FILENAME\n";
 
     exit(0);
