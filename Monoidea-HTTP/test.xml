@@ -30,5 +30,6 @@
         10
       </payment>
     </order>
+    <status value="cancel"/>
   </purchase>
 </monoidea-purchase>

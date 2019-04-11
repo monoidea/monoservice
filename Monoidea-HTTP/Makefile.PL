@@ -37,6 +37,7 @@ requires (
     LWP::UserAgent,
     Date::Leapyear,
     XML::LibXML,
+    XML::LibXML::PrettyPrint,
 );
 
 install_as_cpan;

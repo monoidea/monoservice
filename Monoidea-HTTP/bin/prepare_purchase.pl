@@ -8,10 +8,10 @@ Log::Log4perl->easy_init($DEBUG);
 
 use Config::Simple;
 use LWP::UserAgent;
-use Monoidea::HTTP::Action::Login;
-use Monoidea::HTTP::Action::Purchase;
 use XML::LibXML;
 use XML::LibXML::PrettyPrint;
+use Monoidea::HTTP::Action::Login;
+use Monoidea::HTTP::Action::Purchase;
 
 $ENV{"TZ"} = "UTC";
 
@@ -102,6 +102,8 @@ while(!$success && $i < 5){
     if($response->is_success){
 	$success = 1;
 
+	DEBUG "prepare purchase - success ";
+
 	my $node;
 
 	$node = XML::LibXML::Element->new('product-name');
@@ -128,6 +130,8 @@ while(!$success && $i < 5){
 	$purchase_node->appendChild($order_node);
     }
 
+    HTTP::Request::Common::GET($logout_url);
+
     if(!$success){
 	DEBUG "prepare purchase failed - attempt " . ($i + 1) . "/5 retrying in 1 seconds";
 
@@ -142,7 +146,8 @@ if(!$success){
 
 	DEBUG "prepare purchase failed - giving up";
 
-	$node = XML::LibXML::Element->new('failed');
+	$node = XML::LibXML::Element->new('status');
+	$node->setAttribute(value => 'failed');
 	$purchase_node->appendChild($node);
 }
 

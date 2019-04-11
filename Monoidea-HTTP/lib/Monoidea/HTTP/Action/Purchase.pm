@@ -31,10 +31,10 @@ has 'session_id' => (is => 'rw', isa => 'Str', lazy_build => 1);
 has 'token' => (is => 'rw', isa => 'Str', lazy_build => 1);
 has 'media_account_id' => (is => 'rw', isa => 'Str', lazy_build => 1);
 has 'payment_id' => (is => 'rw', isa => 'Str', lazy_build => 1);
-has 'product_name' => (is => 'rw', isa => 'Str', required => 1);
-has 'position_id' => (is => 'rw', isa => 'Str', required => 1);
-has 'recipe_id' => (is => 'rw', isa => 'Str', required => 1);
-has 'invoice_amount' => (is => 'rw', isa => 'Str', required => 1);
+has 'product_name' => (is => 'rw', isa => 'Str', lazy_build => 1);
+has 'position_id' => (is => 'rw', isa => 'Str', lazy_build => 1);
+has 'recipe_id' => (is => 'rw', isa => 'Str', lazy_build => 1);
+has 'invoice_amount' => (is => 'rw', isa => 'Str', lazy_build => 1);
 
 sub prepare_purchase {
     my ( $self, $user_agent) = @_;
