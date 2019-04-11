@@ -1,5 +1,8 @@
 #!/usr/bin/env perl
 
+use strict;
+use warnings;
+
 use Log::Log4perl qw(:easy);
 Log::Log4perl->easy_init($DEBUG);
  
@@ -39,7 +42,7 @@ sub upload_file {
     $dt = $date_parser->parse_datetime($creation_time_str);
     my $creation_time = $dt->epoch();
 
-    if($creation_time + 60 < time){
+    if($creation_time + 60 > time){
 	return;
     }
 
